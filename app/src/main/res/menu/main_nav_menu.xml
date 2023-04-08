@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/homeFragment"
+        android:icon="@drawable/ic_home"
+        android:title="@string/home"
+        android:iconTint="@color/white"/>
+    <item
+        android:id="@+id/moviesFragment"
+        android:icon="@drawable/ic_movies"
+        android:title="@string/movies" />
+    <item
+        android:id="@+id/tvShowsFragment"
+        android:icon="@drawable/ic_tv_shows"
+        android:title="@string/tv_shows" />
+    <item
+        android:id="@+id/peopleFragment"
+        android:icon="@drawable/ic_people"
+        android:title="@string/people" />
+    <item
+        android:id="@+id/moreFragment"
+        android:icon="@drawable/ic_more"
+        android:title="@string/more" />
+</menu>

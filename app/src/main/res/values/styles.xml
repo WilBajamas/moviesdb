@@ -26,4 +26,5 @@
     <style name="TitleText.Gradient" parent="TextAppearance.AppCompat">
         <item name="android:background">@drawable/background_gradient</item>
     </style>
+
 </resources>
