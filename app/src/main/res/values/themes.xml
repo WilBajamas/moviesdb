@@ -4,6 +4,6 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primary</item>
         <item name="colorOnPrimary">@color/white</item>
-
+        <item name="android:fontFamily">@font/opensans_medium</item>
     </style>
 </resources>

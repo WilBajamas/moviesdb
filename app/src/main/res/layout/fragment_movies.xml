@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.screens.MoviesFragment">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -15,12 +15,19 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            app:contentInsetStart="0dp"
             app:layout_scrollFlags="scroll|enterAlways">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/filters_rv"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/filters_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true" />
+            </RelativeLayout>
 
         </com.google.android.material.appbar.MaterialToolbar>
 
@@ -30,7 +37,7 @@
         android:id="@+id/movies_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:spanCount="2"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:spanCount="2" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

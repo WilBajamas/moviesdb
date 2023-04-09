@@ -13,6 +13,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:textColor="@color/filter_selector"
+        android:fontFamily="@font/opensans_bold"
         tools:text="Text" />
 
 </RelativeLayout>
