@@ -4,5 +4,5 @@ data class Movies(
     val title: String,
     val date: String,
     val image_url: String,
-    val rating: String,
+    val rating: Int,
 )

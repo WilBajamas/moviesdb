@@ -37,18 +37,18 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesFragmentViewMod
         )
 
         val testMoviesData = listOf<Movies>(
-            Movies("SampleSampleSampleSampleSampleSampleSampleSampleSampleSampleSampleSampleSampleSampleSampleSampleSampleSampleSampleSampleSample", "Mar 01, 2023", "https://image.tmdb.org/t/p/original/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg", "100%"),
-            Movies("Sample", "Mar 01, 2023", "https://image.tmdb.org/t/p/original/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg", "100%"),
-            Movies("Sample", "Mar 01, 2023", "https://image.tmdb.org/t/p/original/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg", "100%"),
-            Movies("Sample", "Mar 01, 2023", "https://image.tmdb.org/t/p/original/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg", "100%"),
-            Movies("Sample", "Mar 01, 2023", "https://image.tmdb.org/t/p/original/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg", "100%"),
-            Movies("Sample", "Mar 01, 2023", "https://image.tmdb.org/t/p/original/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg", "100%"),
-            Movies("Sample", "Mar 01, 2023", "https://image.tmdb.org/t/p/original/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg", "100%"),
-            Movies("Sample", "Mar 01, 2023", "https://image.tmdb.org/t/p/original/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg", "100%"),
-            Movies("Sample", "Mar 01, 2023", "https://image.tmdb.org/t/p/original/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg", "100%"),
-            Movies("Sample", "Mar 01, 2023", "https://image.tmdb.org/t/p/original/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg", "100%"),
-            Movies("Sample", "Mar 01, 2023", "https://image.tmdb.org/t/p/original/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg", "100%"),
-            Movies("Sample", "Mar 01, 2023", "https://image.tmdb.org/t/p/original/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg", "100%"),
+            Movies("Sample", "Mar 01, 2023", "https://image.tmdb.org/t/p/original/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg", 100),
+            Movies("Sample", "Mar 01, 2023", "https://image.tmdb.org/t/p/original/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg", 65),
+            Movies("Sample", "Mar 01, 2023", "https://image.tmdb.org/t/p/original/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg", 40),
+            Movies("Sample", "Mar 01, 2023", "https://image.tmdb.org/t/p/original/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg", 78),
+            Movies("Sample", "Mar 01, 2023", "https://image.tmdb.org/t/p/original/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg", 80),
+            Movies("Sample", "Mar 01, 2023", "https://image.tmdb.org/t/p/original/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg", 100),
+            Movies("Sample", "Mar 01, 2023", "https://image.tmdb.org/t/p/original/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg", 65),
+            Movies("Sample", "Mar 01, 2023", "https://image.tmdb.org/t/p/original/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg", 70),
+            Movies("Sample", "Mar 01, 2023", "https://image.tmdb.org/t/p/original/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg", 89),
+            Movies("Sample", "Mar 01, 2023", "https://image.tmdb.org/t/p/original/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg", 100),
+            Movies("Sample", "Mar 01, 2023", "https://image.tmdb.org/t/p/original/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg", 90),
+            Movies("Sample", "Mar 01, 2023", "https://image.tmdb.org/t/p/original/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg", 69),
         )
 
         with(binding) {

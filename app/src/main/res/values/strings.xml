@@ -12,4 +12,5 @@
     <string name="release_date_descending">Release Date Desc.</string>
     <string name="release_date_ascending">Release Date Asc.</string>
     <string name="title_a_z">A-Z</string>
+    <string name="percentage">%s%%</string>
 </resources>

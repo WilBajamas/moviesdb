@@ -27,4 +27,9 @@
         <item name="android:background">@drawable/background_gradient</item>
     </style>
 
+    <style name="CircularDeterminateProgressBar">
+        <item name="android:indeterminateOnly">false </item>
+        <item name="android:progressDrawable">@drawable/percentage_bar_circular</item>
+    </style>
+
 </resources>

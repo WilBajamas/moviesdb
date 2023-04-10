@@ -1,5 +1,6 @@
 package alex.example.movies.ui.adapters
 
+import alex.example.movies.R
 import alex.example.movies.databinding.ShowItemBinding
 import alex.example.movies.domain.Movies
 import android.view.LayoutInflater
@@ -22,8 +23,10 @@ class MoviesAdapter(private val items: List<Movies>) :
     override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
         val item = items[position]
         holder.binding.titleTv.text = item.title
-        holder.binding.ratingTv.text = item.rating
         holder.binding.dateTv.text = item.date
+        holder.binding.ratingView.progressBar.progress = item.rating
+        holder.binding.ratingView.textView.text =
+            holder.binding.root.context.getString(R.string.percentage, item.rating.toString())
         Glide.with(holder.binding.root).load(item.image_url).into(holder.binding.showImg)
     }
 
