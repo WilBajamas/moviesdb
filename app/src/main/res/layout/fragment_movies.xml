@@ -33,11 +33,19 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/movies_rv"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:spanCount="2" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/movies_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            app:spanCount="2" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
