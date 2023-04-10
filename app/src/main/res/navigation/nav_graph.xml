@@ -30,4 +30,9 @@
         android:name="alex.example.movies.ui.screens.MoreFragment"
         android:label="fragment_more"
         tools:layout="@layout/fragment_more" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="alex.example.movies.ui.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
 </navigation>
