@@ -1,10 +1,15 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext {
+        splash_version = "1.0.0"
+        lottie_version = "6.0.0"
         nav_version = "2.5.3"
         lifecycle_version = "2.6.1"
         room_version = "2.5.1"
         paging_version = "3.1.1"
+        retrofit_version = "2.9.0"
+        okhttp_version = "5.0.0-alpha.7"
+        glide_version = "4.14.2"
     }
 }
 
