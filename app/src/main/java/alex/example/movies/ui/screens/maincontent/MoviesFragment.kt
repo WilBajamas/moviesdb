@@ -1,6 +1,6 @@
-package alex.example.movies.ui.screens
+package alex.example.movies.ui.screens.maincontent
 
-import alex.example.movies.ui.viewmodels.MoviesFragmentViewModel
+import alex.example.movies.ui.viewmodels.maincontent.MoviesFragmentViewModel
 import alex.example.movies.R
 import alex.example.movies.databinding.FragmentMoviesBinding
 import alex.example.movies.domain.Movies

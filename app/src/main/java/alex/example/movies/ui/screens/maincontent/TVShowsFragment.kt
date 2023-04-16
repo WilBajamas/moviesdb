@@ -1,7 +1,7 @@
-package alex.example.movies.ui.screens
+package alex.example.movies.ui.screens.maincontent
 
-import alex.example.movies.ui.viewmodels.MoreFragmentViewModel
 import alex.example.movies.R
+import alex.example.movies.ui.viewmodels.maincontent.TVShowsFragmentViewModel
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,24 +9,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-class MoreFragment : Fragment() {
+class TVShowsFragment : Fragment() {
 
     companion object {
-        fun newInstance() = MoreFragment()
+        fun newInstance() = TVShowsFragment()
     }
 
-    private lateinit var viewModel: MoreFragmentViewModel
+    private lateinit var viewModel: TVShowsFragmentViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_more, container, false)
+        return inflater.inflate(R.layout.fragment_t_v_shows, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MoreFragmentViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(TVShowsFragmentViewModel::class.java)
         // TODO: Use the ViewModel
     }
 

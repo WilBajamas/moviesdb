@@ -1,4 +1,4 @@
-package alex.example.movies.ui.viewmodels
+package alex.example.movies.ui.viewmodels.maincontent
 
 import alex.example.movies.domain.Movies
 import alex.example.movies.domain.ShowFilter

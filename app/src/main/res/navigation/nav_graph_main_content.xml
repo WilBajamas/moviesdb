@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph_main_content"
+    app:startDestination="@id/homeFragment"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <fragment
+        android:id="@+id/moreFragment"
+        android:name="alex.example.movies.ui.screens.maincontent.MoreFragment"
+        tools:layout="@layout/fragment_more"
+        android:label="fragment_more" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="alex.example.movies.ui.screens.maincontent.HomeFragment"
+        tools:layout="@layout/fragment_home"
+        android:label="fragment_home" />
+    <fragment
+        android:id="@+id/peopleFragment"
+        android:name="alex.example.movies.ui.screens.maincontent.PeopleFragment"
+        tools:layout="@layout/fragment_people"
+        android:label="fragment_people" />
+    <fragment
+        android:id="@+id/moviesFragment"
+        android:name="alex.example.movies.ui.screens.maincontent.MoviesFragment"
+        tools:layout="@layout/fragment_movies"
+        android:label="fragment_movies" />
+    <fragment
+        android:id="@+id/tvShowsFragment"
+        android:name="alex.example.movies.ui.screens.maincontent.TVShowsFragment"
+        tools:layout="@layout/fragment_t_v_shows"
+        android:label="fragment_t_v_shows" />
+</navigation>

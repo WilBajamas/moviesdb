@@ -6,6 +6,20 @@
         <item name="android:textSize">24sp</item>
     </style>
 
+    <style name="HeaderText.PrimaryColor" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/primary</item>
+        <item name="android:fontFamily">@font/opensans_bold</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="DescriptionText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/text_grey</item>
+        <item name="android:fontFamily">@font/opensans_semi_bold</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
     <style name="HeaderText.Medium">
         <item name="android:textSize">20sp</item>
     </style>
@@ -30,6 +44,12 @@
     <style name="CircularDeterminateProgressBar">
         <item name="android:indeterminateOnly">false </item>
         <item name="android:progressDrawable">@drawable/percentage_bar_circular</item>
+    </style>
+
+    <style name="DefaultTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/primary</item>
+        <item name="hintTextColor">@color/primary</item>
+        <item name="android:textColor">@color/primary</item>
     </style>
 
 </resources>

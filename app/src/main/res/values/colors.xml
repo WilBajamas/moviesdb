@@ -4,8 +4,10 @@
     <color name="secondary">#FF01b4e4</color>
 
     <color name="black">#FF000000</color>
+    <color name="text_black">#FF1A1A1A</color>
     <color name="text_grey">#FF676767</color>
     <color name="gradient_green_start">#FFBCFDCE</color>
     <color name="gradient_green_end">#FF22C09A</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="off_white">#FFF9F9F9</color>
 </resources>

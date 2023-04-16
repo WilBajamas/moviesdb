@@ -1,6 +1,6 @@
-package alex.example.movies.ui.screens
+package alex.example.movies.ui.screens.maincontent
 
-import alex.example.movies.ui.viewmodels.HomeFragmentViewModel
+import alex.example.movies.ui.viewmodels.maincontent.HomeFragmentViewModel
 import alex.example.movies.databinding.FragmentHomeBinding
 import alex.example.movies.utils.BaseFragment
 import android.os.Bundle

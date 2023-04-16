@@ -1,4 +1,4 @@
-package alex.example.movies.ui.viewmodels
+package alex.example.movies.ui.viewmodels.maincontent
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

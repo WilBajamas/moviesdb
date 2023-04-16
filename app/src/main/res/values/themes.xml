@@ -1,10 +1,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.MultiAppModuleTrainingLight" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.MultiAppModuleTrainingLight" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primary</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnPrimary">@color/off_white</item>
         <item name="android:fontFamily">@font/opensans_medium</item>
+        <item name="android:background">@color/off_white</item>
+        <item name="android:statusBarColor">@color/primary</item>
+        <item name="android:navigationBarColor">@color/primary</item>
     </style>
 
     <style name="Theme.App.Starting" parent="Theme.SplashScreen">
