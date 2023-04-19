@@ -5,11 +5,11 @@ import alex.example.movies.databinding.FragmentNewOnboardingBinding
 import alex.example.movies.databinding.OnboardingViewBinding
 import alex.example.movies.domain.PagerItem
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
@@ -48,29 +48,41 @@ class NewOnboardingFragment : Fragment() {
             )
         )
 
-        val pagerAdapter = NewOnboardingPagerAdapter(pagerItems)
-        binding.viewPager.adapter = pagerAdapter
+        with(binding) {
+            skipBtn.setOnClickListener {
+                navigateToMainContent()
+            }
 
-        binding.nextBtn.setOnClickListener {
-            if (binding.viewPager.currentItem < pagerItems.size - 1) binding.viewPager.currentItem += 1 else Log.i(
-                "onboarding current item:",
-                binding.viewPager.currentItem.toString()
-            )
-        }
+            nextBtn.setOnClickListener {
+                if (viewPager.currentItem < pagerItems.lastIndex) viewPager.currentItem += 1 else navigateToMainContent()
+            }
 
-        onPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                if (position == pagerItems.size - 1) binding.nextBtn.text =
-                    getString(R.string.finish) else binding.nextBtn.text =
-                    getString(R.string.next)
+            onPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    if (position == pagerItems.lastIndex) nextBtn.text =
+                        getString(R.string.finish) else nextBtn.text =
+                        getString(R.string.next)
+                }
+            }
+
+            viewPager.apply {
+                val pagerAdapter = NewOnboardingPagerAdapter(pagerItems)
+                adapter = pagerAdapter
+                (getChildAt(0) as RecyclerView).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+                registerOnPageChangeCallback(onPageChangeCallback)
             }
         }
-        binding.viewPager.registerOnPageChangeCallback(onPageChangeCallback)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         binding.viewPager.unregisterOnPageChangeCallback(onPageChangeCallback)
+    }
+
+    private fun navigateToMainContent() {
+        findNavController().navigate(
+            R.id.action_global_mainContentFragment
+        )
     }
 
     private inner class NewOnboardingPagerAdapter(val pagerItems: List<PagerItem>) :
