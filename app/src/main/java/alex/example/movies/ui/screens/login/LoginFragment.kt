@@ -17,9 +17,12 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginFragmentViewModel>
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.loginBtn.setOnClickListener {
-            findNavController().navigate(R.id.action_loginFragment_to_newOnboardingFragment)
+        with(binding) {
+            loginBtn.setOnClickListener {
+                findNavController().navigate(R.id.action_loginFragment_to_newOnboardingFragment)
+            }
         }
+
     }
 
 }
