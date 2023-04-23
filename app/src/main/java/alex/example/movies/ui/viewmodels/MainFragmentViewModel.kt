@@ -2,8 +2,8 @@ package alex.example.movies.ui.viewmodels
 
 import alex.example.movies.BuildConfig
 import alex.example.movies.data.model.Session
-import alex.example.movies.data.repositories.AuthRepository
 import alex.example.movies.data.state.AuthState
+import alex.example.movies.domain.use_case.auth.AuthUseCase
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,9 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainFragmentViewModel @Inject constructor(
-    private val authRepository: AuthRepository
+    private val authUseCase: AuthUseCase
 ) : ViewModel() {
-
 
     private val _authState: MutableStateFlow<AuthState<Session>> =
         MutableStateFlow(AuthState.Loading)
@@ -25,17 +24,12 @@ class MainFragmentViewModel @Inject constructor(
     fun init() {
         val apiKey = BuildConfig.API_KEY
         viewModelScope.launch {
-            val isUserLoggedIn =
-                authRepository.isLoggedIn()
-            val isRequestTokenAvailable = authRepository.isRequestTokenAvailable()
 
             if (apiKey.isNotBlank()) {
-                if (isUserLoggedIn && isRequestTokenAvailable) {
-                    // Proceed to Home Screen
-                    _authState.emit(AuthState.SessionAvailable)
-                } else {
-                    // Proceeed to Log In Screen
-                    _authState.emit(AuthState.SessionNull)
+                authUseCase {
+                    if (it) _authState.emit(AuthState.SessionAvailable) else _authState.emit(
+                        AuthState.SessionNull
+                    )
                 }
             } else {
                 _authState.emit(AuthState.ApiKeyBlank)
