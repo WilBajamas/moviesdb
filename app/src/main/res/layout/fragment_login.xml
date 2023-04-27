@@ -40,11 +40,13 @@
         android:layout_marginHorizontal="24dp"
         android:layout_marginTop="24dp"
         android:selectAllOnFocus="true"
+        app:errorTextAppearance="@style/TextFieldErrorAppearance"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title_tv">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/email_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/prompt_email"
@@ -60,15 +62,18 @@
         android:layout_marginHorizontal="24dp"
         android:layout_marginTop="24dp"
         android:selectAllOnFocus="true"
+        app:endIconMode="password_toggle"
+        app:errorTextAppearance="@style/TextFieldErrorAppearance"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email_address_text_field">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/prompt_password"
-            android:inputType="textEmailAddress" />
+            android:inputType="textPassword" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -86,11 +91,11 @@
         android:text="@string/action_sign_in_short"
         android:textColor="@color/off_white"
         android:textSize="16sp"
-        app:layout_constraintWidth_percent="0.5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password_text_field"
         app:layout_constraintVertical_bias="0.3"
+        app:layout_constraintWidth_percent="0.5"
         app:rippleColor="@color/off_white" />
 </androidx.constraintlayout.widget.ConstraintLayout>

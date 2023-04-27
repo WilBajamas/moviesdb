@@ -42,7 +42,12 @@
         <item name="android:background">@drawable/background_gradient</item>
     </style>
 
-<!--    Shapes-->
+    <style name="TextFieldErrorAppearance" parent="TextAppearance.Design.Error">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+
+    <!--    Shapes-->
     <style name="CircularDeterminateProgressBar">
         <item name="android:indeterminateOnly">false</item>
         <item name="android:progressDrawable">@drawable/percentage_bar_circular</item>
