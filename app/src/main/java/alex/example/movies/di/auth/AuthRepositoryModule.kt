@@ -1,5 +1,6 @@
 package alex.example.movies.di.auth
 
+import alex.example.movies.data.AuthApi
 import alex.example.movies.data.repositories.AuthRepository
 import android.content.SharedPreferences
 import dagger.Module
@@ -15,8 +16,9 @@ class AuthRepositoryModule {
     @Provides
     @Singleton
     fun provideAuthRepository(
-        sharedPreferences: SharedPreferences
+        sharedPreferences: SharedPreferences,
+        authApi: AuthApi
     ) : AuthRepository {
-        return AuthRepository(sharedPreferences)
+        return AuthRepository(sharedPreferences, authApi)
     }
 }

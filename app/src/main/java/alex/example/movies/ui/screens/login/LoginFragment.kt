@@ -11,7 +11,9 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import androidx.core.widget.doOnTextChanged
 import com.google.android.material.textfield.TextInputLayout
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding, LoginFragmentViewModel>(
     FragmentLoginBinding::inflate, LoginFragmentViewModel::class.java
 ) {
@@ -36,7 +38,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginFragmentViewModel>
             loginBtn.setOnClickListener {
 
                 if (viewModel.checkPasswordInputValid() && viewModel.checkEmailInputValid()) {
-//                    viewModel.login()
+                    viewModel.login()
 //                    findNavController().navigate(R.id.action_loginFragment_to_newOnboardingFragment)
                     fadeInLoading()
                 }
