@@ -37,9 +37,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginFragmentViewModel>
             loginBtn.setOnClickListener {
                 if (viewModel.checkPasswordInputValid() && viewModel.checkEmailInputValid()) {
                     viewModel.login()
-                    viewAnimator.crossFadeView(binding.progressIndicator, binding.loginBtn) {
-                        disableTextFields()
-                    }
                 }
 
                 if (!viewModel.checkEmailInputValid()) emailAddressTextField.error =
@@ -51,14 +48,17 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginFragmentViewModel>
 
             viewModel.loginResponse.observe(viewLifecycleOwner) {
                 when (it) {
-                    is Resource.Success -> {
-                        findNavController().navigate(R.id.action_loginFragment_to_newOnboardingFragment)
-                    }
-                    else -> {
+                    is Resource.Success -> findNavController().navigate(R.id.action_loginFragment_to_newOnboardingFragment)
+                    is Resource.Error -> {
                         this.errorTv.text = it.message
                         this.errorTv.visibility = View.VISIBLE
                         viewAnimator.crossFadeView(binding.loginBtn, binding.progressIndicator) {
                             enableTextFields()
+                        }
+                    }
+                    else -> {
+                        viewAnimator.crossFadeView(binding.progressIndicator, binding.loginBtn) {
+                            disableTextFields()
                         }
                     }
                 }
@@ -80,5 +80,5 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginFragmentViewModel>
         binding.passwordTextField.isEnabled = true
         binding.emailAddressTextField.isEnabled = true
     }
-    
+
 }

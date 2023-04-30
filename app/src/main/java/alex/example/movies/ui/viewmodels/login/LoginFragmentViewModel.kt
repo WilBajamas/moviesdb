@@ -26,6 +26,7 @@ class LoginFragmentViewModel @Inject constructor(
 
     fun login() {
         viewModelScope.launch {
+            _loginResponse.value = Resource.Loading()
             loginUseCase(email!!, password!!) {
                 _loginResponse.postValue(it)
             }
