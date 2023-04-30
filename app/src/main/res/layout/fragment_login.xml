@@ -33,7 +33,7 @@
         app:layout_constraintTop_toBottomOf="@+id/lottie_anim_view" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/email_address_text_field"
+        android:id="@+id/username_text_field"
         style="@style/DefaultTextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,11 +46,11 @@
         app:layout_constraintTop_toBottomOf="@+id/title_tv">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/email_input"
+            android:id="@+id/username_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/prompt_email"
-            android:inputType="textEmailAddress" />
+            android:hint="@string/prompt_username"
+            android:inputType="textPersonName" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -66,7 +66,7 @@
         app:errorTextAppearance="@style/TextFieldErrorAppearance"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email_address_text_field">
+        app:layout_constraintTop_toBottomOf="@+id/username_text_field">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password_input"

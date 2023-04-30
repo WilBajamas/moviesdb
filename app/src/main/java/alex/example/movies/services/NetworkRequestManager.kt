@@ -6,6 +6,7 @@ import com.google.gson.Gson
 import retrofit2.Response
 
 
+// TODO: Find out why we can't use class
 object NetworkRequestManager {
     suspend fun <T> callApi(apiCall: suspend () -> Response<T>): Resource<T> {
         return try {

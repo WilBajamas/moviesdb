@@ -3,7 +3,6 @@ package alex.example.movies.ui.viewmodels.login
 import alex.example.movies.data.model.Session
 import alex.example.movies.domain.use_case.auth.LoginUseCase
 import alex.example.movies.utils.Resource
-import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -21,20 +20,20 @@ class LoginFragmentViewModel @Inject constructor(
     val loginResponse: LiveData<Resource<Session>>
         get() = _loginResponse
 
-    var email: String? = null
+    var username: String? = null
     var password: String? = null
 
     fun login() {
         viewModelScope.launch {
             _loginResponse.value = Resource.Loading()
-            loginUseCase(email!!, password!!) {
+            loginUseCase(username!!, password!!) {
                 _loginResponse.postValue(it)
             }
         }
     }
 
     fun checkEmailInputValid(): Boolean {
-        return !email.isNullOrEmpty() && Patterns.EMAIL_ADDRESS.matcher(email.toString()).matches()
+        return !username.isNullOrEmpty()
     }
 
     fun checkPasswordInputValid(): Boolean {

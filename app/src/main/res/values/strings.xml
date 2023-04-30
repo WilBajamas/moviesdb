@@ -15,6 +15,7 @@
     <string name="percentage">%s%%</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
+    <string name="prompt_username">Username</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_skip">Skip</string>
     <string name="action_sign_in_short">Sign in</string>
@@ -28,6 +29,7 @@
     <string name="finish">Finish</string>
     <string name="email_format_error">Wrong email format</string>
     <string name="password_too_short">Password too short</string>
+    <string name="username_empty">Username is empty</string>
 
 <!--    API_KEY empty-->
     <string name="api_key_empty">Please set a valid API Key and restart the app</string>

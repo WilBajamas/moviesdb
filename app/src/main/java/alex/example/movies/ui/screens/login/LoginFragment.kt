@@ -24,9 +24,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginFragmentViewModel>
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            emailInput.doOnTextChanged { text, _, _, _ ->
-                viewModel.email = text.toString().trim()
-                if (viewModel.checkEmailInputValid()) disableFieldError(emailAddressTextField)
+            usernameInput.doOnTextChanged { text, _, _, _ ->
+                viewModel.username = text.toString().trim()
+                if (viewModel.checkEmailInputValid()) disableFieldError(usernameTextField)
             }
 
             passwordInput.doOnTextChanged { text, _, _, _ ->
@@ -39,8 +39,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginFragmentViewModel>
                     viewModel.login()
                 }
 
-                if (!viewModel.checkEmailInputValid()) emailAddressTextField.error =
-                    getString(R.string.email_format_error)
+                if (!viewModel.checkEmailInputValid()) usernameTextField.error =
+                    getString(R.string.username_empty)
 
                 if (!viewModel.checkPasswordInputValid()) passwordTextField.error =
                     getString(R.string.password_too_short)
@@ -73,12 +73,12 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginFragmentViewModel>
 
     private fun disableTextFields() {
         binding.passwordTextField.isEnabled = false
-        binding.emailAddressTextField.isEnabled = false
+        binding.usernameTextField.isEnabled = false
     }
 
     private fun enableTextFields() {
         binding.passwordTextField.isEnabled = true
-        binding.emailAddressTextField.isEnabled = true
+        binding.usernameTextField.isEnabled = true
     }
 
 }
