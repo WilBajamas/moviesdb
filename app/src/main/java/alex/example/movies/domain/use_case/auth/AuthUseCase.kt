@@ -9,7 +9,7 @@ import javax.inject.Inject
 @Module
 @InstallIn(ViewModelComponent::class)
 class AuthUseCase @Inject constructor(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
 ){
     suspend operator fun invoke (onAuthenticated: suspend (Boolean) -> Unit) {
         onAuthenticated(authRepository.isLoggedIn() && authRepository.isRequestTokenAvailable())

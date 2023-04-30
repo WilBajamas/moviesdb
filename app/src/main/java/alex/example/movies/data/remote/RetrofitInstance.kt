@@ -38,6 +38,5 @@ class RetrofitInstance {
             val request = requestBuilder.build()
             return chain.proceed(request)
         }
-
     }
 }

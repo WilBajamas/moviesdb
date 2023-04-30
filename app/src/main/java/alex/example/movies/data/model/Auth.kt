@@ -1,10 +1,9 @@
 package alex.example.movies.data.model
 
 data class Session(
-    val success: Boolean,
     val expires_at: String,
     val request_token: String
-)
+): ApiResponse()
 
 data class LoginRequest(
     val username: String,

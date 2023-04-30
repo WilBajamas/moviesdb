@@ -44,6 +44,7 @@
 
     <style name="TextFieldErrorAppearance" parent="TextAppearance.Design.Error">
         <item name="android:textSize">14sp</item>
+        <item name="android:textColor">?attr/colorError</item>
     </style>
 
 

@@ -1,11 +1,13 @@
 package alex.example.movies.domain.use_case.auth
 
+import alex.example.movies.data.model.Session
 import alex.example.movies.data.repositories.AuthRepository
-import android.util.Log
+import alex.example.movies.utils.DispatcherProvider
+import alex.example.movies.utils.Resource
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -13,23 +15,22 @@ import javax.inject.Inject
 @InstallIn(ViewModelComponent::class)
 class LoginUseCase @Inject constructor(
     private val authRepository: AuthRepository,
+    private val dispatcher: DispatcherProvider,
 ) {
 
-    suspend operator fun invoke(email: String, password: String, result: () -> Unit) =
-        withContext(Dispatchers.IO) {
+    suspend operator fun invoke(email: String, password: String, result: (Resource<Session>) -> Unit) =
+        withContext(dispatcher.io) {
             // Request a requestToken
-            val requestToken = authRepository.getRequestToken().body()?.request_token
+            when (val session = authRepository.getRequestToken().first()) {
+                is Resource.Success -> session.data?.let {
+                    authRepository.saveRequestToken(it.request_token)
 
-            if (!requestToken.isNullOrEmpty()) {
-                authRepository.saveRequestToken(requestToken)
-                val loginResponse = authRepository.performLoginWithUsernamePassword(
-                    email,
-                    password,
-                    requestToken
-                )
-                Log.i("Login Response: ", loginResponse.body()?.success.toString())
-            } else {
-                // TODO: Show error
+                    val loginSession = authRepository.performLoginWithUsernamePassword(email, password, it.request_token).first()
+                    result(loginSession)
+                }
+                else -> {
+                    result(session)
+                }
             }
 
         }

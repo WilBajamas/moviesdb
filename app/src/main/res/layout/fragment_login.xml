@@ -91,7 +91,7 @@
         android:text="@string/action_sign_in_short"
         android:textColor="@color/off_white"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/error_tv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password_text_field"
@@ -103,14 +103,28 @@
         android:id="@+id/progress_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:indeterminate="true"
         android:visibility="gone"
         app:indicatorColor="@color/primary"
-        android:indeterminate="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password_text_field"
         app:layout_constraintVertical_bias="0.3"
-        app:layout_constraintWidth_percent="0.5"/>
+        app:layout_constraintWidth_percent="0.5" />
+
+    <TextView
+        android:id="@+id/error_tv"
+        style="@style/TextFieldErrorAppearance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="16dp"
+        android:textAlignment="center"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Error" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

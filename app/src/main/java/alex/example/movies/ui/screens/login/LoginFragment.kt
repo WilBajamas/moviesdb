@@ -7,9 +7,10 @@ import alex.example.movies.databinding.FragmentLoginBinding
 
 import alex.example.movies.ui.viewmodels.login.LoginFragmentViewModel
 import alex.example.movies.utils.BaseFragment
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
+import alex.example.movies.utils.Resource
+import alex.example.movies.utils.ViewAnimator
 import androidx.core.widget.doOnTextChanged
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,13 +19,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginFragmentViewModel>
     FragmentLoginBinding::inflate, LoginFragmentViewModel::class.java
 ) {
 
-    private var shortAnimationDuration: Int = 0
-
+    private val viewAnimator by lazy { ViewAnimator() }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-
             emailInput.doOnTextChanged { text, _, _, _ ->
                 viewModel.email = text.toString().trim()
                 if (viewModel.checkEmailInputValid()) disableFieldError(emailAddressTextField)
@@ -36,11 +35,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginFragmentViewModel>
             }
 
             loginBtn.setOnClickListener {
-
                 if (viewModel.checkPasswordInputValid() && viewModel.checkEmailInputValid()) {
                     viewModel.login()
-//                    findNavController().navigate(R.id.action_loginFragment_to_newOnboardingFragment)
-                    fadeInLoading()
+                    viewAnimator.crossFadeView(binding.progressIndicator, binding.loginBtn) {
+                        disableTextFields()
+                    }
                 }
 
                 if (!viewModel.checkEmailInputValid()) emailAddressTextField.error =
@@ -50,6 +49,20 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginFragmentViewModel>
                     getString(R.string.password_too_short)
             }
 
+            viewModel.loginResponse.observe(viewLifecycleOwner) {
+                when (it) {
+                    is Resource.Success -> {
+                        findNavController().navigate(R.id.action_loginFragment_to_newOnboardingFragment)
+                    }
+                    else -> {
+                        this.errorTv.text = it.message
+                        this.errorTv.visibility = View.VISIBLE
+                        viewAnimator.crossFadeView(binding.loginBtn, binding.progressIndicator) {
+                            enableTextFields()
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -64,51 +77,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginFragmentViewModel>
     }
 
     private fun enableTextFields() {
-        binding.passwordTextField.isEnabled = false
-        binding.emailAddressTextField.isEnabled = false
+        binding.passwordTextField.isEnabled = true
+        binding.emailAddressTextField.isEnabled = true
     }
-
-    private fun fadeInLoading() {
-        disableTextFields()
-        binding.progressIndicator.apply {
-            alpha = 0f
-            visibility = View.VISIBLE
-
-            animate()
-                .alpha(1f)
-                .setDuration(shortAnimationDuration.toLong())
-                .setListener(null)
-        }
-        binding.loginBtn.animate()
-            .alpha(0f)
-            .setDuration(shortAnimationDuration.toLong())
-            .setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    binding.loginBtn.visibility = View.GONE
-                }
-            })
-    }
-
-    private fun fadeInButton() {
-        enableTextFields()
-        binding.loginBtn.apply {
-            alpha = 0f
-            visibility = View.VISIBLE
-
-            animate()
-                .alpha(1f)
-                .setDuration(shortAnimationDuration.toLong())
-                .setListener(null)
-        }
-        binding.progressIndicator.animate()
-            .alpha(0f)
-            .setDuration(shortAnimationDuration.toLong())
-            .setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    binding.progressIndicator.visibility = View.GONE
-                }
-            })
-    }
-
-
+    
 }
