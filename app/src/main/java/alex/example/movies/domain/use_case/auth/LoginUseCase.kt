@@ -24,8 +24,8 @@ class LoginUseCase @Inject constructor(
             when (val session = authRepository.getRequestToken().first()) {
                 is Resource.Success -> session.data?.let {
                     authRepository.saveRequestToken(it.request_token)
-
                     val loginSession = authRepository.performLoginWithUsernamePassword(email, password, it.request_token).first()
+                    if (loginSession is Resource.Success) authRepository.setLoggedIn()
                     result(loginSession)
                 }
                 else -> {

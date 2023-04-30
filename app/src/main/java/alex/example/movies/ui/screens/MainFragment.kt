@@ -28,7 +28,6 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(
                 when (state) {
                     is AuthState.ApiKeyBlank -> binding.authErrorTv.isVisible = true
                     is AuthState.Loading -> binding.progressBar.isVisible = true
-                    // TODO: Remove from back stack
                     is AuthState.SessionAvailable -> findNavController().navigate(R.id.action_mainFragment_to_mainContentFragment)
                     is AuthState.SessionNull -> findNavController().navigate(R.id.action_mainFragment_to_onboarding_nav)
                     else -> {}

@@ -18,7 +18,11 @@ class AuthRepository @Inject constructor(
     private val requestManager: NetworkRequestManager
 ) {
     fun isLoggedIn(): Boolean {
-        return !sharedPreferences.getString(LOGGED_IN, null).isNullOrEmpty()
+        return sharedPreferences.getBoolean(LOGGED_IN, false)
+    }
+
+    fun setLoggedIn() {
+        sharedPreferences.edit().putBoolean(LOGGED_IN, true).apply()
     }
 
     fun isRequestTokenAvailable(): Boolean {
