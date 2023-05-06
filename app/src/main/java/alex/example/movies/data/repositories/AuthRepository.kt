@@ -1,6 +1,6 @@
 package alex.example.movies.data.repositories
 
-import alex.example.movies.data.AuthApi
+import alex.example.movies.data.remote.api.AuthApi
 import alex.example.movies.data.model.LoginRequest
 import alex.example.movies.data.model.Session
 import alex.example.movies.services.NetworkRequestManager

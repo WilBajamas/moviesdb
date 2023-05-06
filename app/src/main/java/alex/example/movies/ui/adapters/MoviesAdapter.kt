@@ -2,13 +2,14 @@ package alex.example.movies.ui.adapters
 
 import alex.example.movies.R
 import alex.example.movies.databinding.ShowItemBinding
-import alex.example.movies.domain.Movies
+import alex.example.movies.data.model.Movie
+import alex.example.movies.utils.Const
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
-class MoviesAdapter(private val items: List<Movies>) :
+class MoviesAdapter(private val items: MutableList<Movie> = mutableListOf()) :
     RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
@@ -23,11 +24,17 @@ class MoviesAdapter(private val items: List<Movies>) :
     override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
         val item = items[position]
         holder.binding.titleTv.text = item.title
-        holder.binding.dateTv.text = item.date
-        holder.binding.ratingView.progressBar.progress = item.rating
+        holder.binding.dateTv.text = item.release_date
+        holder.binding.ratingView.progressBar.progress = (item.vote_average * 10).toInt()
         holder.binding.ratingView.textView.text =
-            holder.binding.root.context.getString(R.string.percentage, item.rating.toString())
-        Glide.with(holder.binding.root).load(item.image_url).into(holder.binding.showImg)
+            holder.binding.root.context.getString(R.string.percentage, ((item.vote_average * 10).toInt()).toString())
+        Glide.with(holder.binding.root).load("${Const.POSTER_PATH_BASE_URL}${item.poster_path}").into(holder.binding.showImg)
+    }
+
+    fun updateItems(newItems: List<Movie>) {
+        items.clear()
+        items.addAll(newItems)
+        notifyDataSetChanged()
     }
 
     inner class MoviesViewHolder(val binding: ShowItemBinding) :

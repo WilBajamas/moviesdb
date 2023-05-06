@@ -1,6 +1,6 @@
 package alex.example.movies.di.auth
 
-import alex.example.movies.data.AuthApi
+import alex.example.movies.data.remote.api.AuthApi
 import alex.example.movies.data.repositories.AuthRepository
 import alex.example.movies.services.NetworkRequestManager
 import android.content.SharedPreferences

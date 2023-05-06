@@ -1,6 +1,6 @@
-package alex.example.movies.di.auth
+package alex.example.movies.di.movies
 
-import alex.example.movies.data.remote.api.AuthApi
+import alex.example.movies.data.remote.api.MoviesListApi
 import alex.example.movies.services.RetrofitInstance
 import dagger.Module
 import dagger.Provides
@@ -10,14 +10,13 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class AuthApiModule{
+class MoviesListApiModule {
 
     @Provides
     @Singleton
-    fun provideAuthApi(
+    fun provideMoviesApi(
         retrofitInstance: RetrofitInstance
-    ): AuthApi {
-        return retrofitInstance.retrofit().create(AuthApi::class.java)
+    ) : MoviesListApi{
+        return retrofitInstance.retrofit().create(MoviesListApi::class.java)
     }
-
 }

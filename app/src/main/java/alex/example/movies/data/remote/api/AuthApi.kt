@@ -1,4 +1,4 @@
-package alex.example.movies.data
+package alex.example.movies.data.remote.api
 
 import alex.example.movies.data.model.LoginRequest
 import alex.example.movies.data.model.Session

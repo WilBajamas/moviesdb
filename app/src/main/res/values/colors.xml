@@ -6,6 +6,7 @@
     <color name="black">#FF000000</color>
     <color name="text_black">#FF1A1A1A</color>
     <color name="text_grey">#FF676767</color>
+    <color name="background_grey">#FFDDDDDD</color>
     <color name="gradient_green_start">#FFBCFDCE</color>
     <color name="gradient_green_end">#FF22C09A</color>
     <color name="white">#FFFFFFFF</color>

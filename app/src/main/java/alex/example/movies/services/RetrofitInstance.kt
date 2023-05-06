@@ -1,4 +1,4 @@
-package alex.example.movies.data.remote
+package alex.example.movies.services
 
 import alex.example.movies.BuildConfig
 import okhttp3.Interceptor

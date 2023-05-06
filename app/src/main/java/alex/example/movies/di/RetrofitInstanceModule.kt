@@ -1,6 +1,6 @@
 package alex.example.movies.di
 
-import alex.example.movies.data.remote.RetrofitInstance
+import alex.example.movies.services.RetrofitInstance
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
