@@ -1,21 +1,17 @@
 package alex.example.movies.data.repositories
 
-import alex.example.movies.data.remote.api.AuthApi
-import alex.example.movies.data.model.LoginRequest
 import alex.example.movies.data.model.Session
-import alex.example.movies.services.NetworkRequestManager
+import alex.example.movies.data.remote.datasource.AuthDataSource
 import alex.example.movies.utils.Const.LOGGED_IN
 import alex.example.movies.utils.Const.REQUEST_TOKEN
 import alex.example.movies.utils.Resource
 import android.content.SharedPreferences
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class AuthRepository @Inject constructor(
     private val sharedPreferences: SharedPreferences,
-    private val authApi: AuthApi,
-    private val requestManager: NetworkRequestManager
+    private val authDataSource: AuthDataSource
 ) {
     fun isLoggedIn(): Boolean {
         return sharedPreferences.getBoolean(LOGGED_IN, false)
@@ -33,21 +29,12 @@ class AuthRepository @Inject constructor(
         sharedPreferences.edit().putString(REQUEST_TOKEN, requestToken).apply()
     }
 
-    suspend fun getRequestToken(): Flow<Resource<Session>> = flow {
-        val result = requestManager.callApi {
-            authApi.createRequestToken()
-        }
-        emit(result)
-    }
+    suspend fun getRequestToken(): Flow<Resource<Session>> = authDataSource.getRequestToken()
 
     suspend fun performLoginWithUsernamePassword(
         email: String,
         password: String,
         requestToken: String
-    ): Flow<Resource<Session>>  = flow{
-        val result = requestManager.callApi {
-            authApi.createSessionWithLogin(LoginRequest(email, password, requestToken))
-        }
-        emit(result)
-    }
+    ): Flow<Resource<Session>> =
+        authDataSource.performLoginWithUsernamePassword(email, password, requestToken)
 }

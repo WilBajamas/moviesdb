@@ -7,12 +7,22 @@
         <item name="android:fontFamily">@font/opensans_medium</item>
         <item name="android:statusBarColor">@color/primary</item>
         <item name="android:navigationBarColor">@color/primary</item>
+        <item name="chipStyle">@style/FilterChip</item>
     </style>
+
+<!--    <item name="textInputStyle">@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu</item>-->
 
     <style name="Theme.App.Starting" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/primary</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
         <item name="windowSplashScreenAnimationDuration">300</item>
         <item name="postSplashScreenTheme">@style/Theme.MultiAppModuleTrainingLight</item>
+    </style>
+
+    <!--    Fullscreen Dialog Theme-->
+    <style name="FullScreenDialogTheme" parent="Theme.MultiAppModuleTrainingLight">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowIsFloating">false</item>
     </style>
 </resources>

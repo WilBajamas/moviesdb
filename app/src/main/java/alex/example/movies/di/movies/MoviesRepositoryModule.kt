@@ -1,8 +1,7 @@
 package alex.example.movies.di.movies
 
-import alex.example.movies.data.remote.api.MoviesListApi
+import alex.example.movies.data.remote.datasource.MoviesRemoteDataSource
 import alex.example.movies.data.repositories.MoviesRepository
-import alex.example.movies.services.NetworkRequestManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,9 +15,8 @@ class MoviesRepositoryModule {
     @Provides
     @Singleton
     fun provideMoviesRepository(
-        moviesListApi: MoviesListApi,
-        requestManager: NetworkRequestManager
+        moviesRemoteDataSource: MoviesRemoteDataSource
     ): MoviesRepository {
-        return MoviesRepository(moviesListApi, requestManager)
+        return MoviesRepository(moviesRemoteDataSource)
     }
 }
