@@ -4,10 +4,8 @@ import alex.example.movies.R
 import alex.example.movies.ui.viewmodels.maincontent.MoviesFragmentViewModel
 import alex.example.movies.databinding.FragmentMoviesBinding
 import alex.example.movies.ui.adapters.MoviesAdapter
-import alex.example.movies.ui.model.FilterRequest
 import alex.example.movies.ui.screens.filter.FilterFragment
 import alex.example.movies.utils.BaseFragment
-import alex.example.movies.utils.FilterDialogListener
 import alex.example.movies.utils.Resource
 import android.os.Bundle
 import android.util.Log
@@ -21,7 +19,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesFragmentViewModel>(
     FragmentMoviesBinding::inflate, MoviesFragmentViewModel::class.java
-), FilterDialogListener {
+) {
 
     private lateinit var moviesAdapter: MoviesAdapter
 
@@ -68,6 +66,14 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesFragmentViewMod
                 }
             }
         }
+
+        // TODO: Improve this
+        parentFragmentManager.setFragmentResultListener(
+            "requestKey", viewLifecycleOwner
+        ) { _, result ->
+            val languageValue = result.getString("languageId")
+            Log.i("language: ", languageValue.toString())
+        }
     }
 
     private fun showDialog() {
@@ -88,10 +94,4 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesFragmentViewMod
             binding.moviesRv.visibility = View.VISIBLE
         }
     }
-
-    override fun onFilterCallback(request: FilterRequest) {
-        // Not receiving callback
-        Log.i("request callback: ", request.toString())
-    }
-
 }

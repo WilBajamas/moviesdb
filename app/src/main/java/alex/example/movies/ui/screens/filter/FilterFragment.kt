@@ -5,11 +5,8 @@ import alex.example.movies.databinding.FragmentFilterBinding
 import alex.example.movies.domain.model.Genres
 import alex.example.movies.domain.model.Languages
 import alex.example.movies.domain.model.ListType
-import alex.example.movies.ui.model.FilterRequest
 import alex.example.movies.ui.viewmodels.filter.FilterFragmentViewModel
-import alex.example.movies.utils.FilterDialogListener
 import android.app.Dialog
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,27 +17,18 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.chip.Chip
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
+import kotlin.collections.ArrayList
 
 class FilterFragment : DialogFragment() {
 
     private lateinit var binding: FragmentFilterBinding
     private val viewModel: FilterFragmentViewModel by viewModels()
-    private var filterDialogListener: FilterDialogListener? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentFilterBinding.inflate(inflater, container, false)
         return binding.root
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        try {
-            filterDialogListener = parentFragment?.context as FilterDialogListener
-        } catch (e: ClassCastException) {
-            throw ClassCastException("$context must implement MyDialogListener")
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -85,15 +73,19 @@ class FilterFragment : DialogFragment() {
             }
 
             filterBtn.setOnClickListener {
-                filterDialogListener?.onFilterCallback(
-                    FilterRequest(
-                        viewModel.listType.value,
-                        viewModel.genres.value,
-                        viewModel.language.value?.iso639Id,
-                        viewModel.userScoreMin.value!!,
-                        viewModel.userScoreMax.value!!
-                    )
-                )
+
+                // TODO: Improve this
+                val resultData = Bundle().apply {
+                    // Add result data to the bundle
+                    putSerializable("listType", viewModel.listType.value)
+                    putIntegerArrayList("genres",
+                        viewModel.genres.value?.let { it1 -> ArrayList(it1) })
+                    putString("languageId", viewModel.language.value?.iso639Id)
+                    putFloat("userScoreMin", viewModel.userScoreMin.value!!)
+                    putFloat("userScoreMax", viewModel.userScoreMax.value!!)
+
+                }
+                parentFragmentManager.setFragmentResult("requestKey", resultData)
             }
         }
     }
