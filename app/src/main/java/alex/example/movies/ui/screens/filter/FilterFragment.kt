@@ -5,7 +5,7 @@ import alex.example.movies.databinding.FragmentFilterBinding
 import alex.example.movies.domain.model.Genres
 import alex.example.movies.domain.model.Languages
 import alex.example.movies.domain.model.ListType
-import alex.example.movies.ui.viewmodels.filter.FilterFragmentViewModel
+import alex.example.movies.ui.viewmodels.maincontent.MoviesFragmentViewModel
 import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,12 +17,11 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.chip.Chip
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
-import kotlin.collections.ArrayList
 
 class FilterFragment : DialogFragment() {
 
     private lateinit var binding: FragmentFilterBinding
-    private val viewModel: FilterFragmentViewModel by viewModels()
+    private val viewModel: MoviesFragmentViewModel by viewModels(ownerProducer = { requireParentFragment() })
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -33,6 +32,8 @@ class FilterFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setViewOnInputChange()
 
         with(binding) {
 
@@ -48,7 +49,10 @@ class FilterFragment : DialogFragment() {
                 val chip = Chip(requireContext())
                 chip.text = getString(genre.nameResource)
                 chip.id = genre.id
+                chip.isChecked = viewModel.genresData.value?.contains(genre.id) == true
                 genresChipGroup.addView(chip)
+
+                viewModel.chipMap[genre.id] = chip
             }
 
             closeBtn.setOnClickListener {
@@ -73,21 +77,24 @@ class FilterFragment : DialogFragment() {
             }
 
             filterBtn.setOnClickListener {
-
-                // TODO: Improve this
-                val resultData = Bundle().apply {
-                    // Add result data to the bundle
-                    putSerializable("listType", viewModel.listType.value)
-                    putIntegerArrayList("genres",
-                        viewModel.genres.value?.let { it1 -> ArrayList(it1) })
-                    putString("languageId", viewModel.language.value?.iso639Id)
-                    putFloat("userScoreMin", viewModel.userScoreMin.value!!)
-                    putFloat("userScoreMax", viewModel.userScoreMax.value!!)
-
-                }
-                parentFragmentManager.setFragmentResult("requestKey", resultData)
+                // Initiate api call here
+                this@FilterFragment.dismiss()
+                viewModel.callMoviesApi()
             }
         }
+    }
+
+    private fun setViewOnInputChange() {
+        val listTypes = ListType.values()
+        val typeIndex = listTypes.indexOf(viewModel.listTypeData.value)
+        binding.sortByTv.setText(listTypes[typeIndex].displayName)
+
+        val languages = Languages.values()
+        val langIndex = languages.indexOf(viewModel.languageData.value)
+        binding.languageTv.setText(languages[langIndex].displayName)
+
+        binding.userScoreSlider.values =
+            listOf(viewModel.userScoreMinData.value, viewModel.userScoreMaxData.value)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

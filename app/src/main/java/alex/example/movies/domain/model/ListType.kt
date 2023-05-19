@@ -2,16 +2,13 @@ package alex.example.movies.domain.model
 
 import alex.example.movies.R
 
-enum class ListType(val displayName: Int) {
-    MOST_POPULAR_DESC(R.string.popularity_descending),
-    MOST_POPULAR_ASC(R.string.popularity_ascending),
-    TOP_RATED_DESC(R.string.rating_descending),
-    TOP_RATED_ASC(R.string.rating_ascending),
-    RELEASE_DATE_DESC(R.string.release_date_descending),
-    RELEASE_DATE_ASC(R.string.release_date_ascending),
-    ALPHABETICAL_A_Z(R.string.title_a_z),
-    ALPHABETICAL_Z_A(R.string.title_z_a),
-    UPCOMING(R.string.upcoming)
+enum class ListType(val displayName: Int, val sortByListType: String) {
+    MOST_POPULAR_DESC(R.string.popularity_descending, "popularity.desc"),
+    MOST_POPULAR_ASC(R.string.popularity_ascending, "popularity.asc"),
+    TOP_RATED_DESC(R.string.rating_descending, "vote_average.desc"),
+    TOP_RATED_ASC(R.string.rating_ascending, "vote_average.asc"),
+    RELEASE_DATE_DESC(R.string.release_date_descending, "primary_release_date.desc"),
+    RELEASE_DATE_ASC(R.string.release_date_ascending, "primary_release_date.asc")
 }
 
 enum class Genres(val id: Int, val nameResource: Int) {

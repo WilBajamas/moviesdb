@@ -8,8 +8,8 @@ import alex.example.movies.ui.screens.filter.FilterFragment
 import alex.example.movies.utils.BaseFragment
 import alex.example.movies.utils.Resource
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,9 +32,7 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesFragmentViewMod
             moviesRv.adapter = moviesAdapter
 
             swipeRefreshLayout.setOnRefreshListener {
-                Log.i("REFRESH MOVIES:", "Refreshed")
-                // TODO: Call this only after API call failed/succeeded
-                swipeRefreshLayout.isRefreshing = false
+                viewModel.callMoviesApi()
             }
 
             toolbar.setOnMenuItemClickListener {
@@ -48,7 +46,7 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesFragmentViewMod
             }
         }
 
-        viewModel.init()
+        viewModel.callMoviesApi()
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.moviesState.collectLatest {
@@ -61,37 +59,25 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesFragmentViewMod
                             moviesAdapter.updateItems(
                                 movies
                             )
+                            binding.swipeRefreshLayout.isRefreshing = false
                         }
                     }
                 }
             }
         }
-
-        // TODO: Improve this
-        parentFragmentManager.setFragmentResultListener(
-            "requestKey", viewLifecycleOwner
-        ) { _, result ->
-            val languageValue = result.getString("languageId")
-            Log.i("language: ", languageValue.toString())
-        }
     }
 
     private fun showDialog() {
-        val fragmentManager = parentFragmentManager
+        val fragmentManager = childFragmentManager
         val newFragment = FilterFragment()
         newFragment.show(fragmentManager, "dialog")
     }
 
-
     private fun shimmer(showShimmer: Boolean) {
-        if (showShimmer) {
-            binding.shimmerLayout.startShimmer()
-            binding.moviesRv.visibility = View.GONE
-            binding.shimmerLayout.visibility = View.VISIBLE
-        } else {
-            binding.shimmerLayout.stopShimmer()
-            binding.shimmerLayout.visibility = View.GONE
-            binding.moviesRv.visibility = View.VISIBLE
+        binding.shimmerLayout.isVisible = showShimmer
+        binding.moviesRv.isVisible = !showShimmer
+        binding.shimmerLayout.apply {
+            if (showShimmer) startShimmer() else stopShimmer()
         }
     }
 }

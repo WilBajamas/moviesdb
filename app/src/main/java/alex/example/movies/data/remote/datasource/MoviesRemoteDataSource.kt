@@ -3,6 +3,7 @@ package alex.example.movies.data.remote.datasource
 import alex.example.movies.data.model.MoviePageResult
 import alex.example.movies.data.remote.api.MoviesListApi
 import alex.example.movies.services.NetworkRequestManager
+import alex.example.movies.ui.model.FilterRequest
 import alex.example.movies.utils.DispatcherProvider
 import alex.example.movies.utils.Resource
 import kotlinx.coroutines.flow.Flow
@@ -17,38 +18,22 @@ class MoviesRemoteDataSource @Inject constructor(
 ) {
 
     // Descending by default
-    suspend fun fetchMostPopular(page: Int = 1): Flow<Resource<MoviePageResult>> = flow {
+    suspend fun fetchMovies(
+        page: Int = 1, filterRequest: FilterRequest
+    ): Flow<Resource<MoviePageResult>> = flow {
         val result: Resource<MoviePageResult>
         withContext(dispatcher.io) {
             result = requestManager.callApi {
-                moviesListApi.fetchPopularMovies(page)
+                moviesListApi.fetchMoviesWithQuery(
+                    page = page,
+                    sortBy = filterRequest.sortBy.sortByListType,
+                    withGenres = filterRequest.genres?.joinToString(","),
+                    withOriginalLanguage = filterRequest.languageId,
+                    userScoreMinimum = filterRequest.userScoreMin / 10,
+                    userScoreMaximum = filterRequest.userScoreMax / 10
+                )
             }
         }
         emit(result)
     }
-
-    suspend fun fetchTopRatedDescending() {
-
-    }
-
-    suspend fun fetchTopRatedAscending(){
-
-    }
-
-    suspend fun fetchReleaseDateDescending(){
-
-    }
-
-    suspend fun fetchReleaseDateAscending(){
-
-    }
-
-    suspend fun fetchAlphabetical(){
-
-    }
-
-    suspend fun fetchUpcoming(){
-
-    }
-
 }
