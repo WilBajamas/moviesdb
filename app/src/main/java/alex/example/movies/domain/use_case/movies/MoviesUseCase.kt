@@ -16,7 +16,6 @@ class MoviesUseCase @Inject constructor(
     private val moviesRepository: MoviesRepository,
 ) {
 
-    // TODO: Save to Room here, return only required data model for UI
     suspend operator fun invoke(
         filterRequest: FilterRequest
     ): Flow<Resource<MoviePageResult>> {

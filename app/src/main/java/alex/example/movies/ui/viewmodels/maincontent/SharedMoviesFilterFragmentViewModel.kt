@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MoviesFragmentViewModel @Inject constructor(
+class SharedMoviesFilterFragmentViewModel @Inject constructor(
     private val moviesUseCase: MoviesUseCase
 ) : ViewModel() {
 

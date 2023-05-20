@@ -5,7 +5,7 @@ import alex.example.movies.databinding.FragmentFilterBinding
 import alex.example.movies.domain.model.Genres
 import alex.example.movies.domain.model.Languages
 import alex.example.movies.domain.model.ListType
-import alex.example.movies.ui.viewmodels.maincontent.MoviesFragmentViewModel
+import alex.example.movies.ui.viewmodels.maincontent.SharedMoviesFilterFragmentViewModel
 import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -21,7 +21,7 @@ import com.google.android.material.textfield.MaterialAutoCompleteTextView
 class FilterFragment : DialogFragment() {
 
     private lateinit var binding: FragmentFilterBinding
-    private val viewModel: MoviesFragmentViewModel by viewModels(ownerProducer = { requireParentFragment() })
+    private val viewModel: SharedMoviesFilterFragmentViewModel by viewModels(ownerProducer = { requireParentFragment() })
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?

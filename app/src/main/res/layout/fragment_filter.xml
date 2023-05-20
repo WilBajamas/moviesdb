@@ -28,23 +28,23 @@
                 app:icon="@drawable/ic_close" />
 
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/sort_by_input"
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/sort_by_input"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp">
+
+                <AutoCompleteTextView
+                    android:id="@+id/sort_by_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="8dp">
+                    android:hint="@string/sort_results_by"
+                    android:inputType="none"
+                    app:simpleItemSelectedColor="@color/gradient_green_start" />
 
-                    <AutoCompleteTextView
-                        android:id="@+id/sort_by_tv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/sort_results_by"
-                        android:inputType="none"
-                        app:simpleItemSelectedColor="@color/gradient_green_start" />
-
-                </com.google.android.material.textfield.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -68,120 +68,6 @@
                     android:layout_height="wrap_content"
                     app:chipSpacingVertical="4dp">
 
-<!--                    <com.google.android.material.chip.Chip-->
-<!--                        android:id="@+id/action_chip"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="@string/action" />-->
-
-<!--                    <com.google.android.material.chip.Chip-->
-<!--                        android:id="@+id/adventure_chip"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="@string/adventure" />-->
-
-<!--                    <com.google.android.material.chip.Chip-->
-<!--                        android:id="@+id/animation_chip"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="@string/animation" />-->
-
-<!--                    <com.google.android.material.chip.Chip-->
-<!--                        android:id="@+id/comedy_chip"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="@string/comedy" />-->
-
-<!--                    <com.google.android.material.chip.Chip-->
-<!--                        android:id="@+id/crime_chip"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="@string/crime" />-->
-
-<!--                    <com.google.android.material.chip.Chip-->
-<!--                        android:id="@+id/documentary_chip"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="@string/documentary" />-->
-
-<!--                    <com.google.android.material.chip.Chip-->
-<!--                        android:id="@+id/drama_chip"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="@string/drama" />-->
-
-<!--                    <com.google.android.material.chip.Chip-->
-<!--                        android:id="@+id/family_chip"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="@string/family" />-->
-
-<!--                    <com.google.android.material.chip.Chip-->
-<!--                        android:id="@+id/fantasy_chip"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="@string/fantasy" />-->
-
-<!--                    <com.google.android.material.chip.Chip-->
-<!--                        android:id="@+id/history_chip"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="@string/history" />-->
-
-<!--                    <com.google.android.material.chip.Chip-->
-<!--                        android:id="@+id/horror_chip"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="@string/horror" />-->
-
-<!--                    <com.google.android.material.chip.Chip-->
-<!--                        android:id="@+id/music_chip"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="@string/music" />-->
-
-<!--                    <com.google.android.material.chip.Chip-->
-<!--                        android:id="@+id/mystery_chip"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="@string/mystery" />-->
-
-<!--                    <com.google.android.material.chip.Chip-->
-<!--                        android:id="@+id/romance_chip"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="@string/romance" />-->
-
-<!--                    <com.google.android.material.chip.Chip-->
-<!--                        android:id="@+id/science_fiction_chip"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="@string/science_fiction" />-->
-
-<!--                    <com.google.android.material.chip.Chip-->
-<!--                        android:id="@+id/tv_movie_chip"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="@string/tv_movie" />-->
-
-<!--                    <com.google.android.material.chip.Chip-->
-<!--                        android:id="@+id/thriller_chip"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="@string/thriller" />-->
-
-<!--                    <com.google.android.material.chip.Chip-->
-<!--                        android:id="@+id/war_chip"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="@string/war" />-->
-
-<!--                    <com.google.android.material.chip.Chip-->
-<!--                        android:id="@+id/western_chip"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="@string/western" />-->
-
                 </com.google.android.material.chip.ChipGroup>
             </LinearLayout>
 
@@ -189,32 +75,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-
-            <LinearLayout
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/language_input"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginVertical="16dp"
-                android:orientation="vertical">
+                android:layout_margin="16dp">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/language_input"
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                <AutoCompleteTextView
+                    android:id="@+id/language_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp">
+                    android:hint="@string/language"
+                    android:inputType="none"
+                    app:simpleItemSelectedColor="@color/gradient_green_start" />
 
-                    <AutoCompleteTextView
-                        android:id="@+id/language_tv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/language"
-                        android:inputType="none"
-                        app:simpleItemSelectedColor="@color/gradient_green_start" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </LinearLayout>
 
             <com.google.android.material.divider.MaterialDivider
                 android:layout_width="match_parent"
@@ -264,6 +141,7 @@
         android:textColor="@color/off_white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:rippleColor="@color/off_white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,7 @@
 package alex.example.movies.ui.screens.maincontent
 
 import alex.example.movies.R
-import alex.example.movies.ui.viewmodels.maincontent.MoviesFragmentViewModel
+import alex.example.movies.ui.viewmodels.maincontent.SharedMoviesFilterFragmentViewModel
 import alex.example.movies.databinding.FragmentMoviesBinding
 import alex.example.movies.ui.adapters.MoviesAdapter
 import alex.example.movies.ui.screens.filter.FilterFragment
@@ -17,8 +17,8 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesFragmentViewModel>(
-    FragmentMoviesBinding::inflate, MoviesFragmentViewModel::class.java
+class MoviesFragment : BaseFragment<FragmentMoviesBinding, SharedMoviesFilterFragmentViewModel>(
+    FragmentMoviesBinding::inflate, SharedMoviesFilterFragmentViewModel::class.java
 ) {
 
     private lateinit var moviesAdapter: MoviesAdapter
