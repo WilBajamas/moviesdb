@@ -79,7 +79,7 @@ class FilterFragment : DialogFragment() {
             filterBtn.setOnClickListener {
                 // Initiate api call here
                 this@FilterFragment.dismiss()
-                viewModel.callMoviesApi()
+                viewModel.fetchMovies()
             }
         }
     }

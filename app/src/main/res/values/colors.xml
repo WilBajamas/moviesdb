@@ -9,6 +9,8 @@
     <color name="background_grey">#FFDDDDDD</color>
     <color name="gradient_green_start">#FFBCFDCE</color>
     <color name="gradient_green_end">#FF22C09A</color>
+    <color name="gradient_yellow_start">#FFD700</color>
+    <color name="gradient_yellow_end">#FFD2D531</color>
     <color name="white">#FFFFFFFF</color>
     <color name="off_white">#FFF9F9F9</color>
 </resources>

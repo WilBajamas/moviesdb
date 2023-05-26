@@ -1,17 +1,50 @@
 package alex.example.movies.data.repositories
 
-import alex.example.movies.data.remote.datasource.MoviesRemoteDataSource
+import alex.example.movies.data.model.Movie
+import alex.example.movies.data.remote.api.MoviesListApi
+import alex.example.movies.data.remote.datasource.MoviesRemotePagingSource
+import alex.example.movies.services.NetworkRequestManager
 import alex.example.movies.ui.model.FilterRequest
+import alex.example.movies.utils.DispatcherProvider
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class MoviesRepository @Inject constructor(
-    private val moviesRemoteDataSource: MoviesRemoteDataSource
+    private val moviesListApi: MoviesListApi,
+    private val requestManager: NetworkRequestManager,
+    private val dispatcher: DispatcherProvider
 ) {
 
+    private lateinit var filterRequest: FilterRequest
+
+    // Paging Data
+    private val pagingConfig = PagingConfig(
+        pageSize = 100, prefetchDistance = 20, initialLoadSize = 160, enablePlaceholders = false
+    )
+
+    private val flow = Pager(
+        pagingConfig
+    ) {
+        MoviesRemotePagingSource(moviesListApi, requestManager, dispatcher, filterRequest)
+    }.flow
+
+    fun fetchMovies(
+        filterRequest: FilterRequest
+    ): Flow<PagingData<Movie>> {
+        this.filterRequest = filterRequest
+        return flow
+    }
+
+
+    /* [Deprecated]
     suspend fun fetchMovies(
         filterRequest: FilterRequest
     ) = moviesRemoteDataSource.fetchMovies(
         filterRequest = filterRequest
     )
 
+     */
 }

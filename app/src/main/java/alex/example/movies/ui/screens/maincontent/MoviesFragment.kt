@@ -4,13 +4,15 @@ import alex.example.movies.R
 import alex.example.movies.ui.viewmodels.maincontent.SharedMoviesFilterFragmentViewModel
 import alex.example.movies.databinding.FragmentMoviesBinding
 import alex.example.movies.ui.adapters.MoviesAdapter
+import alex.example.movies.ui.adapters.UserComparator
 import alex.example.movies.ui.screens.filter.FilterFragment
 import alex.example.movies.utils.BaseFragment
-import alex.example.movies.utils.Resource
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.CombinedLoadStates
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -22,17 +24,18 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, SharedMoviesFilterFra
 ) {
 
     private lateinit var moviesAdapter: MoviesAdapter
+    private lateinit var loadStateListener: (CombinedLoadStates) -> Unit
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
             moviesRv.layoutManager = GridLayoutManager(context, 2)
-            moviesAdapter = MoviesAdapter()
+            moviesAdapter = MoviesAdapter(UserComparator)
             moviesRv.adapter = moviesAdapter
 
             swipeRefreshLayout.setOnRefreshListener {
-                viewModel.callMoviesApi()
+                viewModel.fetchMovies()
             }
 
             toolbar.setOnMenuItemClickListener {
@@ -44,26 +47,23 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, SharedMoviesFilterFra
                     else -> false
                 }
             }
-        }
 
-        viewModel.callMoviesApi()
+            viewModel.fetchMovies()
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.moviesState.collectLatest {
-                when (it) {
-                    is Resource.Error -> binding.shimmerLayout.stopShimmer()
-                    is Resource.Loading -> shimmer(true)
-                    is Resource.Success -> {
-                        it.data?.results?.let { movies ->
-                            shimmer(false)
-                            moviesAdapter.updateItems(
-                                movies
-                            )
-                            binding.swipeRefreshLayout.isRefreshing = false
-                        }
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewModel.moviesState.collectLatest {
+                    it?.let {
+                        swipeRefreshLayout.isRefreshing = false
+                        moviesAdapter.submitData(it)
                     }
                 }
             }
+
+            loadStateListener = {
+                shimmer(it.refresh is LoadState.Loading)
+            }
+
+            moviesAdapter.addLoadStateListener(loadStateListener)
         }
     }
 
@@ -79,5 +79,10 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, SharedMoviesFilterFra
         binding.shimmerLayout.apply {
             if (showShimmer) startShimmer() else stopShimmer()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        moviesAdapter.removeLoadStateListener(loadStateListener)
     }
 }
