@@ -26,8 +26,12 @@ class MoviesAdapter(diffCallback: DiffUtil.ItemCallback<Movie>) :
             holder.binding.dateTv.text = item.release_date
             holder.binding.ratingView.progressBar.progress = (item.vote_average * 10).toInt()
             holder.binding.ratingView.textView.text =
-                holder.binding.root.context.getString(R.string.percentage, ((item.vote_average * 10).toInt()).toString())
-            Glide.with(holder.binding.root).load("${Const.POSTER_PATH_BASE_URL}${item.poster_path}").into(holder.binding.showImg)
+                holder.binding.root.context.getString(
+                    R.string.percentage,
+                    ((item.vote_average * 10).toInt()).toString()
+                )
+            Glide.with(holder.binding.root).load("${Const.POSTER_PATH_BASE_URL}${item.poster_path}")
+                .placeholder(R.drawable.list_placeholder_img).into(holder.binding.showImg)
         }
     }
 
