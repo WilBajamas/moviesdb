@@ -9,6 +9,7 @@ import alex.example.movies.utils.DispatcherProvider
 import alex.example.movies.utils.Resource
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import java.io.IOException
 
@@ -21,6 +22,7 @@ class MoviesRemotePagingSource (
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
         try {
             val page = params.key ?: Const.FIRST_PAGE_INDEX
+            delay(7000L)
             val apiResult = withContext(dispatcher.io) {
                 requestManager.callApi {
                     moviesListApi.fetchMoviesWithQuery(

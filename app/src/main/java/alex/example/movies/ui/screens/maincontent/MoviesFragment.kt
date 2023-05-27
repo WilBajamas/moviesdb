@@ -5,13 +5,13 @@ import alex.example.movies.ui.viewmodels.maincontent.SharedMoviesFilterFragmentV
 import alex.example.movies.databinding.FragmentMoviesBinding
 import alex.example.movies.ui.adapters.MoviesAdapter
 import alex.example.movies.ui.adapters.UserComparator
+import alex.example.movies.ui.adapters.pagingloadstate.PagingLoadingStateAdapter
 import alex.example.movies.ui.screens.filter.FilterFragment
 import alex.example.movies.utils.BaseFragment
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
-import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,15 +24,31 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, SharedMoviesFilterFra
 ) {
 
     private lateinit var moviesAdapter: MoviesAdapter
-    private lateinit var loadStateListener: (CombinedLoadStates) -> Unit
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            moviesRv.layoutManager = GridLayoutManager(context, 2)
-            moviesAdapter = MoviesAdapter(UserComparator)
-            moviesRv.adapter = moviesAdapter
+
+            // Setup RV Adapter
+            val layoutManager = GridLayoutManager(context, 2)
+            val footerLoadingAdapter = PagingLoadingStateAdapter()
+            moviesAdapter = MoviesAdapter(UserComparator).apply {
+                viewLifecycleOwner.lifecycleScope.launch {
+                    loadStateFlow.collectLatest {
+                        loadErrorLayout.isVisible = it.refresh is LoadState.Error
+                        shimmer(it.refresh is LoadState.Loading)
+                    }
+                }
+            }
+            layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int =
+                    if (position == moviesAdapter.itemCount && footerLoadingAdapter.itemCount > 0) 2 else 1
+            }
+            moviesRv.layoutManager = layoutManager
+            moviesRv.adapter = moviesAdapter.withLoadStateFooter(
+                footerLoadingAdapter
+            )
 
             swipeRefreshLayout.setOnRefreshListener {
                 viewModel.fetchMovies()
@@ -58,12 +74,6 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, SharedMoviesFilterFra
                     }
                 }
             }
-
-            loadStateListener = {
-                shimmer(it.refresh is LoadState.Loading)
-            }
-
-            moviesAdapter.addLoadStateListener(loadStateListener)
         }
     }
 
@@ -73,16 +83,11 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, SharedMoviesFilterFra
         newFragment.show(fragmentManager, "dialog")
     }
 
-    private fun shimmer(showShimmer: Boolean) {
-        binding.shimmerLayout.isVisible = showShimmer
-        binding.moviesRv.isVisible = !showShimmer
-        binding.shimmerLayout.apply {
+    private fun shimmer(showShimmer: Boolean) = with(binding) {
+        shimmerLayout.isVisible = showShimmer
+        moviesRv.isVisible = !showShimmer
+        shimmerLayout.apply {
             if (showShimmer) startShimmer() else stopShimmer()
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        moviesAdapter.removeLoadStateListener(loadStateListener)
     }
 }

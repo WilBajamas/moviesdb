@@ -81,5 +81,6 @@
 
     <!--    Error -->
     <string name="failed_to_load">Failed to load</string>
+    <string name="retry">Retry</string>
 
 </resources>
