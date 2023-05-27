@@ -32,15 +32,16 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, SharedMoviesFilterFra
 
             // Setup RV Adapter
             val layoutManager = GridLayoutManager(context, 2)
-            val footerLoadingAdapter = PagingLoadingStateAdapter()
             moviesAdapter = MoviesAdapter(UserComparator).apply {
                 viewLifecycleOwner.lifecycleScope.launch {
                     loadStateFlow.collectLatest {
                         loadErrorLayout.isVisible = it.refresh is LoadState.Error
+                        swipeRefreshLayout.isVisible = it.refresh !is LoadState.Error
                         shimmer(it.refresh is LoadState.Loading)
                     }
                 }
             }
+            val footerLoadingAdapter = PagingLoadingStateAdapter(moviesAdapter::retry)
             layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int =
                     if (position == moviesAdapter.itemCount && footerLoadingAdapter.itemCount > 0) 2 else 1
@@ -50,10 +51,12 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, SharedMoviesFilterFra
                 footerLoadingAdapter
             )
 
+            // Swipe refresh
             swipeRefreshLayout.setOnRefreshListener {
                 viewModel.fetchMovies()
             }
 
+            // Toolbar
             toolbar.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.action_filter -> {
@@ -64,8 +67,13 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, SharedMoviesFilterFra
                 }
             }
 
+            // Retry Button
+            loadErrorView.retryBtn.setOnClickListener { viewModel.fetchMovies() }
+
+            // Fetch initial data
             viewModel.fetchMovies()
 
+            // Collect movies
             viewLifecycleOwner.lifecycleScope.launch {
                 viewModel.moviesState.collectLatest {
                     it?.let {

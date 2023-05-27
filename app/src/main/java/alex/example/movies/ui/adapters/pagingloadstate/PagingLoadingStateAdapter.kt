@@ -8,7 +8,7 @@ import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
 import androidx.recyclerview.widget.RecyclerView
 
-class PagingLoadingStateAdapter :
+class PagingLoadingStateAdapter(val retry: () -> Unit) :
     LoadStateAdapter<PagingLoadingStateAdapter.PagingLoadingStateViewHolder>() {
 
     override fun onBindViewHolder(holder: PagingLoadingStateViewHolder, loadState: LoadState) =
@@ -23,7 +23,6 @@ class PagingLoadingStateAdapter :
         return PagingLoadingStateViewHolder(binding)
     }
 
-
     inner class PagingLoadingStateViewHolder(
         private val binding: PagingLoadStateBinding
     ) : RecyclerView.ViewHolder(
@@ -32,6 +31,7 @@ class PagingLoadingStateAdapter :
         fun bind(loadState: LoadState) {
             binding.progressBar.isVisible = loadState is LoadState.Loading
             binding.loadErrorLayout.isVisible = loadState is LoadState.Error
+            binding.errorView.retryBtn.setOnClickListener { retry() }
         }
     }
 }

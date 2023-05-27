@@ -67,6 +67,7 @@
         android:visibility="visible">
 
         <include
+            android:id="@+id/load_error_view"
             layout="@layout/list_load_error"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

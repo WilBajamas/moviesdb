@@ -23,7 +23,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <include layout="@layout/list_load_error" />
+        <include
+            android:id="@+id/error_view"
+            layout="@layout/list_load_error" />
 
     </LinearLayout>
 
