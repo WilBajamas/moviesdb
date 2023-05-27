@@ -8,6 +8,7 @@ import alex.example.movies.ui.adapters.UserComparator
 import alex.example.movies.ui.adapters.pagingloadstate.PagingLoadingStateAdapter
 import alex.example.movies.ui.screens.filter.FilterFragment
 import alex.example.movies.utils.BaseFragment
+import alex.example.movies.utils.Const
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
@@ -88,7 +89,7 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, SharedMoviesFilterFra
     private fun showDialog() {
         val fragmentManager = childFragmentManager
         val newFragment = FilterFragment()
-        newFragment.show(fragmentManager, "dialog")
+        newFragment.show(fragmentManager, Const.FILTER_DIALOG_TAG)
     }
 
     private fun shimmer(showShimmer: Boolean) = with(binding) {
