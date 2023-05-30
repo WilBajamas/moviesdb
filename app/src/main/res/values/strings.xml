@@ -83,4 +83,8 @@
     <string name="failed_to_load">Failed to load</string>
     <string name="retry">Retry</string>
 
+    <!--    Home -->
+    <string name="toolbar_description">Millions of movies, TV shows and people to discover. Explore now.</string>
+    <string name="toolbar_welcome">Welcome.</string>
+
 </resources>

@@ -7,4 +7,5 @@ object Const {
  const val POSTER_PATH_BASE_URL = "https://image.tmdb.org/t/p/original/"
  const val FIRST_PAGE_INDEX = 1
  const val FILTER_DIALOG_TAG = "filter_dialog_tag"
+ const val DEFAULT_BACKDROP_COLLECTION_ID = 10
 }
