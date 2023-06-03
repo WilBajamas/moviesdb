@@ -33,6 +33,7 @@
             android:id="@+id/movies_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layoutAnimation="@anim/list_layout_animation"
             app:spanCount="2" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
