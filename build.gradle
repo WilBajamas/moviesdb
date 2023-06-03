@@ -9,7 +9,7 @@ buildscript {
         paging_version = "3.1.1"
         retrofit_version = "2.9.0"
         okhttp_version = "5.0.0-alpha.7"
-        glide_version = "4.14.2"
+        coil_version = "2.4.0"
         shimmer_version = "0.5.0"
     }
 }

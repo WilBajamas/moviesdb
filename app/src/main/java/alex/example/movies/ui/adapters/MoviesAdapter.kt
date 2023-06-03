@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import coil.load
 
 class MoviesAdapter(diffCallback: DiffUtil.ItemCallback<Movie>) :
     PagingDataAdapter<Movie, MoviesAdapter.MoviesViewHolder>(diffCallback) {
@@ -30,8 +30,9 @@ class MoviesAdapter(diffCallback: DiffUtil.ItemCallback<Movie>) :
                     R.string.percentage,
                     ((item.vote_average * 10).toInt()).toString()
                 )
-            Glide.with(holder.binding.root).load("${Const.POSTER_PATH_BASE_URL}${item.poster_path}")
-                .placeholder(R.drawable.list_placeholder_img).into(holder.binding.showImg)
+            holder.binding.showImg.load("${Const.POSTER_PATH_BASE_URL}${item.poster_path}") {
+                crossfade(true)
+            }
         }
     }
 
@@ -41,7 +42,6 @@ class MoviesAdapter(diffCallback: DiffUtil.ItemCallback<Movie>) :
 
 object UserComparator : DiffUtil.ItemCallback<Movie>() {
     override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-        // Id is unique.
         return oldItem.id == newItem.id
     }
 

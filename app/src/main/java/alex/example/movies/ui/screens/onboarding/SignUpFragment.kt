@@ -2,7 +2,6 @@ package alex.example.movies.ui.screens.onboarding
 
 import alex.example.movies.R
 import alex.example.movies.ui.viewmodels.onboarding.SignUpFragmentViewModel
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -22,12 +21,6 @@ class SignUpFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_sign_up, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(SignUpFragmentViewModel::class.java)
-        // TODO: Use the ViewModel
     }
 
 }

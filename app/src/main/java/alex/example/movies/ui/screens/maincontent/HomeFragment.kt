@@ -11,7 +11,7 @@ import android.util.Log
 import android.view.View
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
+import coil.load
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -48,9 +48,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentViewModel>(
             swipeRefreshLayout.setOnRefreshListener {
                 with(viewModel.backdropData.value) {
                     this?.let {
-                        Glide.with(this@HomeFragment)
-                            .load("${Const.POSTER_PATH_BASE_URL}${it[random.nextInt(it.size)].file_path}")
-                            .placeholder(R.drawable.list_placeholder_img).into(collapsingIv)
+                        collapsingIv.load("${Const.POSTER_PATH_BASE_URL}${it[random.nextInt(it.size)].file_path}") {
+                            crossfade(true)
+                        }
 
                         swipeRefreshLayout.isRefreshing = false
                     }
@@ -62,12 +62,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentViewModel>(
                 viewModel.backdropData.observe(viewLifecycleOwner) {
                     if (!it.isNullOrEmpty()) {
                         // TODO: Create glide module for reusing
-                        Glide.with(this@HomeFragment)
-                            .load("${Const.POSTER_PATH_BASE_URL}${it[random.nextInt(it.size)].file_path}")
-                            .placeholder(R.drawable.list_placeholder_img).into(collapsingIv)
+                        collapsingIv.load("${Const.POSTER_PATH_BASE_URL}${it[random.nextInt(it.size)].file_path}") {
+                            crossfade(true)
+                        }
                     } else {
-                        Glide.with(this@HomeFragment).load(R.drawable.sample_placeholder)
-                            .into(collapsingIv)
+                        collapsingIv.load(R.drawable.sample_placeholder) {
+                            placeholder(R.drawable.list_placeholder_img)
+                        }
                     }
                 }
             }

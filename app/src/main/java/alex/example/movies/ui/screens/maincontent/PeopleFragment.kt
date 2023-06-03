@@ -2,7 +2,6 @@ package alex.example.movies.ui.screens.maincontent
 
 import alex.example.movies.ui.viewmodels.maincontent.PeopleFragmentViewModel
 import alex.example.movies.R
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -22,12 +21,6 @@ class PeopleFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_people, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(PeopleFragmentViewModel::class.java)
-        // TODO: Use the ViewModel
     }
 
 }

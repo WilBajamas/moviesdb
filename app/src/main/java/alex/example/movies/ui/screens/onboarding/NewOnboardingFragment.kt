@@ -12,7 +12,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import com.bumptech.glide.Glide
+import coil.load
 
 class NewOnboardingFragment : Fragment() {
 
@@ -100,7 +100,7 @@ class NewOnboardingFragment : Fragment() {
                 binding.titleTv.text = item.title
                 binding.descriptionTv.text = item.description
 
-                Glide.with(binding.root).load(item.imgResource).into(binding.img)
+                binding.img.load(item.imgResource)
             }
         }
 
