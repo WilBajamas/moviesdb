@@ -1,9 +1,10 @@
 package alex.example.movies.ui.viewmodels.maincontent
 
 import alex.example.movies.data.model.Backdrop
-import alex.example.movies.data.model.MoviePageResult
+import alex.example.movies.data.model.FilmPageResult
 import alex.example.movies.data.repositories.ImageBackdropRepository
 import alex.example.movies.data.repositories.MoviesRepository
+import alex.example.movies.data.repositories.TvShowsRepository
 import alex.example.movies.ui.model.TimeWindow
 import alex.example.movies.utils.Resource
 import androidx.lifecycle.LiveData
@@ -20,16 +21,21 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeFragmentViewModel @Inject constructor(
     private val imageBackdropRepository: ImageBackdropRepository,
-    private val moviesRepository: MoviesRepository
+    private val moviesRepository: MoviesRepository,
+    private val tvShowsRepository: TvShowsRepository
 ) : ViewModel() {
 
     private val _backdropCollectionLiveData = MutableLiveData<List<Backdrop>?>()
     val backdropData: LiveData<List<Backdrop>?>
         get(): LiveData<List<Backdrop>?> = _backdropCollectionLiveData
 
-    private val _trendingMovies = MutableStateFlow<Resource<MoviePageResult>>(Resource.Loading())
-    val trendingMovies: StateFlow<Resource<MoviePageResult>>
+    private val _trendingMovies = MutableStateFlow<Resource<FilmPageResult>>(Resource.Loading())
+    val trendingMovies: StateFlow<Resource<FilmPageResult>>
         get() = _trendingMovies
+
+    private val _trendingTvShows = MutableStateFlow<Resource<FilmPageResult>>(Resource.Loading())
+    val trendingTvShows: StateFlow<Resource<FilmPageResult>>
+        get() = _trendingTvShows
 
 
     fun init() {
@@ -41,7 +47,13 @@ class HomeFragmentViewModel @Inject constructor(
                 else -> _backdropCollectionLiveData.value = null
             }
 
-            _trendingMovies.emit(moviesRepository.fetchTrendingMovies(TimeWindow.TODAY.timeFrame).last())
+            _trendingTvShows.emit(
+                tvShowsRepository.fetchTrendingTvShows(TimeWindow.TODAY.timeFrame).last()
+            )
+            _trendingMovies.emit(
+                moviesRepository.fetchTrendingMovies(TimeWindow.TODAY.timeFrame).last()
+            )
+
 
         }
     }

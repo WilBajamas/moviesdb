@@ -1,6 +1,6 @@
 package alex.example.movies.ui.viewmodels.maincontent
 
-import alex.example.movies.data.model.Movie
+import alex.example.movies.data.model.Film
 import alex.example.movies.domain.model.Languages
 import alex.example.movies.domain.model.ListType
 import alex.example.movies.domain.use_case.movies.MoviesUseCase
@@ -23,7 +23,7 @@ class SharedMoviesFilterFragmentViewModel @Inject constructor(
 ) : ViewModel() {
 
     // Movies list response result
-    private val _moviesState: MutableStateFlow<PagingData<Movie>?> =
+    private val _moviesState: MutableStateFlow<PagingData<Film>?> =
         MutableStateFlow(null)
     val moviesState = _moviesState.asStateFlow()
 
@@ -52,7 +52,7 @@ class SharedMoviesFilterFragmentViewModel @Inject constructor(
     val userScoreMaxData: LiveData<Float>
         get(): LiveData<Float> = userScoreMax
 
-    private fun callMoviesApi(): Flow<PagingData<Movie>> {
+    private fun callMoviesApi(): Flow<PagingData<Film>> {
         val filterRequest = FilterRequest(
             listType.value!!,
             genres.value,

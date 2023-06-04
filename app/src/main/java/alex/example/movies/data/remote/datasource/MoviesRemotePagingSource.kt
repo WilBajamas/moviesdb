@@ -1,6 +1,6 @@
 package alex.example.movies.data.remote.datasource
 
-import alex.example.movies.data.model.Movie
+import alex.example.movies.data.model.Film
 import alex.example.movies.data.remote.api.MoviesListApi
 import alex.example.movies.services.NetworkRequestManager
 import alex.example.movies.ui.model.FilterRequest
@@ -17,8 +17,8 @@ class MoviesRemotePagingSource (
     private val requestManager: NetworkRequestManager,
     private val dispatcher: DispatcherProvider,
     private val filterRequest: FilterRequest
-) : PagingSource<Int, Movie>() {
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
+) : PagingSource<Int, Film>() {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Film> {
         try {
             val page = params.key ?: Const.FIRST_PAGE_INDEX
             val apiResult = withContext(dispatcher.io) {
@@ -58,7 +58,7 @@ class MoviesRemotePagingSource (
         }
     }
 
-    override fun getRefreshKey(state: PagingState<Int, Movie>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, Film>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             val anchorPage = state.closestPageToPosition(anchorPosition)
             anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)

@@ -3,7 +3,7 @@ package alex.example.movies.ui.screens.maincontent
 import alex.example.movies.R
 import alex.example.movies.ui.viewmodels.maincontent.HomeFragmentViewModel
 import alex.example.movies.databinding.FragmentHomeBinding
-import alex.example.movies.ui.adapters.TrendingMoviesAdapter
+import alex.example.movies.ui.adapters.TrendingFilmsAdapter
 import alex.example.movies.utils.BaseFragment
 import alex.example.movies.utils.Const
 import alex.example.movies.utils.ItemSpacingDecoration
@@ -28,7 +28,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentViewModel>(
     FragmentHomeBinding::inflate, HomeFragmentViewModel::class.java
 ) {
 
-    private lateinit var trendingMoviesAdapter: TrendingMoviesAdapter
+    private lateinit var trendingMoviesAdapter: TrendingFilmsAdapter
+    private lateinit var trendingTvShowsAdapter: TrendingFilmsAdapter
     private lateinit var offsetChangedListener: OnOffsetChangedListener
 
 
@@ -40,8 +41,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentViewModel>(
 
         with(binding) {
 
-
-            // Fixed bug on SwipeRefreshLayout overriding recyclerview's scroll
             offsetChangedListener = OnOffsetChangedListener { _, verticalOffset ->
                 swipeRefreshLayout.isEnabled = verticalOffset == 0
             }.apply {
@@ -63,6 +62,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentViewModel>(
 
             val itemSpacingDecoration = ItemSpacingDecoration(24)
             trendingMoviesRv.addItemDecoration(itemSpacingDecoration)
+            trendingTvshowsRv.addItemDecoration(itemSpacingDecoration)
 
             viewLifecycleOwner.lifecycleScope.launch {
 
@@ -79,17 +79,36 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentViewModel>(
                     }
                 }
 
-                viewModel.trendingMovies.collectLatest {
+                launch {
+                    viewModel.trendingTvShows.collectLatest {
 
-                    loadSectionListView(trendingMoviesRv, moviesShimmer, it is Resource.Loading)
+                        loadSectionListView(trendingTvshowsRv, tvshowsShimmer, it is Resource.Loading)
 
-                    if (it is Resource.Success) {
-                        it.data?.let { moviePageResult ->
-                            trendingMoviesRv.layoutManager = LinearLayoutManager(
-                                requireContext(), LinearLayoutManager.HORIZONTAL, false
-                            )
-                            trendingMoviesAdapter = TrendingMoviesAdapter(moviePageResult.results)
-                            trendingMoviesRv.adapter = trendingMoviesAdapter
+                        if (it is Resource.Success) {
+                            it.data?.let { tvShowsPageResult ->
+                                trendingTvshowsRv.layoutManager = LinearLayoutManager(
+                                    requireContext(), LinearLayoutManager.HORIZONTAL, false
+                                )
+                                trendingTvShowsAdapter = TrendingFilmsAdapter(tvShowsPageResult.results)
+                                trendingTvshowsRv.adapter = trendingTvShowsAdapter
+                            }
+                        }
+                    }
+                }
+
+                launch {
+                    viewModel.trendingMovies.collectLatest {
+
+                        loadSectionListView(trendingMoviesRv, moviesShimmer, it is Resource.Loading)
+
+                        if (it is Resource.Success) {
+                            it.data?.let { moviePageResult ->
+                                trendingMoviesRv.layoutManager = LinearLayoutManager(
+                                    requireContext(), LinearLayoutManager.HORIZONTAL, false
+                                )
+                                trendingMoviesAdapter = TrendingFilmsAdapter(moviePageResult.results)
+                                trendingMoviesRv.adapter = trendingMoviesAdapter
+                            }
                         }
                     }
                 }

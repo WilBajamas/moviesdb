@@ -1,7 +1,7 @@
 package alex.example.movies.ui.adapters
 
 import alex.example.movies.R
-import alex.example.movies.data.model.Movie
+import alex.example.movies.data.model.Film
 import alex.example.movies.databinding.ShowItemBinding
 import alex.example.movies.utils.Const
 import android.view.LayoutInflater
@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 
-class TrendingMoviesAdapter(private val items: List<Movie>) :
-    RecyclerView.Adapter<TrendingMoviesAdapter.TrendingMoviesItemViewHolder>() {
+class TrendingFilmsAdapter(private val items: List<Film>) :
+    RecyclerView.Adapter<TrendingFilmsAdapter.TrendingMoviesItemViewHolder>() {
 
     inner class TrendingMoviesItemViewHolder(val binding: ShowItemBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -24,11 +24,11 @@ class TrendingMoviesAdapter(private val items: List<Movie>) :
 
     override fun getItemCount(): Int = items.size
 
-    override fun onBindViewHolder(holder: TrendingMoviesAdapter.TrendingMoviesItemViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TrendingFilmsAdapter.TrendingMoviesItemViewHolder, position: Int) {
         val item = items[position]
         with(holder.binding) {
-            titleTv.text = item.title
-            dateTv.text = item.release_date
+            titleTv.text = item.title ?: item.name
+            dateTv.text = item.release_date ?: item.first_air_date
             ratingView.progressBar.progress = (item.vote_average * 10).toInt()
             ratingView.textView.text =
                 holder.binding.root.context.getString(

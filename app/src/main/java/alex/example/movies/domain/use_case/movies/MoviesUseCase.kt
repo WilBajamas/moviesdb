@@ -1,6 +1,6 @@
 package alex.example.movies.domain.use_case.movies
 
-import alex.example.movies.data.model.Movie
+import alex.example.movies.data.model.Film
 import alex.example.movies.data.repositories.MoviesRepository
 import alex.example.movies.ui.model.FilterRequest
 import androidx.paging.PagingData
@@ -18,7 +18,7 @@ class MoviesUseCase @Inject constructor(
 
     operator fun invoke(
         filterRequest: FilterRequest
-    ): Flow<PagingData<Movie>> {
+    ): Flow<PagingData<Film>> {
         return moviesRepository.fetchMovies(filterRequest)
     }
 }

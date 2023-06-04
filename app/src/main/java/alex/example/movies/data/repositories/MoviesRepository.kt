@@ -1,7 +1,7 @@
 package alex.example.movies.data.repositories
 
 import alex.example.movies.data.remote.datasource.TrendingMoviesDataSource
-import alex.example.movies.data.model.Movie
+import alex.example.movies.data.model.Film
 import alex.example.movies.data.remote.api.MoviesListApi
 import alex.example.movies.data.remote.datasource.MoviesRemotePagingSource
 import alex.example.movies.services.NetworkRequestManager
@@ -35,7 +35,7 @@ class MoviesRepository @Inject constructor(
 
     fun fetchMovies(
         filterRequest: FilterRequest
-    ): Flow<PagingData<Movie>> {
+    ): Flow<PagingData<Film>> {
         this.filterRequest = filterRequest
         return flow
     }

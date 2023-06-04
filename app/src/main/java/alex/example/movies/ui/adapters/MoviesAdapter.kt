@@ -2,7 +2,7 @@ package alex.example.movies.ui.adapters
 
 import alex.example.movies.R
 import alex.example.movies.databinding.ShowItemBinding
-import alex.example.movies.data.model.Movie
+import alex.example.movies.data.model.Film
 import alex.example.movies.utils.Const
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 
-class MoviesAdapter(diffCallback: DiffUtil.ItemCallback<Movie>) :
-    PagingDataAdapter<Movie, MoviesAdapter.MoviesViewHolder>(diffCallback) {
+class MoviesAdapter(diffCallback: DiffUtil.ItemCallback<Film>) :
+    PagingDataAdapter<Film, MoviesAdapter.MoviesViewHolder>(diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
         val binding = ShowItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -43,12 +43,12 @@ class MoviesAdapter(diffCallback: DiffUtil.ItemCallback<Movie>) :
         RecyclerView.ViewHolder(binding.root)
 }
 
-object UserComparator : DiffUtil.ItemCallback<Movie>() {
-    override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+object UserComparator : DiffUtil.ItemCallback<Film>() {
+    override fun areItemsTheSame(oldItem: Film, newItem: Film): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+    override fun areContentsTheSame(oldItem: Film, newItem: Film): Boolean {
         return oldItem == newItem
     }
 }
