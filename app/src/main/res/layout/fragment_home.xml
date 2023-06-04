@@ -84,12 +84,128 @@
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/home_rv"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            android:fillViewport="true"
+            android:paddingVertical="24dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp">
+
+                    <TextView
+                        android:id="@+id/trending_movies_title"
+                        style="@style/HeaderText.MediumBlack"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="14dp"
+                        android:text="@string/trending_movies"
+                        android:paddingHorizontal="16dp"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/trending_movies_rv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/trending_movies_title"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never"
+                        android:orientation="horizontal"/>
+
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/movies_shimmer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/trending_movies_title"
+                        android:orientation="horizontal">
+
+                        <include layout="@layout/show_item_placeholder" />
+
+                    </com.facebook.shimmer.ShimmerFrameLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/trending_tvshows_title"
+                        style="@style/HeaderText.MediumBlack"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="14dp"
+                        android:layout_marginBottom="16dp"
+                        android:text="@string/trending_tv_shows" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/trending_tvshows_rv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/trending_tvshows_title"
+                        android:orientation="horizontal" />
+
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/tvshows_shimmer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/trending_tvshows_title"
+                        android:orientation="horizontal">
+
+                        <include layout="@layout/show_item_placeholder" />
+
+                    </com.facebook.shimmer.ShimmerFrameLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/trending_people_title"
+                        style="@style/HeaderText.MediumBlack"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:paddingHorizontal="14dp"
+                        android:text="@string/trending_people" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/trending_people_rv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/trending_people_title"
+                        android:orientation="horizontal" />
+
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/people_shimmer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/trending_people_title"
+                        android:orientation="horizontal">
+
+                        <include layout="@layout/show_item_placeholder" />
+
+                    </com.facebook.shimmer.ShimmerFrameLayout>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

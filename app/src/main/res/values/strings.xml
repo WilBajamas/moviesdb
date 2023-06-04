@@ -86,5 +86,8 @@
     <!--    Home -->
     <string name="toolbar_description">Millions of movies, TV shows and people to discover. Explore now.</string>
     <string name="toolbar_welcome">Welcome.</string>
+    <string name="trending_movies">Trending Movies</string>
+    <string name="trending_tv_shows">Trending TV Shows</string>
+    <string name="trending_people">Trending People</string>
 
 </resources>

@@ -65,30 +65,3 @@ class MoviesRemotePagingSource (
         }
     }
 }
-
-// [Deprecated]
- /* class MoviesRemoteDataSource @Inject constructor(
-    private val moviesListApi: MoviesListApi,
-    private val requestManager: NetworkRequestManager,
-    private val dispatcher: DispatcherProvider
-) {
-
-    // Descending by default
-    suspend fun fetchMovies(
-        page: Int = 1, filterRequest: FilterRequest
-    ): Flow<Resource<MoviePageResult>> = flow {
-        val result: Resource<MoviePageResult> = withContext(dispatcher.io) {
-            requestManager.callApi {
-                moviesListApi.fetchMoviesWithQuery(
-                    page = page,
-                    sortBy = filterRequest.sortBy.sortByListType,
-                    withGenres = filterRequest.genres?.joinToString(","),
-                    withOriginalLanguage = filterRequest.languageId,
-                    userScoreMinimum = filterRequest.userScoreMin / 10,
-                    userScoreMaximum = filterRequest.userScoreMax / 10
-                )
-            }
-        }
-        emit(result)
-    }
-} */

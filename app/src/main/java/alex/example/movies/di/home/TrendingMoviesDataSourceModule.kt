@@ -1,8 +1,7 @@
-package alex.example.movies.di.movies
+package alex.example.movies.di.home
 
 import alex.example.movies.data.remote.datasource.TrendingMoviesDataSource
 import alex.example.movies.data.remote.api.MoviesListApi
-import alex.example.movies.data.repositories.MoviesRepository
 import alex.example.movies.services.NetworkRequestManager
 import alex.example.movies.utils.DispatcherProvider
 import dagger.Module
@@ -13,16 +12,15 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class MoviesRepositoryModule {
+class TrendingMoviesDataSourceModule {
 
     @Provides
     @Singleton
-    fun provideMoviesRepository(
+    fun provideTrendingMoviesDataSource(
         moviesListApi: MoviesListApi,
         requestManager: NetworkRequestManager,
-        dispatcher: DispatcherProvider,
-        trendingMoviesDataSource: TrendingMoviesDataSource
-    ): MoviesRepository {
-        return MoviesRepository(moviesListApi, requestManager, dispatcher, trendingMoviesDataSource)
-    }
+        dispatcher: DispatcherProvider
+    ): TrendingMoviesDataSource =
+        TrendingMoviesDataSource(moviesListApi, requestManager, dispatcher)
+
 }

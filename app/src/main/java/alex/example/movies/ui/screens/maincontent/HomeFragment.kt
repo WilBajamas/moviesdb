@@ -3,17 +3,22 @@ package alex.example.movies.ui.screens.maincontent
 import alex.example.movies.R
 import alex.example.movies.ui.viewmodels.maincontent.HomeFragmentViewModel
 import alex.example.movies.databinding.FragmentHomeBinding
-import alex.example.movies.ui.adapters.HomeAdapter
+import alex.example.movies.ui.adapters.TrendingMoviesAdapter
 import alex.example.movies.utils.BaseFragment
 import alex.example.movies.utils.Const
+import alex.example.movies.utils.ItemSpacingDecoration
+import alex.example.movies.utils.Resource
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.util.Random
 
@@ -23,8 +28,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentViewModel>(
     FragmentHomeBinding::inflate, HomeFragmentViewModel::class.java
 ) {
 
-    private lateinit var homeAdapter: HomeAdapter
+    private lateinit var trendingMoviesAdapter: TrendingMoviesAdapter
     private lateinit var offsetChangedListener: OnOffsetChangedListener
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -34,9 +40,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentViewModel>(
 
         with(binding) {
 
-            homeAdapter = HomeAdapter(viewModel.sectionItemsData.value!!)
-            homeRv.adapter = homeAdapter
-            homeRv.layoutManager = LinearLayoutManager(requireContext())
 
             // Fixed bug on SwipeRefreshLayout overriding recyclerview's scroll
             offsetChangedListener = OnOffsetChangedListener { _, verticalOffset ->
@@ -57,6 +60,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentViewModel>(
 
                 }
             }
+
+            val itemSpacingDecoration = ItemSpacingDecoration(24)
+            trendingMoviesRv.addItemDecoration(itemSpacingDecoration)
+
             viewLifecycleOwner.lifecycleScope.launch {
 
                 viewModel.backdropData.observe(viewLifecycleOwner) {
@@ -71,13 +78,37 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentViewModel>(
                         }
                     }
                 }
+
+                viewModel.trendingMovies.collectLatest {
+
+                    loadSectionListView(trendingMoviesRv, moviesShimmer, it is Resource.Loading)
+
+                    if (it is Resource.Success) {
+                        it.data?.let { moviePageResult ->
+                            trendingMoviesRv.layoutManager = LinearLayoutManager(
+                                requireContext(), LinearLayoutManager.HORIZONTAL, false
+                            )
+                            trendingMoviesAdapter = TrendingMoviesAdapter(moviePageResult.results)
+                            trendingMoviesRv.adapter = trendingMoviesAdapter
+                        }
+                    }
+                }
             }
+        }
+    }
+
+    private fun loadSectionListView(
+        recyclerView: RecyclerView, shimmerLayout: ShimmerFrameLayout, showShimmer: Boolean
+    ) {
+        shimmerLayout.isVisible = showShimmer
+        recyclerView.isVisible = !showShimmer
+        shimmerLayout.apply {
+            if (showShimmer) startShimmer() else stopShimmer()
         }
     }
 
     override fun onPause() {
         super.onPause()
-        Log.i("HomeFragment", "onPause")
         binding.appbar.removeOnOffsetChangedListener(offsetChangedListener)
     }
 

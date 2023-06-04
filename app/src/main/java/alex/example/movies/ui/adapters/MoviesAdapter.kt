@@ -22,17 +22,20 @@ class MoviesAdapter(diffCallback: DiffUtil.ItemCallback<Movie>) :
     override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
         val item = getItem(position)
         item?.let {
-            holder.binding.titleTv.text = item.title
-            holder.binding.dateTv.text = item.release_date
-            holder.binding.ratingView.progressBar.progress = (item.vote_average * 10).toInt()
-            holder.binding.ratingView.textView.text =
-                holder.binding.root.context.getString(
-                    R.string.percentage,
-                    ((item.vote_average * 10).toInt()).toString()
-                )
-            holder.binding.showImg.load("${Const.POSTER_PATH_BASE_URL}${item.poster_path}") {
-                crossfade(true)
+            with(holder.binding) {
+                titleTv.text = item.title
+                dateTv.text = item.release_date
+                ratingView.progressBar.progress = (item.vote_average * 10).toInt()
+                ratingView.textView.text =
+                    holder.binding.root.context.getString(
+                        R.string.percentage,
+                        ((item.vote_average * 10).toInt()).toString()
+                    )
+                showImg.load("${Const.POSTER_PATH_BASE_URL}${item.poster_path}") {
+                    crossfade(true)
+                }
             }
+
         }
     }
 

@@ -1,5 +1,6 @@
 package alex.example.movies.data.repositories
 
+import alex.example.movies.data.remote.datasource.TrendingMoviesDataSource
 import alex.example.movies.data.model.Movie
 import alex.example.movies.data.remote.api.MoviesListApi
 import alex.example.movies.data.remote.datasource.MoviesRemotePagingSource
@@ -15,7 +16,8 @@ import javax.inject.Inject
 class MoviesRepository @Inject constructor(
     private val moviesListApi: MoviesListApi,
     private val requestManager: NetworkRequestManager,
-    private val dispatcher: DispatcherProvider
+    private val dispatcher: DispatcherProvider,
+    private val trendingMoviesDataSource: TrendingMoviesDataSource
 ) {
 
     private lateinit var filterRequest: FilterRequest
@@ -39,12 +41,9 @@ class MoviesRepository @Inject constructor(
     }
 
 
-    /* [Deprecated]
-    suspend fun fetchMovies(
-        filterRequest: FilterRequest
-    ) = moviesRemoteDataSource.fetchMovies(
-        filterRequest = filterRequest
+    suspend fun fetchTrendingMovies(
+        timeWindow: String
+    ) = trendingMoviesDataSource.fetchTrendingMovies(
+        timeWindow
     )
-
-     */
 }
