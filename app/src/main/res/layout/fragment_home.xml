@@ -88,14 +88,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true"
-            android:paddingVertical="24dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                >
+                android:paddingVertical="24dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -108,17 +107,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="14dp"
-                        android:text="@string/trending_movies"
-                        android:paddingHorizontal="16dp"/>
+                        android:paddingHorizontal="16dp"
+                        android:text="@string/trending_movies" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/trending_movies_rv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/trending_movies_title"
+                        android:layoutAnimation="@anim/home_list_layout_animation"
                         android:nestedScrollingEnabled="false"
-                        android:overScrollMode="never"
-                        android:orientation="horizontal"/>
+                        android:orientation="horizontal"
+                        android:overScrollMode="never" />
 
                     <com.facebook.shimmer.ShimmerFrameLayout
                         android:id="@+id/movies_shimmer"
@@ -144,8 +144,8 @@
                         style="@style/HeaderText.MediumBlack"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingHorizontal="14dp"
                         android:layout_marginBottom="16dp"
+                        android:paddingHorizontal="14dp"
                         android:text="@string/trending_tv_shows" />
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -153,7 +153,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/trending_tvshows_title"
-                        android:orientation="horizontal" />
+                        android:layoutAnimation="@anim/home_list_layout_animation"
+                        android:nestedScrollingEnabled="false"
+                        android:orientation="horizontal"
+                        android:overScrollMode="never" />
 
                     <com.facebook.shimmer.ShimmerFrameLayout
                         android:id="@+id/tvshows_shimmer"
@@ -188,7 +191,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/trending_people_title"
-                        android:orientation="horizontal" />
+                        android:layoutAnimation="@anim/home_list_layout_animation"
+                        android:nestedScrollingEnabled="false"
+                        android:orientation="horizontal"
+                        android:overScrollMode="never" />
 
                     <com.facebook.shimmer.ShimmerFrameLayout
                         android:id="@+id/people_shimmer"

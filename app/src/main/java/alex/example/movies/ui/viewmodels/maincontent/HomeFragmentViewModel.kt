@@ -2,8 +2,10 @@ package alex.example.movies.ui.viewmodels.maincontent
 
 import alex.example.movies.data.model.Backdrop
 import alex.example.movies.data.model.FilmPageResult
+import alex.example.movies.data.model.PeopleResponse
 import alex.example.movies.data.repositories.ImageBackdropRepository
 import alex.example.movies.data.repositories.MoviesRepository
+import alex.example.movies.data.repositories.PeopleRepository
 import alex.example.movies.data.repositories.TvShowsRepository
 import alex.example.movies.ui.model.TimeWindow
 import alex.example.movies.utils.Resource
@@ -22,7 +24,8 @@ import javax.inject.Inject
 class HomeFragmentViewModel @Inject constructor(
     private val imageBackdropRepository: ImageBackdropRepository,
     private val moviesRepository: MoviesRepository,
-    private val tvShowsRepository: TvShowsRepository
+    private val tvShowsRepository: TvShowsRepository,
+    private val peopleRepository: PeopleRepository
 ) : ViewModel() {
 
     private val _backdropCollectionLiveData = MutableLiveData<List<Backdrop>?>()
@@ -36,6 +39,10 @@ class HomeFragmentViewModel @Inject constructor(
     private val _trendingTvShows = MutableStateFlow<Resource<FilmPageResult>>(Resource.Loading())
     val trendingTvShows: StateFlow<Resource<FilmPageResult>>
         get() = _trendingTvShows
+
+    private val _trendingPeople = MutableStateFlow<Resource<PeopleResponse>>(Resource.Loading())
+    val trendingPeople: StateFlow<Resource<PeopleResponse>>
+        get() = _trendingPeople
 
 
     fun init() {
@@ -53,8 +60,9 @@ class HomeFragmentViewModel @Inject constructor(
             _trendingMovies.emit(
                 moviesRepository.fetchTrendingMovies(TimeWindow.TODAY.timeFrame).last()
             )
-
-
+            _trendingPeople.emit(
+                peopleRepository.fetchTrendingPeople(TimeWindow.TODAY.timeFrame).last()
+            )
         }
     }
 

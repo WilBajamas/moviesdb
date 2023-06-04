@@ -15,6 +15,6 @@ class TvShowsRepositoryModule {
     @Provides
     @Singleton
     fun provideTvShowsRepository(
-        tvShowsDataSource: TrendingTvShowsDataSource
-    ): TvShowsRepository = TvShowsRepository(tvShowsDataSource)
+        trendingTvShowsDataSource: TrendingTvShowsDataSource
+    ): TvShowsRepository = TvShowsRepository(trendingTvShowsDataSource)
 }

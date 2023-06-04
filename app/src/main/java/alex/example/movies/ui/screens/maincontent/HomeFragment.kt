@@ -4,6 +4,7 @@ import alex.example.movies.R
 import alex.example.movies.ui.viewmodels.maincontent.HomeFragmentViewModel
 import alex.example.movies.databinding.FragmentHomeBinding
 import alex.example.movies.ui.adapters.TrendingFilmsAdapter
+import alex.example.movies.ui.adapters.TrendingPeopleAdapter
 import alex.example.movies.utils.BaseFragment
 import alex.example.movies.utils.Const
 import alex.example.movies.utils.ItemSpacingDecoration
@@ -30,6 +31,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentViewModel>(
 
     private lateinit var trendingMoviesAdapter: TrendingFilmsAdapter
     private lateinit var trendingTvShowsAdapter: TrendingFilmsAdapter
+    private lateinit var trendingPeopleAdapter: TrendingPeopleAdapter
     private lateinit var offsetChangedListener: OnOffsetChangedListener
 
 
@@ -63,6 +65,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentViewModel>(
             val itemSpacingDecoration = ItemSpacingDecoration(24)
             trendingMoviesRv.addItemDecoration(itemSpacingDecoration)
             trendingTvshowsRv.addItemDecoration(itemSpacingDecoration)
+            trendingPeopleRv.addItemDecoration(itemSpacingDecoration)
 
             viewLifecycleOwner.lifecycleScope.launch {
 
@@ -82,14 +85,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentViewModel>(
                 launch {
                     viewModel.trendingTvShows.collectLatest {
 
-                        loadSectionListView(trendingTvshowsRv, tvshowsShimmer, it is Resource.Loading)
+                        loadSectionListView(
+                            trendingTvshowsRv, tvshowsShimmer, it is Resource.Loading
+                        )
 
                         if (it is Resource.Success) {
                             it.data?.let { tvShowsPageResult ->
                                 trendingTvshowsRv.layoutManager = LinearLayoutManager(
                                     requireContext(), LinearLayoutManager.HORIZONTAL, false
                                 )
-                                trendingTvShowsAdapter = TrendingFilmsAdapter(tvShowsPageResult.results)
+                                trendingTvShowsAdapter =
+                                    TrendingFilmsAdapter(tvShowsPageResult.results)
                                 trendingTvshowsRv.adapter = trendingTvShowsAdapter
                             }
                         }
@@ -106,8 +112,27 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentViewModel>(
                                 trendingMoviesRv.layoutManager = LinearLayoutManager(
                                     requireContext(), LinearLayoutManager.HORIZONTAL, false
                                 )
-                                trendingMoviesAdapter = TrendingFilmsAdapter(moviePageResult.results)
+                                trendingMoviesAdapter =
+                                    TrendingFilmsAdapter(moviePageResult.results)
                                 trendingMoviesRv.adapter = trendingMoviesAdapter
+                            }
+                        }
+                    }
+                }
+
+                launch {
+                    viewModel.trendingPeople.collectLatest {
+
+                        loadSectionListView(trendingPeopleRv, peopleShimmer, it is Resource.Loading)
+
+                        if (it is Resource.Success) {
+                            it.data?.let { peopleResponse ->
+                                trendingPeopleRv.layoutManager = LinearLayoutManager(
+                                    requireContext(), LinearLayoutManager.HORIZONTAL, false
+                                )
+                                trendingPeopleAdapter =
+                                    TrendingPeopleAdapter(peopleResponse.results)
+                                trendingPeopleRv.adapter = trendingPeopleAdapter
                             }
                         }
                     }
