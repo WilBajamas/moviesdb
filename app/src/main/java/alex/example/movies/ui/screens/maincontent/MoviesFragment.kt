@@ -4,7 +4,7 @@ import alex.example.movies.R
 import alex.example.movies.data.model.Film
 import alex.example.movies.databinding.FragmentMoviesBinding
 import alex.example.movies.ui.adapters.MoviesAdapter
-import alex.example.movies.ui.adapters.UserComparator
+import alex.example.movies.ui.adapters.comparator.FilmComparator
 import alex.example.movies.ui.adapters.pagingloadstate.PagingLoadingStateAdapter
 import alex.example.movies.ui.screens.filter.FilterFragment
 import alex.example.movies.ui.viewmodels.maincontent.MoviesFragmentViewModel
@@ -34,7 +34,7 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesFragmentViewMod
 
             // Setup RV Adapter
             val layoutManager = GridLayoutManager(context, 2)
-            moviesAdapter = MoviesAdapter(UserComparator).apply {
+            moviesAdapter = MoviesAdapter(FilmComparator).apply {
                 viewLifecycleOwner.lifecycleScope.launch {
                     loadStateFlow.collectLatest {
                         loadErrorLayout.isVisible = it.refresh is LoadState.Error

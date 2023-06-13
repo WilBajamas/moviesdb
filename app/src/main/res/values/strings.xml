@@ -70,6 +70,13 @@
     <string name="war">War</string>
     <string name="western">Western</string>
     <string name="close">Close</string>
+    <string name="action_adventure">Action &amp; Adventure</string>
+    <string name="kids">Kids</string>
+    <string name="reality">Reality</string>
+    <string name="sci_fi_fantasy">Sci-Fi &amp; Fantasy</string>
+    <string name="soap">Soap</string>
+    <string name="talk">Talk</string>
+    <string name="war_politics">War &amp; Politics</string>
 
     <!--    Language -->
     <string name="french">French</string>

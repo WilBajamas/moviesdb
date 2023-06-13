@@ -19,7 +19,6 @@ enum class Genres(val id: Int, val nameResource: Int) {
     CRIME(80, R.string.crime),
     DOCUMENTARY(99, R.string.documentary),
     DRAMA(18, R.string.drama),
-    FAMILY(10751, R.string.family),
     FANTASY(14, R.string.fantasy),
     HISTORY(36, R.string.history),
     HORROR(27, R.string.horror),
@@ -27,11 +26,20 @@ enum class Genres(val id: Int, val nameResource: Int) {
     MYSTERY(9648, R.string.mystery),
     ROMANCE(10749, R.string.romance),
     SCIENCE_FICTION(878, R.string.science_fiction),
-    TV_MOVIE(10770, R.string.tv_movie),
+    TV_(10770, R.string.tv_movie),
     THRILLER(53, R.string.thriller),
     WAR(10752, R.string.war),
     WESTERN(37, R.string.western),
+    ACTION_ADVENTURE(10759, R.string.action_adventure),
+    FAMILY(10751, R.string.family),
+    KIDS(10762, R.string.kids),
+    REALITY(10764, R.string.reality),
+    SCI_FI_FANTASY(10765, R.string.sci_fi_fantasy),
+    SOAP(10766, R.string.soap),
+    TALK(10767, R.string.talk),
+    WAR_POLITICS(10768, R.string.talk),
 }
+
 
 enum class Languages(val displayName: Int, val iso639Id: String) {
     FRENCH(R.string.french, "fr"),

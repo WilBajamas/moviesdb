@@ -35,7 +35,6 @@ class FilterFragment<T : Any>(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setViewOnInputChange()
 
         with(binding) {
@@ -94,8 +93,6 @@ class FilterFragment<T : Any>(
 
                     filterClickCallback(filterRequest)
                 }
-
-
             }
         }
     }
