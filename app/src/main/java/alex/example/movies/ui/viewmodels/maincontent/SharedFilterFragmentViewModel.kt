@@ -1,31 +1,17 @@
 package alex.example.movies.ui.viewmodels.maincontent
 
-import alex.example.movies.data.model.Film
 import alex.example.movies.domain.model.Languages
 import alex.example.movies.domain.model.ListType
-import alex.example.movies.domain.use_case.movies.MoviesUseCase
+import alex.example.movies.domain.use_case.PagingUseCase
 import alex.example.movies.ui.model.FilterRequest
 import androidx.lifecycle.*
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.google.android.material.chip.Chip
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class SharedMoviesFilterFragmentViewModel @Inject constructor(
-    private val moviesUseCase: MoviesUseCase,
-) : ViewModel() {
 
-    // Movies list response result
-    private val _moviesState: MutableStateFlow<PagingData<Film>?> =
-        MutableStateFlow(null)
-    val moviesState = _moviesState.asStateFlow()
+open class SharedFilterFragmentViewModel<T : Any> : ViewModel() {
 
     val displayNames = ListType.values().map { it.displayName }
     val displayLanguages = Languages.values().map { it.displayName }
@@ -52,25 +38,9 @@ class SharedMoviesFilterFragmentViewModel @Inject constructor(
     val userScoreMaxData: LiveData<Float>
         get(): LiveData<Float> = userScoreMax
 
-    private fun callMoviesApi(): Flow<PagingData<Film>> {
-        val filterRequest = FilterRequest(
-            listType.value!!,
-            genres.value,
-            language.value!!.iso639Id,
-            userScoreMin.value!!,
-            userScoreMax.value!!
-        )
-
-        return moviesUseCase(filterRequest).cachedIn(viewModelScope)
-    }
-
-    fun fetchMovies() {
-        viewModelScope.launch {
-            callMoviesApi().collectLatest {
-                _moviesState.emit(it)
-            }
-        }
-    }
+    fun callPagingRemoteAction(
+        pagingUseCase: PagingUseCase<T>, filterRequest: FilterRequest
+    ): Flow<PagingData<T>> = pagingUseCase.invoke(filterRequest).cachedIn(viewModelScope)
 
     fun setGenres(genres: List<Int>) {
         this.genres.value = genres

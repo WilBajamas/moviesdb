@@ -11,7 +11,7 @@ import androidx.viewbinding.ViewBinding
 
 abstract class BaseFragment<T : ViewBinding, VM: ViewModel>(
     private val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> T,
-    private val viewModelClass: Class<VM>
+    private val viewModelClass: Class<out VM>
 ) : Fragment() {
 
     private var _binding: T? = null

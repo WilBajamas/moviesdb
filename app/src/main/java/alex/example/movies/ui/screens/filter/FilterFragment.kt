@@ -5,7 +5,8 @@ import alex.example.movies.databinding.FragmentFilterBinding
 import alex.example.movies.domain.model.Genres
 import alex.example.movies.domain.model.Languages
 import alex.example.movies.domain.model.ListType
-import alex.example.movies.ui.viewmodels.maincontent.SharedMoviesFilterFragmentViewModel
+import alex.example.movies.ui.model.FilterRequest
+import alex.example.movies.ui.viewmodels.maincontent.SharedFilterFragmentViewModel
 import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,10 +19,12 @@ import androidx.fragment.app.viewModels
 import com.google.android.material.chip.Chip
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 
-class FilterFragment : DialogFragment() {
+class FilterFragment<T : Any>(
+    private val filterClickCallback: (FilterRequest) -> Unit
+) : DialogFragment() {
 
     private lateinit var binding: FragmentFilterBinding
-    private val viewModel: SharedMoviesFilterFragmentViewModel by viewModels(ownerProducer = { requireParentFragment() })
+    private val viewModel: SharedFilterFragmentViewModel<T> by viewModels(ownerProducer = { requireParentFragment() })
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -79,7 +82,20 @@ class FilterFragment : DialogFragment() {
             filterBtn.setOnClickListener {
                 // Initiate api call here
                 this@FilterFragment.dismiss()
-                viewModel.fetchMovies()
+
+                with(viewModel) {
+                    val filterRequest = FilterRequest(
+                        listTypeData.value!!,
+                        genresData.value,
+                        languageData.value!!.iso639Id,
+                        userScoreMinData.value!!,
+                        userScoreMaxData.value!!
+                    )
+
+                    filterClickCallback(filterRequest)
+                }
+
+
             }
         }
     }

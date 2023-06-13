@@ -2,6 +2,7 @@ package alex.example.movies.domain.use_case.movies
 
 import alex.example.movies.data.model.Film
 import alex.example.movies.data.repositories.MoviesRepository
+import alex.example.movies.domain.use_case.PagingUseCase
 import alex.example.movies.ui.model.FilterRequest
 import androidx.paging.PagingData
 import dagger.Module
@@ -14,11 +15,8 @@ import javax.inject.Inject
 @InstallIn(ViewModelComponent::class)
 class MoviesUseCase @Inject constructor(
     private val moviesRepository: MoviesRepository,
-) {
+) : PagingUseCase<Film> {
 
-    operator fun invoke(
-        filterRequest: FilterRequest
-    ): Flow<PagingData<Film>> {
-        return moviesRepository.fetchMovies(filterRequest)
-    }
+    override fun invoke(filterRequest: FilterRequest): Flow<PagingData<Film>> =
+        moviesRepository.fetchMovies(filterRequest)
 }

@@ -1,26 +1,20 @@
 package alex.example.movies.ui.screens.maincontent
 
-import alex.example.movies.R
+import alex.example.movies.databinding.FragmentTVShowsBinding
 import alex.example.movies.ui.viewmodels.maincontent.TVShowsFragmentViewModel
+import alex.example.movies.utils.BaseFragment
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 
-class TVShowsFragment : Fragment() {
+class TVShowsFragment : BaseFragment<FragmentTVShowsBinding, TVShowsFragmentViewModel>(FragmentTVShowsBinding::inflate, TVShowsFragmentViewModel::class.java) {
 
-    companion object {
-        fun newInstance() = TVShowsFragment()
-    }
 
-    private lateinit var viewModel: TVShowsFragmentViewModel
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_t_v_shows, container, false)
+        with(binding) {
+
+        }
     }
 
 }

@@ -1,12 +1,13 @@
 package alex.example.movies.ui.screens.maincontent
 
 import alex.example.movies.R
-import alex.example.movies.ui.viewmodels.maincontent.SharedMoviesFilterFragmentViewModel
+import alex.example.movies.data.model.Film
 import alex.example.movies.databinding.FragmentMoviesBinding
 import alex.example.movies.ui.adapters.MoviesAdapter
 import alex.example.movies.ui.adapters.UserComparator
 import alex.example.movies.ui.adapters.pagingloadstate.PagingLoadingStateAdapter
 import alex.example.movies.ui.screens.filter.FilterFragment
+import alex.example.movies.ui.viewmodels.maincontent.MoviesFragmentViewModel
 import alex.example.movies.utils.BaseFragment
 import alex.example.movies.utils.Const
 import android.os.Bundle
@@ -20,8 +21,8 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MoviesFragment : BaseFragment<FragmentMoviesBinding, SharedMoviesFilterFragmentViewModel>(
-    FragmentMoviesBinding::inflate, SharedMoviesFilterFragmentViewModel::class.java
+class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesFragmentViewModel>(
+    FragmentMoviesBinding::inflate, MoviesFragmentViewModel::class.java
 ) {
 
     private lateinit var moviesAdapter: MoviesAdapter
@@ -54,7 +55,7 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, SharedMoviesFilterFra
 
             // Swipe refresh
             swipeRefreshLayout.setOnRefreshListener {
-                viewModel.fetchMovies()
+                viewModel.callMoviesApi()
             }
 
             // Toolbar
@@ -69,10 +70,10 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, SharedMoviesFilterFra
             }
 
             // Retry Button
-            loadErrorView.retryBtn.setOnClickListener { viewModel.fetchMovies() }
+            loadErrorView.retryBtn.setOnClickListener { viewModel.callMoviesApi() }
 
             // Fetch initial data
-            viewModel.fetchMovies()
+            viewModel.callMoviesApi()
 
             // Collect movies
             viewLifecycleOwner.lifecycleScope.launch {
@@ -88,7 +89,9 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, SharedMoviesFilterFra
 
     private fun showDialog() {
         val fragmentManager = childFragmentManager
-        val newFragment = FilterFragment()
+        val newFragment = FilterFragment<Film>{
+            viewModel.setFilter(it)
+        }
         newFragment.show(fragmentManager, Const.FILTER_DIALOG_TAG)
     }
 
