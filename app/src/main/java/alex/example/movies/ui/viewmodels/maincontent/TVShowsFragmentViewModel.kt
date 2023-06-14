@@ -32,7 +32,7 @@ class TVShowsFragmentViewModel @Inject constructor(
         )
     )
 
-    fun callMoviesApi(
+    fun callTvShowsApi(
         filterRequest: FilterRequest = _filterLiveData.value!!
     ) {
         viewModelScope.launch {
@@ -44,6 +44,6 @@ class TVShowsFragmentViewModel @Inject constructor(
 
     fun setFilter(filterRequest: FilterRequest) {
         _filterLiveData.value = filterRequest
-        callMoviesApi(filterRequest)
+        callTvShowsApi(filterRequest)
     }
 }

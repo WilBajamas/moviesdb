@@ -18,4 +18,10 @@ interface PeopleApi {
         @Query("page") page: Int?
     ): Response<PeopleResponse>
 
+    @GET("search/person")
+    suspend fun fetchSearchPeople(
+        @Query("page") page: Int?,
+        @Query("query") search: String?
+    ): Response<PeopleResponse>
+
 }

@@ -15,7 +15,8 @@ import javax.inject.Inject
 class PeopleRemotePagingSource @Inject constructor(
     private val requestManager: NetworkRequestManager,
     private val dispatcher: DispatcherProvider,
-    private val peopleApi: PeopleApi
+    private val peopleApi: PeopleApi,
+    private val searchQuery: String? = null
 ) : PagingSource<Int, People>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, People> {
@@ -23,7 +24,12 @@ class PeopleRemotePagingSource @Inject constructor(
             val page = params.key ?: Const.FIRST_PAGE_INDEX
             val apiResult = withContext(dispatcher.io) {
                 requestManager.callApi {
-                    peopleApi.fetchPopularPeople(page)
+                    if (searchQuery.isNullOrEmpty()) {
+                        peopleApi.fetchPopularPeople(page)
+                    } else {
+                        peopleApi.fetchSearchPeople(page, searchQuery)
+                    }
+
                 }
             }
 

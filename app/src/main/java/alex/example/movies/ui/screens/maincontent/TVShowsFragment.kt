@@ -45,14 +45,14 @@ class TVShowsFragment : BaseFragment<FragmentTVShowsBinding, TVShowsFragmentView
                 override fun getSpanSize(position: Int): Int =
                     if (position == moviesAdapter.itemCount && footerLoadingAdapter.itemCount > 0) 2 else 1
             }
-            moviesRv.layoutManager = layoutManager
-            moviesRv.adapter = moviesAdapter.withLoadStateFooter(
+            tvShowsRv.layoutManager = layoutManager
+            tvShowsRv.adapter = moviesAdapter.withLoadStateFooter(
                 footerLoadingAdapter
             )
 
             // Swipe refresh
             swipeRefreshLayout.setOnRefreshListener {
-                viewModel.callMoviesApi()
+                viewModel.callTvShowsApi()
             }
 
             // Toolbar
@@ -67,10 +67,10 @@ class TVShowsFragment : BaseFragment<FragmentTVShowsBinding, TVShowsFragmentView
             }
 
             // Retry Button
-            loadErrorView.retryBtn.setOnClickListener { viewModel.callMoviesApi() }
+            loadErrorView.retryBtn.setOnClickListener { viewModel.callTvShowsApi() }
 
             // Fetch initial data
-            viewModel.callMoviesApi()
+            viewModel.callTvShowsApi()
 
             // Collect movies
             viewLifecycleOwner.lifecycleScope.launch {
@@ -94,7 +94,7 @@ class TVShowsFragment : BaseFragment<FragmentTVShowsBinding, TVShowsFragmentView
 
     private fun shimmer(showShimmer: Boolean) = with(binding) {
         shimmerLayout.isVisible = showShimmer
-        moviesRv.isVisible = !showShimmer
+        tvShowsRv.isVisible = !showShimmer
         shimmerLayout.apply {
             if (showShimmer) startShimmer() else stopShimmer()
         }
