@@ -9,5 +9,7 @@ data class People(
 )
 
 data class PeopleResponse(
-    val page: Int, val results: List<People>
+    val page: Int,
+    val results: List<People>,
+    val total_pages: Int
 )
