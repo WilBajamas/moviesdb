@@ -104,7 +104,8 @@ class FilmDetailsFragment : BaseFragment<FragmentFilmDetailsBinding, FilmDetails
 
                                     if (it.networks != null && it.revenue == null) {
                                         networkRevenueTv.text = getString(R.string.network)
-                                        networkRevenueTextTv.text = it.networks[0].name
+                                        networkRevenueTextTv.text =
+                                            if (it.networks.isNotEmpty()) it.networks[0].name else "-"
                                     } else {
                                         networkRevenueTv.text = getString(R.string.revenue)
                                         networkRevenueTextTv.text =

@@ -1,6 +1,7 @@
 package alex.example.movies.di.film
 
 import alex.example.movies.data.remote.datasource.MovieDetailDataSource
+import alex.example.movies.data.remote.datasource.TvShowDetailDataSource
 import alex.example.movies.data.repositories.FilmDetailRepository
 import dagger.Module
 import dagger.Provides
@@ -15,9 +16,7 @@ class FilmDetailRepositoryModule {
     @Provides
     @Singleton
     fun provideFilmDetailRepository(
-        movieDetailDataSource: MovieDetailDataSource
-    ): FilmDetailRepository {
-        return FilmDetailRepository(movieDetailDataSource)
-    }
+        movieDetailDataSource: MovieDetailDataSource, tvShowDetailDataSource: TvShowDetailDataSource
+    ): FilmDetailRepository = FilmDetailRepository(movieDetailDataSource, tvShowDetailDataSource)
 
 }

@@ -1,6 +1,7 @@
 package alex.example.movies.di.credits
 
 import alex.example.movies.data.remote.datasource.MovieCreditsDataSource
+import alex.example.movies.data.remote.datasource.TvShowCreditsDataSource
 import alex.example.movies.data.repositories.CreditsRepository
 import dagger.Module
 import dagger.Provides
@@ -15,7 +16,8 @@ class CreditsRepositoryModule {
     @Provides
     @Singleton
     fun provideCreditsRepository(
-        movieCreditsDataSource: MovieCreditsDataSource
-    ): CreditsRepository = CreditsRepository(movieCreditsDataSource)
+        movieCreditsDataSource: MovieCreditsDataSource,
+        tvShowCreditsDataSource: TvShowCreditsDataSource
+    ): CreditsRepository = CreditsRepository(movieCreditsDataSource, tvShowCreditsDataSource)
 
 }

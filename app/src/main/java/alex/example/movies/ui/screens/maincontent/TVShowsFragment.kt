@@ -3,6 +3,7 @@ package alex.example.movies.ui.screens.maincontent
 import alex.example.movies.R
 import alex.example.movies.data.model.Film
 import alex.example.movies.databinding.FragmentTVShowsBinding
+import alex.example.movies.domain.model.FilmType
 import alex.example.movies.ui.adapters.TvShowsAdapter
 import alex.example.movies.ui.adapters.comparator.FilmComparator
 import alex.example.movies.ui.adapters.pagingloadstate.PagingLoadingStateAdapter
@@ -10,10 +11,13 @@ import alex.example.movies.ui.screens.filter.FilterFragment
 import alex.example.movies.ui.viewmodels.maincontent.TVShowsFragmentViewModel
 import alex.example.movies.utils.BaseFragment
 import alex.example.movies.utils.Const
+import alex.example.movies.utils.FilmItemClickListener
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,7 +27,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class TVShowsFragment : BaseFragment<FragmentTVShowsBinding, TVShowsFragmentViewModel>(FragmentTVShowsBinding::inflate, TVShowsFragmentViewModel::class.java) {
 
-    private lateinit var moviesAdapter: TvShowsAdapter
+    private lateinit var tvShowsAdapter: TvShowsAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -31,7 +35,8 @@ class TVShowsFragment : BaseFragment<FragmentTVShowsBinding, TVShowsFragmentView
         with(binding) {
 // Setup RV Adapter
             val layoutManager = GridLayoutManager(context, 2)
-            moviesAdapter = TvShowsAdapter(FilmComparator).apply {
+            tvShowsAdapter = TvShowsAdapter(FilmComparator).apply {
+
                 viewLifecycleOwner.lifecycleScope.launch {
                     loadStateFlow.collectLatest {
                         loadErrorLayout.isVisible = it.refresh is LoadState.Error
@@ -39,14 +44,22 @@ class TVShowsFragment : BaseFragment<FragmentTVShowsBinding, TVShowsFragmentView
                         shimmer(it.refresh is LoadState.Loading)
                     }
                 }
+
+                // TODO: Improve implementation
+                this.setOnClickListener(object: FilmItemClickListener {
+                    override fun filmItemClick(id: Int, filmType: FilmType) {
+                        val bundle = bundleOf("id" to id, "filmType" to filmType.name)
+                        requireParentFragment().requireParentFragment().findNavController().navigate(R.id.action_mainContentFragment_to_filmDetailsFragment, bundle)
+                    }
+                })
             }
-            val footerLoadingAdapter = PagingLoadingStateAdapter(moviesAdapter::retry)
+            val footerLoadingAdapter = PagingLoadingStateAdapter(tvShowsAdapter::retry)
             layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int =
-                    if (position == moviesAdapter.itemCount && footerLoadingAdapter.itemCount > 0) 2 else 1
+                    if (position == tvShowsAdapter.itemCount && footerLoadingAdapter.itemCount > 0) 2 else 1
             }
             tvShowsRv.layoutManager = layoutManager
-            tvShowsRv.adapter = moviesAdapter.withLoadStateFooter(
+            tvShowsRv.adapter = tvShowsAdapter.withLoadStateFooter(
                 footerLoadingAdapter
             )
 
@@ -77,7 +90,7 @@ class TVShowsFragment : BaseFragment<FragmentTVShowsBinding, TVShowsFragmentView
                 viewModel.moviesState.collectLatest {
                     it?.let {
                         swipeRefreshLayout.isRefreshing = false
-                        moviesAdapter.submitData(it)
+                        tvShowsAdapter.submitData(it)
                     }
                 }
             }

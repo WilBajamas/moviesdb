@@ -11,7 +11,6 @@ import javax.inject.Inject
 class CreditsUseCase @Inject constructor(
     private val creditsRepository: CreditsRepository
 ){
-
     fun fetchCredits(id: Int, filmType: String) = creditsRepository.fetchCredits(id, filmType)
 
 }

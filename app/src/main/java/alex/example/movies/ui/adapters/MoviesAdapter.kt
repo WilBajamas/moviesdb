@@ -42,7 +42,6 @@ class MoviesAdapter(diffCallback: DiffUtil.ItemCallback<Film>) :
                 showImg.load("${Const.POSTER_PATH_BASE_URL}${item.poster_path}") {
                     crossfade(true)
                 }
-                // TODO: Hardcoded film type
                 root.setOnClickListener {
                     onClickListener?.filmItemClick(item.id, FilmType.MOVIE)
                 }

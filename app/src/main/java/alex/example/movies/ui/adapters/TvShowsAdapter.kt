@@ -3,7 +3,9 @@ package alex.example.movies.ui.adapters
 import alex.example.movies.R
 import alex.example.movies.data.model.Film
 import alex.example.movies.databinding.ShowItemBinding
+import alex.example.movies.domain.model.FilmType
 import alex.example.movies.utils.Const
+import alex.example.movies.utils.FilmItemClickListener
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -13,6 +15,12 @@ import coil.load
 
 class TvShowsAdapter(diffCallback: DiffUtil.ItemCallback<Film>) :
     PagingDataAdapter<Film, TvShowsAdapter.TvShowsViewHolder>(diffCallback) {
+
+    private var onClickListener: FilmItemClickListener? = null
+
+    fun setOnClickListener(onClickListener: FilmItemClickListener) {
+        this.onClickListener = onClickListener
+    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup, viewType: Int
@@ -33,6 +41,9 @@ class TvShowsAdapter(diffCallback: DiffUtil.ItemCallback<Film>) :
                 )
                 showImg.load("${Const.POSTER_PATH_BASE_URL}${item.poster_path}") {
                     crossfade(true)
+                }
+                root.setOnClickListener {
+                    onClickListener?.filmItemClick(item.id, FilmType.TV_SHOW)
                 }
             }
 
