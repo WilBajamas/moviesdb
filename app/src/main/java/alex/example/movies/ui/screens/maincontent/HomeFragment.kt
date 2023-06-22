@@ -3,16 +3,16 @@ package alex.example.movies.ui.screens.maincontent
 import alex.example.movies.R
 import alex.example.movies.ui.viewmodels.maincontent.HomeFragmentViewModel
 import alex.example.movies.databinding.FragmentHomeBinding
+import alex.example.movies.domain.model.FilmType
 import alex.example.movies.ui.adapters.TrendingFilmsAdapter
 import alex.example.movies.ui.adapters.TrendingPeopleAdapter
-import alex.example.movies.utils.BaseFragment
-import alex.example.movies.utils.Const
-import alex.example.movies.utils.ItemSpacingDecoration
-import alex.example.movies.utils.Resource
+import alex.example.movies.utils.*
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -97,6 +97,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentViewModel>(
                                 trendingTvShowsAdapter =
                                     TrendingFilmsAdapter(tvShowsPageResult.results)
                                 trendingTvshowsRv.adapter = trendingTvShowsAdapter
+
+                                trendingTvShowsAdapter.setOnClickListener(object :
+                                    FilmItemClickListener {
+                                    override fun filmItemClick(id: Int, filmType: FilmType) {
+                                        val bundle =
+                                            bundleOf("id" to id, "filmType" to filmType.name)
+                                        requireParentFragment().requireParentFragment()
+                                            .findNavController().navigate(
+                                                R.id.action_mainContentFragment_to_filmDetailsFragment,
+                                                bundle
+                                            )
+                                    }
+                                })
                             }
                         }
                     }
@@ -115,6 +128,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentViewModel>(
                                 trendingMoviesAdapter =
                                     TrendingFilmsAdapter(moviePageResult.results)
                                 trendingMoviesRv.adapter = trendingMoviesAdapter
+                                // TODO: Improve on click implementation
+                                trendingMoviesAdapter.setOnClickListener(object :
+                                    FilmItemClickListener {
+                                    override fun filmItemClick(id: Int, filmType: FilmType) {
+                                        val bundle =
+                                            bundleOf("id" to id, "filmType" to filmType.name)
+                                        requireParentFragment().requireParentFragment()
+                                            .findNavController().navigate(
+                                            R.id.action_mainContentFragment_to_filmDetailsFragment,
+                                            bundle
+                                        )
+                                    }
+                                })
                             }
                         }
                     }

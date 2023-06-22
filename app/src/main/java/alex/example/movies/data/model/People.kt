@@ -6,6 +6,8 @@ data class People(
     val known_for_department: String,
     val gender: Int,
     val profile_path: String,
+    val character: String,
+    val job: String
 )
 
 data class PeopleResponse(

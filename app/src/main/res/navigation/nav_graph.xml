@@ -6,10 +6,26 @@
     app:startDestination="@id/mainFragment">
 
     <fragment
+        android:id="@+id/filmDetailsFragment"
+        android:name="alex.example.movies.ui.screens.film.FilmDetailsFragment"
+        android:label="fragment_film_details"
+        tools:layout="@layout/fragment_film_details" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+        <argument
+            android:name="filmType"
+            app:argType="alex.example.movies.domain.model.FilmType" />
+    </fragment>
+    <fragment
         android:id="@+id/mainContentFragment"
         android:name="alex.example.movies.MainContentFragment"
         android:label="fragment_main_content"
-        tools:layout="@layout/fragment_main_content" />
+        tools:layout="@layout/fragment_main_content" >
+        <action
+            android:id="@+id/action_mainContentFragment_to_filmDetailsFragment"
+            app:destination="@id/filmDetailsFragment" />
+    </fragment>
     <navigation
         android:id="@+id/onboarding_nav"
         app:startDestination="@id/loginFragment">

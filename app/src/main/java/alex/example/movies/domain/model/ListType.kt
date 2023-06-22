@@ -49,3 +49,8 @@ enum class Languages(val displayName: Int, val iso639Id: String) {
     JAPANESE(R.string.japanese, "ja"),
     KOREAN(R.string.korean, "ko"),
 }
+
+enum class FilmType() {
+    MOVIE,
+    TV_SHOW
+}

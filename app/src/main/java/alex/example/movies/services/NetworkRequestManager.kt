@@ -20,7 +20,7 @@ object NetworkRequestManager {
                 Resource.Error(message = errorResponse.status_message ?: "Unknown Error")
             }
         } catch (exception: Exception) {
-            exception.let { Resource.Error(message = "Test Exception") }
+            exception.let { Resource.Error(message = exception.message!!) }
         }
     }
 }
