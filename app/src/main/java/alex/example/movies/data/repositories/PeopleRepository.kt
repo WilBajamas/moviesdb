@@ -1,11 +1,14 @@
 package alex.example.movies.data.repositories
 
+import alex.example.movies.data.model.FilmCredit
 import alex.example.movies.data.model.People
 import alex.example.movies.data.remote.api.PeopleApi
+import alex.example.movies.data.remote.datasource.PeopleDetailDataSource
 import alex.example.movies.data.remote.datasource.PeopleRemotePagingSource
 import alex.example.movies.data.remote.datasource.TrendingPeopleDataSource
 import alex.example.movies.services.NetworkRequestManager
 import alex.example.movies.utils.DispatcherProvider
+import alex.example.movies.utils.Resource
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -14,6 +17,7 @@ import javax.inject.Inject
 
 class PeopleRepository @Inject constructor(
     private val peopleDataSource: TrendingPeopleDataSource,
+    private val peopleDetailDataSource: PeopleDetailDataSource,
     private val requestManager: NetworkRequestManager,
     private val dispatcher: DispatcherProvider,
     private val peopleApi: PeopleApi
@@ -44,5 +48,11 @@ class PeopleRepository @Inject constructor(
         this.searchQuery = searchQuery
         return flow
     }
+
+    suspend fun fetchPersonDetails(id: Int): Flow<Resource<People>> =
+        peopleDetailDataSource.fetchPeopleDetails(id)
+
+    suspend fun fetchPersonMovieCredits(id: Int): Flow<Resource<FilmCredit>> =
+        peopleDetailDataSource.fetchPersonMovieCredits(id)
 
 }

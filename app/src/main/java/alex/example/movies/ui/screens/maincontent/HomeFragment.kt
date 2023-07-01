@@ -136,9 +136,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentViewModel>(
                                             bundleOf("id" to id, "filmType" to filmType.name)
                                         requireParentFragment().requireParentFragment()
                                             .findNavController().navigate(
-                                            R.id.action_mainContentFragment_to_filmDetailsFragment,
-                                            bundle
-                                        )
+                                                R.id.action_mainContentFragment_to_filmDetailsFragment,
+                                                bundle
+                                            )
                                     }
                                 })
                             }
@@ -159,6 +159,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentViewModel>(
                                 trendingPeopleAdapter =
                                     TrendingPeopleAdapter(peopleResponse.results)
                                 trendingPeopleRv.adapter = trendingPeopleAdapter
+
+                                trendingPeopleAdapter.setOnClickListener(object :
+                                    PeopleItemClickListener {
+                                    override fun peopleItemClick(id: Int) {
+                                        val bundle = bundleOf("id" to id)
+                                        requireParentFragment().requireParentFragment()
+                                            .findNavController().navigate(
+                                                R.id.action_mainContentFragment_to_peopleDetailFragment,
+                                                bundle
+                                            )
+                                    }
+                                })
                             }
                         }
                     }

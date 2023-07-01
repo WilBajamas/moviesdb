@@ -1,6 +1,6 @@
 package alex.example.movies.data.remote.api
 
-import alex.example.movies.data.model.PeopleResponse
+import alex.example.movies.data.model.*
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -23,5 +23,15 @@ interface PeopleApi {
         @Query("page") page: Int?,
         @Query("query") search: String?
     ): Response<PeopleResponse>
+
+    @GET("person/{person_id}")
+    suspend fun fetchPersonDetails(
+        @Path("person_id") personId: Int?,
+    ): Response<People>
+
+    @GET("person/{person_id}/movie_credits")
+    suspend fun fetchPersonMovieCredits(
+        @Path("person_id") personId: Int?,
+    ): Response<FilmCredit>
 
 }

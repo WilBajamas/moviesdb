@@ -8,6 +8,12 @@
         <item name="android:fontFamily">@font/opensans_bold</item>
     </style>
 
+    <style name="HeaderText.Black" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/text_black</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:fontFamily">@font/opensans_bold</item>
+    </style>
+
     <style name="HeaderText.MediumBlack" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/text_black</item>
         <item name="android:textSize">20sp</item>
@@ -66,8 +72,24 @@
         <item name="android:fontFamily">@font/opensans_bold</item>
     </style>
 
+    <style name="TitleText.SmallBold.White" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/off_white</item>
+        <item name="android:fontFamily">@font/opensans_bold</item>
+    </style>
+
     <style name="TitleText.Gradient" parent="TextAppearance.AppCompat">
         <item name="android:background">@drawable/background_gradient</item>
+    </style>
+
+    <style name="DescriptionText.Small" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/off_white</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="DescriptionText.Small.Black" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/text_black</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="TextFieldErrorAppearance" parent="TextAppearance.Design.Error">

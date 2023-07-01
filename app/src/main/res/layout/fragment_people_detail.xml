@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.screens.people.PeopleDetailFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/header_view"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:0.7"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="?attr/colorPrimary">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/people_iv_view"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="12dp"
+                    app:cardCornerRadius="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="10: 16"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/people_iv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop" />
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/people_name_tv"
+                    style="@style/HeaderText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:autoSizeTextType="uniform"
+                    android:maxLines="3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/people_iv_view"
+                    app:layout_constraintTop_toTopOf="@+id/people_iv_view"
+                    tools:text="Name here" />
+
+                <TextView
+                    android:id="@+id/dob_tv"
+                    style="@style/TitleText.SmallBold.White"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="12dp"
+                    android:layout_marginTop="6dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/people_iv_view"
+                    app:layout_constraintTop_toBottomOf="@+id/people_name_tv"
+                    android:text="@string/dob" />
+
+                <TextView
+                    android:id="@+id/birthday_tv"
+                    style="@style/TitleText.White"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="12dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/people_iv_view"
+                    app:layout_constraintTop_toBottomOf="@+id/dob_tv"
+                    tools:text="June 6th 2015" />
+
+                <TextView
+                    android:id="@+id/pob_tv"
+                    style="@style/TitleText.SmallBold.White"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="12dp"
+                    android:layout_marginTop="6dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/people_iv_view"
+                    app:layout_constraintTop_toBottomOf="@+id/birthday_tv"
+                    android:text="@string/pob" />
+
+                <TextView
+                    android:id="@+id/place_of_birth_tv"
+                    style="@style/TitleText.White"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="12dp"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/people_iv_view"
+                    app:layout_constraintTop_toBottomOf="@+id/pob_tv"
+                    tools:text="Malaysia" />
+
+                <TextView
+                    android:id="@+id/known_for_tv"
+                    style="@style/TitleText.White"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="12dp"
+                    android:layout_marginTop="6dp"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/people_iv_view"
+                    app:layout_constraintTop_toBottomOf="@+id/place_of_birth_tv"
+                    tools:text="Acting" />
+
+                <TextView
+                    android:id="@+id/gender_tv"
+                    style="@style/TitleText.White"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="12dp"
+                    android:layout_marginTop="6dp"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/people_iv_view"
+                    app:layout_constraintTop_toBottomOf="@+id/known_for_tv"
+                    tools:text="Female" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/biography_title_tv"
+                style="@style/HeaderText.MediumBlack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="16dp"
+                android:text="@string/biography"
+                app:layout_constraintTop_toBottomOf="@+id/header_view" />
+
+            <TextView
+                android:id="@+id/biography_tv"
+                style="@style/TitleText.Small"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/biography_title_tv"
+                app:layout_constraintTop_toBottomOf="@+id/biography_title_tv"
+                tools:text="Golshifteh Farahani (گلشیفته فراهانی) was born on 10th July 1983 and is an international Iranian actress. She has dual Iranian and French nationality. Golshifteh Farahani started her acting career in theatre at the age of 6. Since then she has played in more than 40 films, many of which have been screened or awarded at international festivals. Amongst her famous Iranian films are Bahman Ghobadi's Half Moon, Dariush Mehrjui's Santoori , Rasool Mollagholipour's M for Mother and Asghar Farhadi's About Elly." />
+
+            <TextView
+                android:id="@+id/known_for_title"
+                style="@style/HeaderText.MediumBlack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="16dp"
+                android:text="@string/known_for"
+                app:layout_constraintTop_toBottomOf="@+id/biography_tv" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/known_for_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="16dp"
+                android:layoutAnimation="@anim/home_list_layout_animation"
+                android:nestedScrollingEnabled="false"
+                android:orientation="horizontal"
+                android:overScrollMode="never"
+                app:layout_constraintTop_toBottomOf="@+id/known_for_title" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

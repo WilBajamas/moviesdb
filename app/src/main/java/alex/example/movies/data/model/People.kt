@@ -7,7 +7,10 @@ data class People(
     val gender: Int,
     val profile_path: String,
     val character: String,
-    val job: String
+    val job: String,
+    val birthday: String,
+    val place_of_birth: String,
+    val biography: String,
 )
 
 data class PeopleResponse(

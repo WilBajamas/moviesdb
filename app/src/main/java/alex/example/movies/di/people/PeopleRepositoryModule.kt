@@ -1,6 +1,7 @@
 package alex.example.movies.di.people
 
 import alex.example.movies.data.remote.api.PeopleApi
+import alex.example.movies.data.remote.datasource.PeopleDetailDataSource
 import alex.example.movies.data.remote.datasource.TrendingPeopleDataSource
 import alex.example.movies.data.repositories.PeopleRepository
 import alex.example.movies.services.NetworkRequestManager
@@ -19,10 +20,17 @@ class PeopleRepositoryModule {
     @Singleton
     fun providePeopleRepository(
         trendingPeopleDataSource: TrendingPeopleDataSource,
+        peopleDetailDataSource: PeopleDetailDataSource,
         requestManager: NetworkRequestManager,
         dispatcher: DispatcherProvider,
         peopleApi: PeopleApi
     ): PeopleRepository =
-        PeopleRepository(trendingPeopleDataSource, requestManager, dispatcher, peopleApi)
+        PeopleRepository(
+            trendingPeopleDataSource,
+            peopleDetailDataSource,
+            requestManager,
+            dispatcher,
+            peopleApi
+        )
 
 }

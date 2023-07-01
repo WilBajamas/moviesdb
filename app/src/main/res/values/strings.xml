@@ -40,6 +40,10 @@
     <string name="cast">Cast</string>
     <string name="type">Type</string>
     <string name="network">Network</string>
+    <string name="biography">Biography</string>
+    <string name="known_for">Known For</string>
+    <string name="dob">D.O.B</string>
+    <string name="pob">P.O.B</string>
 
 
     <!--    API_KEY empty-->
@@ -104,5 +108,14 @@
     <string name="trending_movies">Trending Movies</string>
     <string name="trending_tv_shows">Trending TV Shows</string>
     <string name="trending_people">Trending People</string>
+
+    <!--    Transition -->
+    <string name="transition_item">transition_item %1$s</string>
+    <string name="transition_detail">transition_detail</string>
+
+    <!--    Gender -->
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="non_binary">Non-binary</string>
 
 </resources>

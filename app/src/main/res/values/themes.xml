@@ -8,6 +8,7 @@
         <item name="android:statusBarColor">@color/primary</item>
         <item name="android:navigationBarColor">@color/primary</item>
         <item name="chipStyle">@style/FilterChip</item>
+        <item name="android:windowActivityTransitions">true</item>
     </style>
 
 <!--    <item name="textInputStyle">@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu</item>-->

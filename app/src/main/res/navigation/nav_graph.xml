@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_mainContentFragment_to_filmDetailsFragment"
             app:destination="@id/filmDetailsFragment" />
+        <action
+            android:id="@+id/action_mainContentFragment_to_peopleDetailFragment"
+            app:destination="@id/peopleDetailFragment" />
     </fragment>
     <navigation
         android:id="@+id/onboarding_nav"
@@ -67,4 +70,9 @@
             app:popUpToInclusive="true" />
     </fragment>
     <include app:graph="@navigation/nav_graph_main_content" />
+    <fragment
+        android:id="@+id/peopleDetailFragment"
+        android:name="alex.example.movies.ui.screens.people.PeopleDetailFragment"
+        android:label="fragment_people_detail"
+        tools:layout="@layout/fragment_people_detail" />
 </navigation>
