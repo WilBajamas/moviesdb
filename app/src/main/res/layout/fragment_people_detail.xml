@@ -19,11 +19,11 @@
                 android:id="@+id/header_view"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:background="?attr/colorPrimary"
                 app:layout_constraintDimensionRatio="1:0.7"
-                app:layout_constraintTop_toTopOf="parent"
-                android:background="?attr/colorPrimary">
+                app:layout_constraintTop_toTopOf="parent">
 
-                <androidx.cardview.widget.CardView
+                <com.google.android.material.card.MaterialCardView
                     android:id="@+id/people_iv_view"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -38,11 +38,11 @@
 
                     <ImageView
                         android:id="@+id/people_iv"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="167dp"
+                        android:layout_height="261dp"
                         android:scaleType="centerCrop" />
 
-                </androidx.cardview.widget.CardView>
+                </com.google.android.material.card.MaterialCardView>
 
                 <TextView
                     android:id="@+id/people_name_tv"
@@ -65,10 +65,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="12dp"
                     android:layout_marginTop="6dp"
+                    android:text="@string/dob"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/people_iv_view"
-                    app:layout_constraintTop_toBottomOf="@+id/people_name_tv"
-                    android:text="@string/dob" />
+                    app:layout_constraintTop_toBottomOf="@+id/people_name_tv" />
 
                 <TextView
                     android:id="@+id/birthday_tv"
@@ -88,10 +88,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="12dp"
                     android:layout_marginTop="6dp"
+                    android:text="@string/pob"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/people_iv_view"
-                    app:layout_constraintTop_toBottomOf="@+id/birthday_tv"
-                    android:text="@string/pob" />
+                    app:layout_constraintTop_toBottomOf="@+id/birthday_tv" />
 
                 <TextView
                     android:id="@+id/place_of_birth_tv"
@@ -134,8 +134,20 @@
                     app:layout_constraintTop_toBottomOf="@+id/known_for_tv"
                     tools:text="Female" />
 
-
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/header_shimmer_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/colorPrimary"
+                android:orientation="horizontal">
+
+                <include
+                    android:id="@+id/header_placeholder"
+                    layout="@layout/detail_header_placeholder" />
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
 
             <TextView
                 android:id="@+id/biography_title_tv"
@@ -179,6 +191,17 @@
                 android:orientation="horizontal"
                 android:overScrollMode="never"
                 app:layout_constraintTop_toBottomOf="@+id/known_for_title" />
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/header_view" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

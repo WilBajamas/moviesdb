@@ -2,15 +2,15 @@ package alex.example.movies.data.model
 
 data class People(
     val id: Int,
-    val name: String,
-    val known_for_department: String,
+    val name: String?,
+    val known_for_department: String?,
     val gender: Int,
-    val profile_path: String,
+    val profile_path: String?,
     val character: String,
     val job: String,
-    val birthday: String,
-    val place_of_birth: String,
-    val biography: String,
+    val birthday: String?,
+    val place_of_birth: String?,
+    val biography: String?,
 )
 
 data class PeopleResponse(
