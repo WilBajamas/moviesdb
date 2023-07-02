@@ -11,6 +11,7 @@ import alex.example.movies.ui.screens.filter.FilterFragment
 import alex.example.movies.ui.viewmodels.maincontent.TVShowsFragmentViewModel
 import alex.example.movies.utils.BaseFragment
 import alex.example.movies.utils.Const
+import alex.example.movies.utils.Const.DETAIL_ARGUMENTS_FILM_TYPE_TAG
 import alex.example.movies.utils.FilmItemClickListener
 import android.os.Bundle
 import android.view.View
@@ -48,7 +49,7 @@ class TVShowsFragment : BaseFragment<FragmentTVShowsBinding, TVShowsFragmentView
                 // TODO: Improve implementation
                 this.setOnClickListener(object: FilmItemClickListener {
                     override fun filmItemClick(id: Int, filmType: FilmType) {
-                        val bundle = bundleOf("id" to id, "filmType" to filmType.name)
+                        val bundle = bundleOf(Const.DETAIL_ARGUMENTS_ID_TAG to id, DETAIL_ARGUMENTS_FILM_TYPE_TAG to filmType.name)
                         requireParentFragment().requireParentFragment().findNavController().navigate(R.id.action_mainContentFragment_to_filmDetailsFragment, bundle)
                     }
                 })

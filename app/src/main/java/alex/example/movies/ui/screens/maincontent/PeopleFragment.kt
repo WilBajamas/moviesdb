@@ -1,16 +1,21 @@
 package alex.example.movies.ui.screens.maincontent
 
+import alex.example.movies.R
 import alex.example.movies.ui.viewmodels.maincontent.PeopleFragmentViewModel
 import alex.example.movies.databinding.FragmentPeopleBinding
 import alex.example.movies.ui.adapters.PeopleAdapter
 import alex.example.movies.ui.adapters.comparator.PeopleComparator
 import alex.example.movies.ui.adapters.pagingloadstate.PagingLoadingStateAdapter
 import alex.example.movies.utils.BaseFragment
+import alex.example.movies.utils.Const
+import alex.example.movies.utils.PeopleItemClickListener
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,6 +47,18 @@ class PeopleFragment : BaseFragment<FragmentPeopleBinding, PeopleFragmentViewMod
                 }
             }
 
+            popularPeopleAdapter.setOnClickListener(object :
+                PeopleItemClickListener {
+                override fun peopleItemClick(id: Int) {
+                    val bundle = bundleOf(Const.DETAIL_ARGUMENTS_ID_TAG to id)
+                    requireParentFragment().requireParentFragment()
+                        .findNavController().navigate(
+                            R.id.action_mainContentFragment_to_peopleDetailFragment,
+                            bundle
+                        )
+                }
+            })
+
             val footerLoadingAdapter = PagingLoadingStateAdapter(popularPeopleAdapter::retry)
             layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int =
@@ -62,6 +79,18 @@ class PeopleFragment : BaseFragment<FragmentPeopleBinding, PeopleFragmentViewMod
                     }
                 }
             }
+
+            searchPeopleAdapter.setOnClickListener(object :
+                PeopleItemClickListener {
+                override fun peopleItemClick(id: Int) {
+                    val bundle = bundleOf(Const.DETAIL_ARGUMENTS_ID_TAG to id)
+                    requireParentFragment().requireParentFragment()
+                        .findNavController().navigate(
+                            R.id.action_mainContentFragment_to_peopleDetailFragment,
+                            bundle
+                        )
+                }
+            })
 
             val searchFooterLoadingAdapter = PagingLoadingStateAdapter(searchPeopleAdapter::retry)
             searchLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {

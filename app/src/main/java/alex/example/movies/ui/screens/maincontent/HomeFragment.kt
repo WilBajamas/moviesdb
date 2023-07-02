@@ -102,7 +102,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentViewModel>(
                                     FilmItemClickListener {
                                     override fun filmItemClick(id: Int, filmType: FilmType) {
                                         val bundle =
-                                            bundleOf("id" to id, "filmType" to filmType.name)
+                                            bundleOf(
+                                                Const.DETAIL_ARGUMENTS_ID_TAG to id,
+                                                Const.DETAIL_ARGUMENTS_FILM_TYPE_TAG to filmType.name
+                                            )
                                         requireParentFragment().requireParentFragment()
                                             .findNavController().navigate(
                                                 R.id.action_mainContentFragment_to_filmDetailsFragment,
@@ -133,7 +136,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentViewModel>(
                                     FilmItemClickListener {
                                     override fun filmItemClick(id: Int, filmType: FilmType) {
                                         val bundle =
-                                            bundleOf("id" to id, "filmType" to filmType.name)
+                                            bundleOf(
+                                                Const.DETAIL_ARGUMENTS_ID_TAG to id,
+                                                Const.DETAIL_ARGUMENTS_FILM_TYPE_TAG to filmType.name
+                                            )
                                         requireParentFragment().requireParentFragment()
                                             .findNavController().navigate(
                                                 R.id.action_mainContentFragment_to_filmDetailsFragment,

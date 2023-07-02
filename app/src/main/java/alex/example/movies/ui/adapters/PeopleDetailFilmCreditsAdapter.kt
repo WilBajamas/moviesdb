@@ -3,6 +3,7 @@ package alex.example.movies.ui.adapters
 import alex.example.movies.R
 import alex.example.movies.data.model.Film
 import alex.example.movies.databinding.ShowItemBinding
+import alex.example.movies.ui.extension.convertDateString
 import alex.example.movies.utils.Const
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -32,7 +33,8 @@ class PeopleDetailFilmCreditsAdapter(private val items: List<Film>) :
         val item = items[position]
         with (holder.binding) {
             titleTv.text = item.title ?: item.name
-            dateTv.text = item.release_date ?: item.first_air_date
+            if (item.release_date != null)  dateTv.text = item.release_date.convertDateString()
+            if (item.first_air_date != null)  dateTv.text = item.first_air_date.convertDateString()
             ratingView.progressBar.progress = (item.vote_average * 10).toInt()
             ratingView.textView.text = holder.binding.root.context.getString(
                 R.string.percentage, ((item.vote_average * 10).toInt()).toString()
