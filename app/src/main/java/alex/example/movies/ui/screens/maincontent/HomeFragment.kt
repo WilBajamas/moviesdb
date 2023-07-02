@@ -163,7 +163,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentViewModel>(
                                 trendingPeopleAdapter.setOnClickListener(object :
                                     PeopleItemClickListener {
                                     override fun peopleItemClick(id: Int) {
-                                        val bundle = bundleOf("id" to id)
+                                        val bundle = bundleOf(Const.DETAIL_ARGUMENTS_ID_TAG to id)
                                         requireParentFragment().requireParentFragment()
                                             .findNavController().navigate(
                                                 R.id.action_mainContentFragment_to_peopleDetailFragment,

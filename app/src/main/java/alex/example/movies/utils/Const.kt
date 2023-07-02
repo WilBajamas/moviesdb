@@ -8,4 +8,5 @@ object Const {
  const val FIRST_PAGE_INDEX = 1
  const val FILTER_DIALOG_TAG = "filter_dialog_tag"
  const val DEFAULT_BACKDROP_COLLECTION_ID = 10
+ const val DETAIL_ARGUMENTS_ID_TAG = "id"
 }

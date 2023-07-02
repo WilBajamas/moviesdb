@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="30dp">
+
+    <TextView
+        android:id="@+id/error_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/error_loading_content"
+        android:textAlignment="center"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/design_default_color_error"/>
+
+    <Button
+        android:id="@+id/retry_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/error_tv"
+        app:layout_constraintStart_toStartOf="@+id/error_tv"
+        app:layout_constraintTop_toBottomOf="@id/error_tv"
+        android:layout_marginTop="12dp"
+        android:text="@string/retry"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

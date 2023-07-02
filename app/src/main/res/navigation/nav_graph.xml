@@ -24,10 +24,14 @@
         tools:layout="@layout/fragment_main_content" >
         <action
             android:id="@+id/action_mainContentFragment_to_filmDetailsFragment"
-            app:destination="@id/filmDetailsFragment" />
+            app:destination="@id/filmDetailsFragment"
+            app:enterAnim="@anim/slide_in"
+            app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_mainContentFragment_to_peopleDetailFragment"
-            app:destination="@id/peopleDetailFragment" />
+            app:destination="@id/peopleDetailFragment"
+            app:enterAnim="@anim/slide_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <navigation
         android:id="@+id/onboarding_nav"

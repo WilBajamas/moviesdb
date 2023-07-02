@@ -33,7 +33,6 @@ class PeopleDetailDataSource @Inject constructor(
                 peopleApi.fetchPersonMovieCredits(id)
             }
         }
-
         emit(result)
     }
 
