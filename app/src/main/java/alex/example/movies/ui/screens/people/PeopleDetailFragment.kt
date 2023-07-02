@@ -101,8 +101,7 @@ class PeopleDetailFragment :
                                 knownForRv.layoutManager = LinearLayoutManager(
                                     requireContext(), LinearLayoutManager.HORIZONTAL, false
                                 )
-                                filmCreditsAdapter =
-                                    PeopleDetailFilmCreditsAdapter(it)
+                                filmCreditsAdapter = PeopleDetailFilmCreditsAdapter(it)
                                 knownForRv.adapter = filmCreditsAdapter
                             }
                         }

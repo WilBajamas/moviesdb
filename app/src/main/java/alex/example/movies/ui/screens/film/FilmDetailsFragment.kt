@@ -18,6 +18,7 @@ import kotlinx.coroutines.launch
 import alex.example.movies.ui.extension.toMoneyValue
 import alex.example.movies.utils.ItemSpacingDecoration
 import android.util.Log
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 
 @AndroidEntryPoint
@@ -31,12 +32,18 @@ class FilmDetailsFragment : BaseFragment<FragmentFilmDetailsBinding, FilmDetails
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
+            val arguments = requireArguments()
+            val filmId = arguments.getInt(Const.DETAIL_ARGUMENTS_ID_TAG)
+            val filmType = arguments.getString(Const.DETAIL_ARGUMENTS_FILM_TYPE_TAG)
+
+            toolbar.setNavigationOnClickListener {
+                findNavController().navigateUp()
+            }
 
             viewLifecycleOwner.lifecycleScope.launch {
-                val arguments = requireArguments()
                 // TODO: Improve implementation
                 viewModel.fetchFilmDetails(
-                    arguments.getInt("id"), arguments.getString("filmType")!!
+                    filmId, filmType!!
                 )
 
                 launch {
@@ -94,9 +101,7 @@ class FilmDetailsFragment : BaseFragment<FragmentFilmDetailsBinding, FilmDetails
 
                                     if (it.budget != null && it.type == null) {
                                         budgetTypeTv.text = getString(R.string.budget)
-                                        budgetTypeTextTv.text =
-                                            it.budget.takeIf { budget -> budget != 0L }
-                                                ?.toMoneyValue("$") ?: "-"
+                                        budgetTypeTextTv.text = it.budget.toMoneyValue("$")
                                     } else {
                                         budgetTypeTv.text = getString(R.string.type)
                                         budgetTypeTextTv.text = it.type
@@ -108,9 +113,7 @@ class FilmDetailsFragment : BaseFragment<FragmentFilmDetailsBinding, FilmDetails
                                             if (it.networks.isNotEmpty()) it.networks[0].name else "-"
                                     } else {
                                         networkRevenueTv.text = getString(R.string.revenue)
-                                        networkRevenueTextTv.text =
-                                            it.revenue.takeIf { revenue -> revenue != 0L }
-                                                ?.toMoneyValue("$") ?: "-"
+                                        networkRevenueTextTv.text = it.revenue.toMoneyValue("$")
                                     }
 
 

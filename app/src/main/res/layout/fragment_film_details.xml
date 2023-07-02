@@ -18,7 +18,8 @@
             android:background="?attr/colorPrimary"
             app:contentInsetStart="0dp"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:menu="@menu/details_menu">
+            app:menu="@menu/details_menu"
+            app:navigationIcon="@drawable/ic_back_btn">
 
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
@@ -67,7 +68,7 @@
                         android:id="@+id/film_iv"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:scaleType="centerCrop"/>
+                        android:scaleType="centerCrop" />
 
                 </com.google.android.material.card.MaterialCardView>
 
