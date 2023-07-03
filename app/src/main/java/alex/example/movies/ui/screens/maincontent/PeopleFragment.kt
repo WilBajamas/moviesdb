@@ -40,7 +40,7 @@ class PeopleFragment : BaseFragment<FragmentPeopleBinding, PeopleFragmentViewMod
             popularPeopleAdapter = PeopleAdapter(PeopleComparator).apply {
                 viewLifecycleOwner.lifecycleScope.launch {
                     loadStateFlow.collectLatest {
-                        loadErrorLayout.isVisible = it.refresh is LoadState.Error
+                        loadErrorView.root.isVisible = it.refresh is LoadState.Error
                         swipeRefreshLayout.isVisible = it.refresh !is LoadState.Error
                         shimmer(it.refresh is LoadState.Loading)
                     }

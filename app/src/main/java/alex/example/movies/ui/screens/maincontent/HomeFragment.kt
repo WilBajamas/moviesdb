@@ -34,12 +34,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentViewModel>(
     private lateinit var trendingPeopleAdapter: TrendingPeopleAdapter
     private lateinit var offsetChangedListener: OnOffsetChangedListener
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         with(binding) {
+
+            val retryClickListener = View.OnClickListener {
+                viewModel.init()
+            }
+
             val random = Random()
             offsetChangedListener = OnOffsetChangedListener { _, verticalOffset ->
                 swipeRefreshLayout.isEnabled = verticalOffset == 0
@@ -47,18 +50,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentViewModel>(
                 appbar.addOnOffsetChangedListener(this)
             }
 
+            viewModel.init()
+
             swipeRefreshLayout.setOnRefreshListener {
                 with(viewModel.backdropData.value) {
+                    viewModel.init()
                     this?.let {
                         collapsingIv.load("${Const.POSTER_PATH_BASE_URL}${it[random.nextInt(it.size)].file_path}") {
                             crossfade(true)
                         }
-
-                        swipeRefreshLayout.isRefreshing = false
                     }
-
+                    swipeRefreshLayout.isRefreshing = false
                 }
             }
+
+            moviesErrorView.retryBtn.setOnClickListener(retryClickListener)
+            tvShowsErrorView.retryBtn.setOnClickListener(retryClickListener)
+            peopleErrorView.retryBtn.setOnClickListener(retryClickListener)
 
             val itemSpacingDecoration = ItemSpacingDecoration(24)
             trendingMoviesRv.addItemDecoration(itemSpacingDecoration)
@@ -67,7 +75,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentViewModel>(
 
             viewLifecycleOwner.lifecycleScope.launch {
 
-                viewModel.init()
 
                 viewModel.backdropData.observe(viewLifecycleOwner) {
                     if (!it.isNullOrEmpty()) {
@@ -88,6 +95,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentViewModel>(
                         loadSectionListView(
                             trendingTvshowsRv, tvshowsShimmer, it is Resource.Loading
                         )
+                        showErrorView(trendingTvshowsRv, tvShowsErrorView.root, it is Resource.Error)
 
                         if (it is Resource.Success) {
                             it.data?.let { tvShowsPageResult ->
@@ -120,6 +128,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentViewModel>(
                 launch {
                     viewModel.trendingMovies.collectLatest {
 
+                        showErrorView(trendingMoviesRv, moviesErrorView.root, it is Resource.Error)
                         loadSectionListView(trendingMoviesRv, moviesShimmer, it is Resource.Loading)
 
                         if (it is Resource.Success) {
@@ -154,6 +163,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentViewModel>(
                     viewModel.trendingPeople.collectLatest {
 
                         loadSectionListView(trendingPeopleRv, peopleShimmer, it is Resource.Loading)
+                        showErrorView(trendingPeopleRv, peopleErrorView.root, it is Resource.Error)
 
                         if (it is Resource.Success) {
                             it.data?.let { peopleResponse ->
@@ -191,6 +201,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentViewModel>(
         shimmerLayout.apply {
             if (showShimmer) startShimmer() else stopShimmer()
         }
+    }
+
+    private fun showErrorView(recyclerView: RecyclerView, errorView: View, show: Boolean) {
+        recyclerView.isVisible = !show
+        errorView.isVisible = show
     }
 
     override fun onPause() {

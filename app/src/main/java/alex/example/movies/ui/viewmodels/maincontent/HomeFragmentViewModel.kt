@@ -16,7 +16,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.last
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -54,15 +54,19 @@ class HomeFragmentViewModel @Inject constructor(
                 else -> _backdropCollectionLiveData.value = null
             }
 
-            _trendingTvShows.emit(
-                tvShowsRepository.fetchTrendingTvShows(TimeWindow.TODAY.timeFrame).last()
-            )
-            _trendingMovies.emit(
-                moviesRepository.fetchTrendingMovies(TimeWindow.TODAY.timeFrame).last()
-            )
-            _trendingPeople.emit(
-                peopleRepository.fetchTrendingPeople(TimeWindow.TODAY.timeFrame).last()
-            )
+            tvShowsRepository.fetchTrendingTvShows(TimeWindow.TODAY.timeFrame).collectLatest {
+                _trendingTvShows.emit(it)
+
+            }
+
+            moviesRepository.fetchTrendingMovies(TimeWindow.TODAY.timeFrame).collectLatest {
+                _trendingMovies.emit(it)
+            }
+
+            peopleRepository.fetchTrendingPeople(TimeWindow.TODAY.timeFrame).collectLatest {
+                _trendingPeople.emit(it)
+            }
+
         }
     }
 

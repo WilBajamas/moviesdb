@@ -19,6 +19,7 @@ class TrendingPeopleDataSource @Inject constructor(
     suspend fun fetchTrendingPeople(
         timeWindow: String
     ): Flow<Resource<PeopleResponse>> = flow {
+        emit(Resource.Loading())
         val result: Resource<PeopleResponse> = withContext(dispatcher.io) {
             requestManager.callApi {
                 peopleApi.fetchTrendingPeopleWithTimeWindow(

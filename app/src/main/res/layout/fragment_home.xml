@@ -131,6 +131,13 @@
 
                     </com.facebook.shimmer.ShimmerFrameLayout>
 
+                    <include
+                        android:id="@+id/movies_error_view"
+                        layout="@layout/error_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/trending_movies_title" />
+
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -169,6 +176,13 @@
 
                     </com.facebook.shimmer.ShimmerFrameLayout>
 
+                    <include
+                        android:id="@+id/tv_shows_error_view"
+                        layout="@layout/error_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/trending_tvshows_title" />
+
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -206,6 +220,13 @@
                         <include layout="@layout/show_item_placeholder" />
 
                     </com.facebook.shimmer.ShimmerFrameLayout>
+
+                    <include
+                        android:id="@+id/people_error_view"
+                        layout="@layout/error_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/trending_people_title" />
 
                 </RelativeLayout>
 

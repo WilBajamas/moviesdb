@@ -21,6 +21,7 @@ class TrendingMoviesDataSource @Inject constructor(
     suspend fun fetchTrendingMovies(
         timeWindow: String
     ): Flow<Resource<FilmPageResult>> = flow {
+        emit(Resource.Loading())
         val result: Resource<FilmPageResult> = withContext(dispatcher.io) {
             requestManager.callApi {
                 moviesListApi.fetchTrendingMoviesWithTimeWindow(
