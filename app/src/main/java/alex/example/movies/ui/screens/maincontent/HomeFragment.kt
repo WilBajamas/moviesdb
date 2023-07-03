@@ -38,11 +38,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentViewModel>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.init()
-        val random = Random()
 
         with(binding) {
-
+            val random = Random()
             offsetChangedListener = OnOffsetChangedListener { _, verticalOffset ->
                 swipeRefreshLayout.isEnabled = verticalOffset == 0
             }.apply {
@@ -68,6 +66,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentViewModel>(
             trendingPeopleRv.addItemDecoration(itemSpacingDecoration)
 
             viewLifecycleOwner.lifecycleScope.launch {
+
+                viewModel.init()
 
                 viewModel.backdropData.observe(viewLifecycleOwner) {
                     if (!it.isNullOrEmpty()) {
@@ -101,11 +101,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentViewModel>(
                                 trendingTvShowsAdapter.setOnClickListener(object :
                                     FilmItemClickListener {
                                     override fun filmItemClick(id: Int, filmType: FilmType) {
-                                        val bundle =
-                                            bundleOf(
-                                                Const.DETAIL_ARGUMENTS_ID_TAG to id,
-                                                Const.DETAIL_ARGUMENTS_FILM_TYPE_TAG to filmType.name
-                                            )
+                                        val bundle = bundleOf(
+                                            Const.DETAIL_ARGUMENTS_ID_TAG to id,
+                                            Const.DETAIL_ARGUMENTS_FILM_TYPE_TAG to filmType.name
+                                        )
                                         requireParentFragment().requireParentFragment()
                                             .findNavController().navigate(
                                                 R.id.action_mainContentFragment_to_filmDetailsFragment,
@@ -135,11 +134,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentViewModel>(
                                 trendingMoviesAdapter.setOnClickListener(object :
                                     FilmItemClickListener {
                                     override fun filmItemClick(id: Int, filmType: FilmType) {
-                                        val bundle =
-                                            bundleOf(
-                                                Const.DETAIL_ARGUMENTS_ID_TAG to id,
-                                                Const.DETAIL_ARGUMENTS_FILM_TYPE_TAG to filmType.name
-                                            )
+                                        val bundle = bundleOf(
+                                            Const.DETAIL_ARGUMENTS_ID_TAG to id,
+                                            Const.DETAIL_ARGUMENTS_FILM_TYPE_TAG to filmType.name
+                                        )
                                         requireParentFragment().requireParentFragment()
                                             .findNavController().navigate(
                                                 R.id.action_mainContentFragment_to_filmDetailsFragment,

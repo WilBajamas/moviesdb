@@ -17,9 +17,10 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import alex.example.movies.ui.extension.toMoneyValue
 import alex.example.movies.utils.ItemSpacingDecoration
-import android.util.Log
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.facebook.shimmer.ShimmerFrameLayout
 
 @AndroidEntryPoint
 class FilmDetailsFragment : BaseFragment<FragmentFilmDetailsBinding, FilmDetailsFragmentViewModel>(
@@ -40,88 +41,98 @@ class FilmDetailsFragment : BaseFragment<FragmentFilmDetailsBinding, FilmDetails
                 findNavController().navigateUp()
             }
 
+            headerErrorView.retryBtn.setOnClickListener {
+                retryDetails(filmId, filmType!!)
+            }
+
+            infoErrorView.retryBtn.setOnClickListener {
+                retryDetails(filmId, filmType!!)
+            }
+
+            rvErrorView.retryBtn.setOnClickListener {
+                retryCredits(filmId, filmType!!)
+            }
+
             viewLifecycleOwner.lifecycleScope.launch {
-                // TODO: Improve implementation
                 viewModel.fetchFilmDetails(
                     filmId, filmType!!
+                )
+
+                viewModel.fetchFilmCredits(
+                    filmId, filmType
                 )
 
                 launch {
                     val itemSpacingDecoration = ItemSpacingDecoration(24)
                     castRv.addItemDecoration(itemSpacingDecoration)
                     viewModel.filmCreditsStateFlow.collectLatest {
-                        when (it) {
-                            is Resource.Success -> {
-                                castRv.layoutManager = LinearLayoutManager(
-                                    requireContext(), LinearLayoutManager.HORIZONTAL, false
-                                )
-                                castAdapter = FilmDetailsCastAdapter(it.data!!.cast)
-                                castRv.adapter = castAdapter
-                            }
-                            is Resource.Error -> {
+                        loadRVContent(it is Resource.Loading)
+                        showErrorCredits(it is Resource.Error)
 
-                            }
-                            is Resource.Loading -> {
-
-                            }
+                        if (it is Resource.Success) {
+                            castRv.layoutManager = LinearLayoutManager(
+                                requireContext(), LinearLayoutManager.HORIZONTAL, false
+                            )
+                            castAdapter = FilmDetailsCastAdapter(it.data!!.cast)
+                            castRv.adapter = castAdapter
                         }
                     }
                 }
 
                 launch {
                     viewModel.filmDetailsStateFlow.collectLatest { resource ->
-                        when (resource) {
-                            is Resource.Success -> {
-                                val details = resource.data
-                                details?.let {
-                                    filmIv.load("${Const.POSTER_PATH_BASE_URL}${details.poster_path}") {
-                                        placeholder(R.drawable.list_placeholder_img)
-                                    }
-                                    filmBackdropIv.load("${Const.POSTER_PATH_BASE_URL}${details.backdrop_path}") {
-                                        crossfade(true)
-                                    }
-                                    filmTitleTv.text = it.title ?: it.name
-                                    releaseDateTv.text = it.release_date ?: it.first_air_date
-                                    filmGenresTv.text =
-                                        it.genres.joinToString(", ") { genre -> genre.name }
-                                    ratingView.progressBar.progress = (it.vote_average * 10).toInt()
-                                    ratingView.textView.text = getString(
-                                        R.string.percentage,
-                                        ((it.vote_average * 10).toInt()).toString()
-                                    )
-                                    taglineTv.text = it.tagline
-                                    overviewTv.text = it.overview
-                                    statusTextTv.text = it.status
-                                    languageTextTv.text = Languages.values()
-                                        .find { language -> language.iso639Id == it.original_language }?.displayName?.let { string ->
-                                            getString(
-                                                string
-                                            )
-                                        }
+                        loadShimmer(
+                            headerView, headerShimmerView, resource is Resource.Loading
+                        )
+                        showErrorHeaderContent(resource is Resource.Error)
+                        showErrorDetailContent(resource is Resource.Error)
+                        loadDetailContent(resource is Resource.Loading)
 
-                                    if (it.budget != null && it.type == null) {
-                                        budgetTypeTv.text = getString(R.string.budget)
-                                        budgetTypeTextTv.text = it.budget.toMoneyValue("$")
-                                    } else {
-                                        budgetTypeTv.text = getString(R.string.type)
-                                        budgetTypeTextTv.text = it.type
-                                    }
+                        if (resource is Resource.Success) {
 
-                                    if (it.networks != null && it.revenue == null) {
-                                        networkRevenueTv.text = getString(R.string.network)
-                                        networkRevenueTextTv.text =
-                                            if (it.networks.isNotEmpty()) it.networks[0].name else "-"
-                                    } else {
-                                        networkRevenueTv.text = getString(R.string.revenue)
-                                        networkRevenueTextTv.text = it.revenue.toMoneyValue("$")
-                                    }
-
-
+                            val details = resource.data
+                            details?.let {
+                                filmIv.load("${Const.POSTER_PATH_BASE_URL}${details.poster_path}") {
+                                    placeholder(R.drawable.list_placeholder_img)
                                 }
-                            }
-                            is Resource.Error -> Log.e("Film Detail Error: ", resource.message!!)
-                            is Resource.Loading -> {
+                                filmBackdropIv.load("${Const.POSTER_PATH_BASE_URL}${details.backdrop_path}") {
+                                    crossfade(true)
+                                }
+                                filmTitleTv.text = it.title ?: it.name
+                                releaseDateTv.text = it.release_date ?: it.first_air_date
+                                filmGenresTv.text =
+                                    it.genres.joinToString(", ") { genre -> genre.name }
+                                ratingView.progressBar.progress = (it.vote_average * 10).toInt()
+                                ratingView.textView.text = getString(
+                                    R.string.percentage,
+                                    ((it.vote_average * 10).toInt()).toString()
+                                )
+                                taglineTv.text = it.tagline
+                                overviewTv.text = it.overview
+                                statusTextTv.text = it.status
+                                languageTextTv.text = Languages.values()
+                                    .find { language -> language.iso639Id == it.original_language }?.displayName?.let { string ->
+                                        getString(
+                                            string
+                                        )
+                                    }
 
+                                if (it.budget != null && it.type == null) {
+                                    budgetTypeTv.text = getString(R.string.budget)
+                                    budgetTypeTextTv.text = it.budget.toMoneyValue("$")
+                                } else {
+                                    budgetTypeTv.text = getString(R.string.type)
+                                    budgetTypeTextTv.text = it.type
+                                }
+
+                                if (it.networks != null && it.revenue == null) {
+                                    networkRevenueTv.text = getString(R.string.network)
+                                    networkRevenueTextTv.text =
+                                        if (it.networks.isNotEmpty()) it.networks[0].name else "-"
+                                } else {
+                                    networkRevenueTv.text = getString(R.string.revenue)
+                                    networkRevenueTextTv.text = it.revenue.toMoneyValue("$")
+                                }
                             }
                         }
                     }
@@ -131,5 +142,65 @@ class FilmDetailsFragment : BaseFragment<FragmentFilmDetailsBinding, FilmDetails
 
         }
     }
+
+    private fun loadShimmer(
+        view: View, shimmerLayout: ShimmerFrameLayout, showShimmer: Boolean
+    ) {
+        when (showShimmer) {
+            true -> view.visibility = View.INVISIBLE
+            false -> view.visibility = View.VISIBLE
+        }
+        shimmerLayout.isVisible = showShimmer
+        shimmerLayout.apply {
+            if (showShimmer) startShimmer() else stopShimmer()
+        }
+    }
+
+    private fun loadDetailContent(load: Boolean) {
+        with(binding) {
+            infoView.isVisible = !load
+            infoProgressBar.isVisible = load
+        }
+    }
+
+    private fun loadRVContent(load: Boolean) {
+        with(binding) {
+            castRv.isVisible = !load
+            rvProgressBar.isVisible = load
+        }
+    }
+
+    private fun showErrorDetailContent(show: Boolean) {
+        with(binding) {
+            infoView.isVisible = !show
+            infoErrorView.root.isVisible = show
+        }
+    }
+
+    private fun showErrorHeaderContent(show: Boolean) {
+        with(binding) {
+            filmBackdropIv.isVisible = !show
+            filmIvView.isVisible = !show
+            filmTitleTv.isVisible = !show
+            releaseDateTv.isVisible = !show
+            filmGenresTv.isVisible = !show
+            userScoreTv.isVisible = !show
+            ratingView.root.isVisible = !show
+            taglineTv.isVisible = !show
+            overviewTv.isVisible = !show
+            headerErrorView.root.isVisible = show
+        }
+    }
+
+    private fun showErrorCredits(show: Boolean) {
+        with(binding) {
+            castRv.isVisible = !show
+            rvErrorView.root.isVisible = show
+        }
+    }
+
+    private fun retryDetails(id: Int, filmType: String) = viewModel.fetchFilmDetails(id, filmType)
+
+    private fun retryCredits(id: Int, filmType: String) = viewModel.fetchFilmCredits(id, filmType)
 
 }

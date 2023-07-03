@@ -32,13 +32,15 @@ class FilmDetailsFragmentViewModel @Inject constructor(
             filmDetailsResult?.let {
                 _filmDetailsStateFlow.emit(it)
             }
+        }
+    }
 
+    fun fetchFilmCredits(id: Int, filmType: String) {
+        viewModelScope.launch {
             val filmCreditsResult = creditsUseCase.fetchCredits(id, filmType).lastOrNull()
             filmCreditsResult?.let {
                 _filmCreditsStateFlow.emit(it)
             }
         }
     }
-
-
 }
