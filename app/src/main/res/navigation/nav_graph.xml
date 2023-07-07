@@ -32,6 +32,11 @@
             app:destination="@id/peopleDetailFragment"
             app:enterAnim="@anim/slide_in"
             app:popExitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_mainContentFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/mainContentFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <navigation
         android:id="@+id/onboarding_nav"

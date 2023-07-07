@@ -44,6 +44,8 @@
     <string name="known_for">Known For</string>
     <string name="dob">D.O.B</string>
     <string name="pob">P.O.B</string>
+    <string name="cancel">Cancel</string>
+    <string name="yes">Yes</string>
 
 
     <!--    API_KEY empty-->
@@ -118,5 +120,11 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="non_binary">Non-binary</string>
+
+    <!--    Preferences -->
+    <string name="favourite_films">Favourite Films</string>
+    <string name="favourite_films_description">List of your favourite films</string>
+    <string name="logout">Logout</string>
+    <string name="logout_description">Are you sure you want to logout?</string>
 
 </resources>

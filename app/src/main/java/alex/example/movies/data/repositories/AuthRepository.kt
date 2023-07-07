@@ -7,11 +7,11 @@ import alex.example.movies.utils.Const.REQUEST_TOKEN
 import alex.example.movies.utils.Resource
 import android.content.SharedPreferences
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class AuthRepository @Inject constructor(
-    private val sharedPreferences: SharedPreferences,
-    private val authDataSource: AuthDataSource
+    private val sharedPreferences: SharedPreferences, private val authDataSource: AuthDataSource
 ) {
     fun isLoggedIn(): Boolean {
         return sharedPreferences.getBoolean(LOGGED_IN, false)
@@ -19,6 +19,11 @@ class AuthRepository @Inject constructor(
 
     fun setLoggedIn() {
         sharedPreferences.edit().putBoolean(LOGGED_IN, true).apply()
+    }
+
+    fun removeSession() = flow<Boolean> {
+        sharedPreferences.edit().clear().apply()
+        emit(true)
     }
 
     fun isRequestTokenAvailable(): Boolean {
@@ -32,9 +37,7 @@ class AuthRepository @Inject constructor(
     suspend fun getRequestToken(): Flow<Resource<Session>> = authDataSource.getRequestToken()
 
     suspend fun performLoginWithUsernamePassword(
-        email: String,
-        password: String,
-        requestToken: String
+        email: String, password: String, requestToken: String
     ): Flow<Resource<Session>> =
         authDataSource.performLoginWithUsernamePassword(email, password, requestToken)
 }
