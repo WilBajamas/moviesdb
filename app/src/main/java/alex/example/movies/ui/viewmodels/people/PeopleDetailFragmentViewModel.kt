@@ -30,13 +30,13 @@ class PeopleDetailFragmentViewModel @Inject constructor(
 
     fun fetchDetails(id: Int) {
         viewModelScope.launch {
-            _peopleDetailStateFlow.emit(peopleDetailUseCase.invoke(id).last())
+            _peopleDetailStateFlow.emit(peopleDetailUseCase(id).last())
         }
     }
 
     fun fetchMoviesCredits(id: Int) {
         viewModelScope.launch {
-            _peopleMovieCreditsStateFlow.emit(peopleMovieCreditsUseCase.invoke(id).last())
+            _peopleMovieCreditsStateFlow.emit(peopleMovieCreditsUseCase(id).last())
         }
     }
 

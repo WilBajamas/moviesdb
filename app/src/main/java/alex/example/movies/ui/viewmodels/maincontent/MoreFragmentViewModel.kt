@@ -10,6 +10,6 @@ class MoreFragmentViewModel @Inject constructor(
     private val logoutUseCase: LogoutUseCase
 ) : ViewModel() {
 
-    fun logout() = logoutUseCase.invoke()
+    fun logout() = logoutUseCase()
 
 }

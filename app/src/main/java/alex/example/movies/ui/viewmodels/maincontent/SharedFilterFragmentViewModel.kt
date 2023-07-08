@@ -40,7 +40,7 @@ open class SharedFilterFragmentViewModel<T : Any> : ViewModel() {
 
     fun callPagingRemoteAction(
         pagingUseCase: PagingUseCase<T>, filterRequest: FilterRequest
-    ): Flow<PagingData<T>> = pagingUseCase.invoke(filterRequest).cachedIn(viewModelScope)
+    ): Flow<PagingData<T>> = pagingUseCase(filterRequest).cachedIn(viewModelScope)
 
     fun setGenres(genres: List<Int>) {
         this.genres.value = genres

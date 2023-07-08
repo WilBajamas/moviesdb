@@ -1,9 +1,11 @@
 package alex.example.movies.data.repositories
 
+import alex.example.movies.data.local.dao.FilmDao
 import alex.example.movies.data.model.Film
 import alex.example.movies.data.remote.api.TvShowsListApi
 import alex.example.movies.data.remote.datasource.TrendingTvShowsDataSource
 import alex.example.movies.data.remote.datasource.TvShowsRemotePagingSource
+import alex.example.movies.domain.model.FilmType
 import alex.example.movies.services.NetworkRequestManager
 import alex.example.movies.ui.model.FilterRequest
 import alex.example.movies.utils.DispatcherProvider
@@ -17,7 +19,8 @@ class TvShowsRepository @Inject constructor(
     private val tvShowsListApi: TvShowsListApi,
     private val requestManager: NetworkRequestManager,
     private val dispatcher: DispatcherProvider,
-    private val tvShowsDataSource: TrendingTvShowsDataSource
+    private val tvShowsDataSource: TrendingTvShowsDataSource,
+    private val filmDao: FilmDao,
 ) {
 
     private lateinit var filterRequest: FilterRequest
@@ -42,5 +45,8 @@ class TvShowsRepository @Inject constructor(
 
     suspend fun fetchTrendingTvShows(timeWindow: String) =
         tvShowsDataSource.fetchTrendingTvShows(timeWindow)
+
+    // TODO: Might need a datasource layer
+    suspend fun fetchFavouriteTvShows() = filmDao.getAllFilmsByType(FilmType.TV_SHOW.ordinal)
 
 }

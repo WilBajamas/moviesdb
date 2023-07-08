@@ -31,7 +31,7 @@ class PeopleFragmentViewModel @Inject constructor(
     private val _searchQueryData: MutableLiveData<String?> = MutableLiveData(null)
 
     fun fetchPopularPeople() = viewModelScope.launch {
-        peopleUseCase.invoke().cachedIn(viewModelScope).collectLatest {
+        peopleUseCase().cachedIn(viewModelScope).collectLatest {
             _peopleState.emit(it)
         }
     }
@@ -42,7 +42,7 @@ class PeopleFragmentViewModel @Inject constructor(
     }
 
     fun fetchSearchPeople() = viewModelScope.launch {
-        searchPeopleUseCase.invoke(_searchQueryData.value).cachedIn(viewModelScope).collectLatest {
+        searchPeopleUseCase(_searchQueryData.value).cachedIn(viewModelScope).collectLatest {
             _searchPeopleState.emit(it)
         }
     }

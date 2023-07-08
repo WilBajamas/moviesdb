@@ -17,6 +17,8 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import alex.example.movies.ui.extension.toMoneyValue
 import alex.example.movies.utils.ItemSpacingDecoration
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -104,8 +106,7 @@ class FilmDetailsFragment : BaseFragment<FragmentFilmDetailsBinding, FilmDetails
                                     it.genres.joinToString(", ") { genre -> genre.name }
                                 ratingView.progressBar.progress = (it.vote_average * 10).toInt()
                                 ratingView.textView.text = getString(
-                                    R.string.percentage,
-                                    ((it.vote_average * 10).toInt()).toString()
+                                    R.string.percentage, ((it.vote_average * 10).toInt()).toString()
                                 )
                                 taglineTv.text = it.tagline
                                 overviewTv.text = it.overview
@@ -138,9 +139,55 @@ class FilmDetailsFragment : BaseFragment<FragmentFilmDetailsBinding, FilmDetails
                     }
                 }
 
+                launch {
+//                    viewModel.filmDetailsStateFlow.collectLatest { resource ->
+//
+//                        if (resource is Resource.Success || resource is Resource.Loading) {
+//                            showFavouriteError()
+//                        } else {
+//
+//                        }
+//                    }
+                }
+
+                launch {
+                    viewModel.filmFavouriteStatusStateFlow.collectLatest {
+                        when (it) {
+                            true -> toolbar.menu.findItem(R.id.action_favourite)
+                                .setIcon(R.drawable.ic_favourite_filled)
+                            false -> toolbar.menu.findItem(R.id.action_favourite)
+                                .setIcon(R.drawable.ic_favourite)
+                        }
+                    }
+                }
+
             }
 
         }
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.action_favourite -> {
+
+            viewLifecycleOwner.lifecycleScope.launch {
+                val filmType = arguments?.getString(Const.DETAIL_ARGUMENTS_FILM_TYPE_TAG)
+                filmType?.let {
+                    viewModel.filmDetailsStateFlow.collectLatest { resource ->
+                        if (resource.data == null || resource is Resource.Loading) {
+                            showFavouriteError()
+                        } else {
+                            viewModel.favouriteFilm(resource.data, it)
+                        }
+                    }
+                } ?: run {
+                    false
+                }
+            }
+            true
+        }
+        else -> false
+
     }
 
     private fun loadShimmer(
@@ -203,4 +250,7 @@ class FilmDetailsFragment : BaseFragment<FragmentFilmDetailsBinding, FilmDetails
 
     private fun retryCredits(id: Int, filmType: String) = viewModel.fetchFilmCredits(id, filmType)
 
+    private fun showFavouriteError() {
+        Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
+    }
 }

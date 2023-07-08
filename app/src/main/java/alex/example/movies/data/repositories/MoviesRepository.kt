@@ -1,9 +1,11 @@
 package alex.example.movies.data.repositories
 
+import alex.example.movies.data.local.dao.FilmDao
 import alex.example.movies.data.remote.datasource.TrendingMoviesDataSource
 import alex.example.movies.data.model.Film
 import alex.example.movies.data.remote.api.MoviesListApi
 import alex.example.movies.data.remote.datasource.MoviesRemotePagingSource
+import alex.example.movies.domain.model.FilmType
 import alex.example.movies.services.NetworkRequestManager
 import alex.example.movies.ui.model.FilterRequest
 import alex.example.movies.utils.DispatcherProvider
@@ -17,7 +19,8 @@ class MoviesRepository @Inject constructor(
     private val moviesListApi: MoviesListApi,
     private val requestManager: NetworkRequestManager,
     private val dispatcher: DispatcherProvider,
-    private val trendingMoviesDataSource: TrendingMoviesDataSource
+    private val trendingMoviesDataSource: TrendingMoviesDataSource,
+    private val filmDao: FilmDao,
 ) {
 
     private lateinit var filterRequest: FilterRequest
@@ -46,4 +49,8 @@ class MoviesRepository @Inject constructor(
     ) = trendingMoviesDataSource.fetchTrendingMovies(
         timeWindow
     )
+
+    // TODO: Might need a datasource layer
+    suspend fun fetchFavouriteMovies() = filmDao.getAllFilmsByType(FilmType.MOVIE.ordinal)
+
 }

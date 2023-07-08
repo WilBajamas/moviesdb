@@ -3,6 +3,7 @@ package alex.example.movies.ui.viewmodels.film
 import alex.example.movies.data.model.Credit
 import alex.example.movies.data.model.FilmDetail
 import alex.example.movies.domain.use_case.credit.CreditsUseCase
+import alex.example.movies.domain.use_case.film.FavouriteFilmUseCase
 import alex.example.movies.domain.use_case.film.FilmDetailsUseCase
 import alex.example.movies.utils.Resource
 import androidx.lifecycle.ViewModel
@@ -15,7 +16,8 @@ import javax.inject.Inject
 @HiltViewModel
 class FilmDetailsFragmentViewModel @Inject constructor(
     private val filmDetailsUseCase: FilmDetailsUseCase,
-    private val creditsUseCase: CreditsUseCase
+    private val creditsUseCase: CreditsUseCase,
+    private val favouriteFilmUseCase: FavouriteFilmUseCase
 ) : ViewModel() {
 
     private val _filmDetailsStateFlow = MutableStateFlow<Resource<FilmDetail>>(Resource.Loading())
@@ -26,9 +28,13 @@ class FilmDetailsFragmentViewModel @Inject constructor(
     val filmCreditsStateFlow: StateFlow<Resource<Credit>>
         get() = _filmCreditsStateFlow
 
+    private val _filmFavouriteStatusStateFlow = MutableStateFlow(false)
+    val filmFavouriteStatusStateFlow: StateFlow<Boolean>
+        get() = _filmFavouriteStatusStateFlow
+
     fun fetchFilmDetails(id: Int, filmType: String) {
         viewModelScope.launch {
-            val filmDetailsResult = filmDetailsUseCase.invoke(id, filmType).lastOrNull()
+            val filmDetailsResult = filmDetailsUseCase(id, filmType).lastOrNull()
             filmDetailsResult?.let {
                 _filmDetailsStateFlow.emit(it)
             }
@@ -41,6 +47,14 @@ class FilmDetailsFragmentViewModel @Inject constructor(
             filmCreditsResult?.let {
                 _filmCreditsStateFlow.emit(it)
             }
+        }
+    }
+
+    fun favouriteFilm(film: FilmDetail, filmType: String) {
+        viewModelScope.launch {
+            _filmFavouriteStatusStateFlow.emit(
+                favouriteFilmUseCase(film, filmType).last()
+            )
         }
     }
 }
