@@ -1,5 +1,6 @@
 package alex.example.movies.di.film
 
+import alex.example.movies.data.local.dao.FilmDao
 import alex.example.movies.data.remote.datasource.MovieDetailDataSource
 import alex.example.movies.data.remote.datasource.TvShowDetailDataSource
 import alex.example.movies.data.repositories.FilmDetailRepository
@@ -16,7 +17,9 @@ class FilmDetailRepositoryModule {
     @Provides
     @Singleton
     fun provideFilmDetailRepository(
-        movieDetailDataSource: MovieDetailDataSource, tvShowDetailDataSource: TvShowDetailDataSource
-    ): FilmDetailRepository = FilmDetailRepository(movieDetailDataSource, tvShowDetailDataSource)
+        movieDetailDataSource: MovieDetailDataSource,
+        tvShowDetailDataSource: TvShowDetailDataSource,
+        filmDao: FilmDao
+    ): FilmDetailRepository = FilmDetailRepository(movieDetailDataSource, tvShowDetailDataSource, filmDao)
 
 }

@@ -1,13 +1,16 @@
 package alex.example.movies.data.local.entities
 
+import alex.example.movies.data.db.Converters
 import alex.example.movies.data.model.Genre
 import alex.example.movies.data.model.Network
 import alex.example.movies.data.model.People
 import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
 
 @Entity(tableName = "films")
 data class FilmDetailEntity(
-    val id: Int,
+    @PrimaryKey val id: Int,
     val backdrop_path: String,
     val budget: Long?,
     val original_language: String,
@@ -22,8 +25,11 @@ data class FilmDetailEntity(
     val tagline: String,
     val type: String?,
     val vote_average: Float,
+    @TypeConverters(Converters::class)
     val networks: List<Network>?,
-    val created_by: List<People>,
+    @TypeConverters(Converters::class)
+    val created_by: List<People>?,
+    @TypeConverters(Converters::class)
     val genres: List<Genre>,
     val filmType: String,
 )

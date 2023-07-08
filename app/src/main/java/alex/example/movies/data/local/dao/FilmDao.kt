@@ -7,17 +7,15 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface FilmDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertFilm(vararg filmDetailEntity: FilmDetailEntity): Int
+    suspend fun insertFilm(filmDetailEntity: FilmDetailEntity): Long
 
     @Delete
     suspend fun removeFilm(filmDetailEntity: FilmDetailEntity)
 
-    @Query("SELECT * FROM my_table WHERE id = :filmId LIMIT 1")
-    suspend fun getFilmDetailById(filmId: Int): Flow<FilmDetailEntity>
+    @Query("SELECT * FROM films WHERE id = :filmId LIMIT 1")
+    suspend fun getFilmDetailById(filmId: Int): FilmDetailEntity?
 
-    @Query ("SELECT * FROM films WHERE filmType = :filmType")
-    suspend fun getAllFilmsByType(filmType: Int): Flow<List<FilmDetailEntity>>
+    @Query("SELECT * FROM films WHERE filmType = :filmType")
+    fun getAllFilmsByType(filmType: Int): Flow<List<FilmDetailEntity>>
 
-    @Query("DELETE FROM films WHERE id = :filmId")
-    suspend fun deleteFilmById(filmDetailId: Int)
 }

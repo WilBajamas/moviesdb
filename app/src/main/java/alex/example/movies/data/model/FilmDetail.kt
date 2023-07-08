@@ -17,7 +17,7 @@ data class FilmDetail(
     val type: String?,
     val vote_average: Float,
     val networks: List<Network>?,
-    val created_by: List<People>,
+    val created_by: List<People>?,
     val genres: List<Genre>,
 )
 

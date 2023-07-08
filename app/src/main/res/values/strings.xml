@@ -104,6 +104,7 @@
     <string name="failed_to_load">Failed to load</string>
     <string name="error_loading_content">Error loading content</string>
     <string name="retry">Retry</string>
+    <string name="favourite_error">Please wait for details to finish loading.</string>
 
     <!--    Home -->
     <string name="toolbar_description">Millions of movies, TV shows and people to discover. Explore now.</string>
@@ -126,5 +127,9 @@
     <string name="favourite_films_description">List of your favourite films</string>
     <string name="logout">Logout</string>
     <string name="logout_description">Are you sure you want to logout?</string>
+
+    <!--    Film Details -->
+    <string name="added_to_favourites">Added to favourites</string>
+    <string name="removed_from_favourites">Removed from favourites</string>
 
 </resources>

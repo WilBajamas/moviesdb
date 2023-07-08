@@ -1,5 +1,6 @@
 package alex.example.movies.di.movies
 
+import alex.example.movies.data.local.dao.FilmDao
 import alex.example.movies.data.remote.datasource.TrendingMoviesDataSource
 import alex.example.movies.data.remote.api.MoviesListApi
 import alex.example.movies.data.repositories.MoviesRepository
@@ -21,8 +22,15 @@ class MoviesRepositoryModule {
         moviesListApi: MoviesListApi,
         requestManager: NetworkRequestManager,
         dispatcher: DispatcherProvider,
-        trendingMoviesDataSource: TrendingMoviesDataSource
+        trendingMoviesDataSource: TrendingMoviesDataSource,
+        filmDao: FilmDao
     ): MoviesRepository {
-        return MoviesRepository(moviesListApi, requestManager, dispatcher, trendingMoviesDataSource)
+        return MoviesRepository(
+            moviesListApi,
+            requestManager,
+            dispatcher,
+            trendingMoviesDataSource,
+            filmDao
+        )
     }
 }

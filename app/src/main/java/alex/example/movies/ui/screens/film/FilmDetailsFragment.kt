@@ -17,7 +17,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import alex.example.movies.ui.extension.toMoneyValue
 import alex.example.movies.utils.ItemSpacingDecoration
-import android.view.MenuItem
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
@@ -53,6 +52,11 @@ class FilmDetailsFragment : BaseFragment<FragmentFilmDetailsBinding, FilmDetails
 
             rvErrorView.retryBtn.setOnClickListener {
                 retryCredits(filmId, filmType!!)
+            }
+
+            toolbar.menu.findItem(R.id.action_favourite).setOnMenuItemClickListener {
+                favouriteClick(filmType!!)
+                true
             }
 
             viewLifecycleOwner.lifecycleScope.launch {
@@ -140,23 +144,23 @@ class FilmDetailsFragment : BaseFragment<FragmentFilmDetailsBinding, FilmDetails
                 }
 
                 launch {
-//                    viewModel.filmDetailsStateFlow.collectLatest { resource ->
-//
-//                        if (resource is Resource.Success || resource is Resource.Loading) {
-//                            showFavouriteError()
-//                        } else {
-//
-//                        }
-//                    }
-                }
-
-                launch {
                     viewModel.filmFavouriteStatusStateFlow.collectLatest {
                         when (it) {
                             true -> toolbar.menu.findItem(R.id.action_favourite)
                                 .setIcon(R.drawable.ic_favourite_filled)
+
                             false -> toolbar.menu.findItem(R.id.action_favourite)
                                 .setIcon(R.drawable.ic_favourite)
+
+                        }
+                    }
+                }
+
+                launch {
+                    viewModel.filmFavouriteStatusSharedFlow.collectLatest {
+                        when (it) {
+                            true -> showFavouriteStatusToast(R.string.added_to_favourites)
+                            false -> showFavouriteStatusToast(R.string.removed_from_favourites)
                         }
                     }
                 }
@@ -166,28 +170,16 @@ class FilmDetailsFragment : BaseFragment<FragmentFilmDetailsBinding, FilmDetails
         }
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.action_favourite -> {
-
-            viewLifecycleOwner.lifecycleScope.launch {
-                val filmType = arguments?.getString(Const.DETAIL_ARGUMENTS_FILM_TYPE_TAG)
-                filmType?.let {
-                    viewModel.filmDetailsStateFlow.collectLatest { resource ->
-                        if (resource.data == null || resource is Resource.Loading) {
-                            showFavouriteError()
-                        } else {
-                            viewModel.favouriteFilm(resource.data, it)
-                        }
-                    }
-                } ?: run {
-                    false
+    private fun favouriteClick(filmType: String) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.filmDetailsStateFlow.collectLatest { resource ->
+                if (resource.data == null || resource is Resource.Loading) {
+                    showFavouriteStatusToast(R.string.favourite_error)
+                } else {
+                    viewModel.favouriteFilm(resource.data, filmType)
                 }
             }
-            true
         }
-        else -> false
-
     }
 
     private fun loadShimmer(
@@ -250,7 +242,7 @@ class FilmDetailsFragment : BaseFragment<FragmentFilmDetailsBinding, FilmDetails
 
     private fun retryCredits(id: Int, filmType: String) = viewModel.fetchFilmCredits(id, filmType)
 
-    private fun showFavouriteError() {
-        Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
+    private fun showFavouriteStatusToast(stringResource: Int) {
+        Toast.makeText(requireContext(), getString(stringResource), Toast.LENGTH_SHORT).show()
     }
 }

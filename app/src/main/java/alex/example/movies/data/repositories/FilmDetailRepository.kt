@@ -28,4 +28,17 @@ class FilmDetailRepository @Inject constructor(
         emit(filmDao.insertFilm(film.mapToEntity(filmType)) > 0)
     }
 
+    suspend fun unfavouriteFilm(film: FilmDetail, filmType: String) =
+        flow {
+            try {
+                filmDao.removeFilm(film.mapToEntity(filmType))
+                emit(false)
+
+            } catch (e: java.lang.Exception) {
+                emit(true)
+            }
+        }
+
+    suspend fun getLocalFilm(filmId: Int) = filmDao.getFilmDetailById(filmId)
+
 }

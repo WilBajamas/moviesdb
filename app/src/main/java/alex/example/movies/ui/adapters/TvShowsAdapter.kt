@@ -4,6 +4,7 @@ import alex.example.movies.R
 import alex.example.movies.data.model.Film
 import alex.example.movies.databinding.ShowItemBinding
 import alex.example.movies.domain.model.FilmType
+import alex.example.movies.ui.extension.convertDateString
 import alex.example.movies.utils.Const
 import alex.example.movies.utils.FilmItemClickListener
 import android.view.LayoutInflater
@@ -34,7 +35,7 @@ class TvShowsAdapter(diffCallback: DiffUtil.ItemCallback<Film>) :
         item?.let {
             with(holder.binding) {
                 titleTv.text = item.name
-                dateTv.text = item.first_air_date
+                dateTv.text = item.first_air_date.convertDateString()
                 ratingView.progressBar.progress = (item.vote_average * 10).toInt()
                 ratingView.textView.text = holder.binding.root.context.getString(
                     R.string.percentage, ((item.vote_average * 10).toInt()).toString()

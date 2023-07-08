@@ -38,3 +38,24 @@ fun FilmDetail.mapToEntity(filmType: String) : FilmDetailEntity = FilmDetailEnti
     genres = genres,
     filmType = filmType
 )
+
+fun FilmDetailEntity.mapToModel(): FilmDetail = FilmDetail(
+    id = id,
+    backdrop_path = backdrop_path,
+    budget = budget,
+    original_language = original_language,
+    title = title,
+    name = name,
+    overview = overview,
+    poster_path = poster_path,
+    release_date = release_date,
+    first_air_date = first_air_date,
+    revenue = revenue,
+    status = status,
+    tagline = tagline,
+    type = type,
+    vote_average = vote_average,
+    networks = networks,
+    created_by = created_by,
+    genres = genres,
+)

@@ -1,5 +1,6 @@
 package alex.example.movies.di.tvshows
 
+import alex.example.movies.data.local.dao.FilmDao
 import alex.example.movies.data.remote.api.TvShowsListApi
 import alex.example.movies.data.remote.datasource.TrendingTvShowsDataSource
 import alex.example.movies.data.repositories.TvShowsRepository
@@ -21,7 +22,14 @@ class TvShowsRepositoryModule {
         tvShowsListApi: TvShowsListApi,
         requestManager: NetworkRequestManager,
         dispatcher: DispatcherProvider,
-        trendingTvShowsDataSource: TrendingTvShowsDataSource
+        trendingTvShowsDataSource: TrendingTvShowsDataSource,
+        filmDao: FilmDao
     ): TvShowsRepository =
-        TvShowsRepository(tvShowsListApi, requestManager, dispatcher, trendingTvShowsDataSource)
+        TvShowsRepository(
+            tvShowsListApi,
+            requestManager,
+            dispatcher,
+            trendingTvShowsDataSource,
+            filmDao
+        )
 }

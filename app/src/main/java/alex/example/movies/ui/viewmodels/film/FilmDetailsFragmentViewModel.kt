@@ -5,6 +5,7 @@ import alex.example.movies.data.model.FilmDetail
 import alex.example.movies.domain.use_case.credit.CreditsUseCase
 import alex.example.movies.domain.use_case.film.FavouriteFilmUseCase
 import alex.example.movies.domain.use_case.film.FilmDetailsUseCase
+import alex.example.movies.domain.use_case.film.LocalFilmUseCase
 import alex.example.movies.utils.Resource
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,7 +18,8 @@ import javax.inject.Inject
 class FilmDetailsFragmentViewModel @Inject constructor(
     private val filmDetailsUseCase: FilmDetailsUseCase,
     private val creditsUseCase: CreditsUseCase,
-    private val favouriteFilmUseCase: FavouriteFilmUseCase
+    private val favouriteFilmUseCase: FavouriteFilmUseCase,
+    private val localFilmUseCase: LocalFilmUseCase
 ) : ViewModel() {
 
     private val _filmDetailsStateFlow = MutableStateFlow<Resource<FilmDetail>>(Resource.Loading())
@@ -32,11 +34,24 @@ class FilmDetailsFragmentViewModel @Inject constructor(
     val filmFavouriteStatusStateFlow: StateFlow<Boolean>
         get() = _filmFavouriteStatusStateFlow
 
+    private val _filmFavouriteStatusSharedFlow = MutableSharedFlow<Boolean>()
+    val filmFavouriteStatusSharedFlow: SharedFlow<Boolean>
+        get() = _filmFavouriteStatusSharedFlow
+
     fun fetchFilmDetails(id: Int, filmType: String) {
         viewModelScope.launch {
-            val filmDetailsResult = filmDetailsUseCase(id, filmType).lastOrNull()
-            filmDetailsResult?.let {
-                _filmDetailsStateFlow.emit(it)
+            localFilmUseCase(id)?.let {
+                _filmDetailsStateFlow.emit(Resource.Success(it))
+                _filmFavouriteStatusStateFlow.emit(true)
+
+            } ?: run {
+
+                _filmFavouriteStatusStateFlow.emit(false)
+                val filmDetailsResult = filmDetailsUseCase(id, filmType).lastOrNull()
+                filmDetailsResult?.let { filmDetail ->
+                    _filmDetailsStateFlow.emit(filmDetail)
+                }
+
             }
         }
     }
@@ -52,9 +67,11 @@ class FilmDetailsFragmentViewModel @Inject constructor(
 
     fun favouriteFilm(film: FilmDetail, filmType: String) {
         viewModelScope.launch {
+            val result = favouriteFilmUseCase(film, filmType, _filmFavouriteStatusStateFlow.value).last()
             _filmFavouriteStatusStateFlow.emit(
-                favouriteFilmUseCase(film, filmType).last()
-            )
+                result)
+
+            _filmFavouriteStatusSharedFlow.emit(result)
         }
     }
 }
