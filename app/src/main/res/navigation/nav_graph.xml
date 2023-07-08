@@ -32,11 +32,6 @@
             app:destination="@id/peopleDetailFragment"
             app:enterAnim="@anim/slide_in"
             app:popExitAnim="@android:anim/fade_out" />
-        <action
-            android:id="@+id/action_mainContentFragment_to_mainFragment"
-            app:destination="@id/mainFragment"
-            app:popUpTo="@id/mainContentFragment"
-            app:popUpToInclusive="true" />
     </fragment>
     <navigation
         android:id="@+id/onboarding_nav"
@@ -60,7 +55,9 @@
             tools:layout="@layout/fragment_new_onboarding" />
         <action
             android:id="@+id/action_global_mainContentFragment"
-            app:destination="@id/mainContentFragment" />
+            app:destination="@id/mainContentFragment"
+            app:popUpTo="@id/onboarding_nav"
+            app:popUpToInclusive="true" />
     </navigation>
     <fragment
         android:id="@+id/mainFragment"
@@ -84,4 +81,10 @@
         android:name="alex.example.movies.ui.screens.people.PeopleDetailFragment"
         android:label="fragment_people_detail"
         tools:layout="@layout/fragment_people_detail" />
+    <action
+        android:id="@+id/action_global_mainFragment"
+        app:destination="@id/mainFragment"
+        app:enterAnim="@android:anim/fade_out"
+        app:popUpTo="@id/mainContentFragment"
+        app:popUpToInclusive="true" />
 </navigation>

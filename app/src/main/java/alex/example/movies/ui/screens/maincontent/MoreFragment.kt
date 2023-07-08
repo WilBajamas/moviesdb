@@ -52,7 +52,7 @@ class MoreFragment : PreferenceFragmentCompat() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.logout().collectLatest {
                 requireParentFragment().requireParentFragment().findNavController()
-                    .navigate(R.id.action_mainContentFragment_to_mainFragment)
+                    .navigate(R.id.action_global_mainFragment)
             }
         }
     }

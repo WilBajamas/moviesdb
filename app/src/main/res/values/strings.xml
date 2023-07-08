@@ -126,7 +126,7 @@
     <string name="favourite_films">Favourite Films</string>
     <string name="favourite_films_description">List of your favourite films</string>
     <string name="logout">Logout</string>
-    <string name="logout_description">Are you sure you want to logout?</string>
+    <string name="logout_description">Are you sure you want to logout? Logging out will clear your favourites (still in development)</string>
 
     <!--    Film Details -->
     <string name="added_to_favourites">Added to favourites</string>
